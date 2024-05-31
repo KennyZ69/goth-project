@@ -1,0 +1,11 @@
+package home
+
+import "gothstarter/layouts"
+
+templ Index(name string) {
+	@layouts.Base() {
+		<div class="text-red-600">
+			Hello there { name }
+		</div>
+	}
+}

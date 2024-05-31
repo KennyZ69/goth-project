@@ -2,12 +2,13 @@ package main
 
 import (
 	"gothstarter/handles"
-	"gothstarter/layouts"
+	"gothstarter/layouts/components/home"
 	"log"
 	"log/slog"
 	"net/http"
 	"os"
 
+	"github.com/go-chi/chi"
 	"github.com/joho/godotenv"
 )
 
@@ -17,9 +18,21 @@ func main() {
 	}
 	listenAddr := os.Getenv("PORT")
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		handles.HandleTempl(layouts.Index(), w, r)
+	router := chi.NewMux()
+
+	router.Handle("/*", public())
+
+	// router.Handle("/", handles.MakeHandle(handles.HandleHome))
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		handles.Render(home.Index("home"), w, r)
+
 	})
+
+	// http.Handle("/*", public())
+	// http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	// 	handles.Render(home.Index("home"), w, r)
+	// })
+	// http.Handle("/home", handles.MakeHandle(handles.HandleHome))
 
 	slog.Info("HTTP server was started", "listenAddr", listenAddr)
 	log.Fatal(http.ListenAndServe(listenAddr, nil))
