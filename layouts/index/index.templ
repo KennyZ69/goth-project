@@ -2,12 +2,9 @@ package index
 
 import (
 	layouts "gothstarter/layouts/base"
+	"net/http"
 )
 
-templ Index(name string) {
-	@layouts.Base() {
-		<div class="flex flex-col flex-wrap px-5 mx-auto w-full py-3">
-			This is { name }
-		</div>
-	}
+templ Index(r *http.Request) {
+	@layouts.Base(r)
 }

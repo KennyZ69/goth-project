@@ -19,9 +19,11 @@ func main() {
 	router := chi.NewMux()
 
 	router.Handle("/*", public())
-	router.Get("/", handles.MakeHandle(handles.HandleHome))
-	router.Handle("/login", handles.MakeHandle(handles.HandleLogin))
-	router.Handle("/signup", handles.MakeHandle((handles.HandleSignUp)))
+	router.Get("/", handles.MakeHandle(handles.HandleComponents))
+	router.Handle("/login", handles.MakeHandle(handles.HandleComponents))
+	router.Handle("/signup", handles.MakeHandle(handles.HandleComponents))
+	// router.Handle("/login", handles.MakeHandle(handles.HandleLogin))
+	// router.Get("/signup", handles.MakeHandle(handles.HandleSignUp))
 
 	// http.Handle("/*", public())
 	// http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

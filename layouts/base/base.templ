@@ -1,8 +1,12 @@
 package base
 
-import "gothstarter/layouts/components"
+import (
+	"gothstarter/layouts/components"
+	"net/http"
+	"strings"
+)
 
-templ Base() {
+templ Base(r *http.Request) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -16,8 +20,15 @@ templ Base() {
 			// <script src="https://cdn.tailwindcss.com"></script>
 		</head>
 		<body class="antialiased ">
+			if strings.Contains(r.URL.Path, "/login"){
+				@components.Login()
+			} else if strings.Contains(r.URL.Path, "signup"){
+				@components.Signup()
+			}
+			 else {
 			@components.Navigation()
 			{ children... }
+			}
 		</body>
 	</html>
 }
