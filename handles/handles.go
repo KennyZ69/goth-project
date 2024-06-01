@@ -25,11 +25,3 @@ func MakeHandle(h httpHandler) http.HandlerFunc {
 func HandleComponents(w http.ResponseWriter, r *http.Request) error {
 	return Render(index.Index(r), w, r)
 }
-
-// func HandleLogin(w http.ResponseWriter, r *http.Request) error {
-// 	return Render(components.Login(), w, r)
-// }
-
-// func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
-// 	return Render(components.Signup(), w, r)
-// }

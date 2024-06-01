@@ -23,7 +23,7 @@ func Login() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div><section class=\"w-full px-8 py-16 bg-gray-100 xl:px-8 flex items-center\"><div class=\"max-w-5xl mx-auto\"><div class=\"flex flex-col items-center md:flex-row\"><div class=\"w-full mt-16 md:mt-0 \"><div class=\"relative z-10 h-auto p-8 py-10 overflow-hidden bg-white border-b-2 border-gray-300 rounded-lg shadow-2xl px-7\" data-rounded=\"rounded-lg\" data-rounded-max=\"rounded-full\"><h3 class=\"mb-6 text-2xl font-medium text-center\">Log in to your Account</h3><input type=\"text\" name=\"username\" id=\"username\t\" class=\"block w-full px-4 py-3 mb-4 border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none\" data-rounded=\"rounded-lg\" data-primary=\"blue-500\" placeholder=\"Username\"> <input type=\"password\" name=\"password\" id=\"password\" class=\"block w-full px-4 py-3 mb-4 border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none\" data-rounded=\"rounded-lg\" data-primary=\"blue-500\" placeholder=\"Password\"><div class=\"block\"><button class=\"w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg\" data-primary=\"blue-600\" data-rounded=\"rounded-lg\">Log Me In</button></div><p class=\"w-full mt-4 text-sm text-center text-gray-500\">Log in with a different <a href=\"#_\" class=\"text-blue-500 underline\">service/account</a></p></div></div></div></div></section></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
