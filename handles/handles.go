@@ -1,7 +1,8 @@
 package handles
 
 import (
-	"gothstarter/layouts"
+	components "gothstarter/layouts/components"
+	index "gothstarter/layouts/index"
 	"log/slog"
 	"net/http"
 
@@ -23,5 +24,13 @@ func MakeHandle(h httpHandler) http.HandlerFunc {
 }
 
 func HandleHome(w http.ResponseWriter, r *http.Request) error {
-	return Render(layouts.Index("home"), w, r)
+	return Render(index.Index("index"), w, r)
+}
+
+func HandleLogin(w http.ResponseWriter, r *http.Request) error {
+	return Render(components.Login(), w, r)
+}
+
+func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
+	return Render(components.Signup(), w, r)
 }
