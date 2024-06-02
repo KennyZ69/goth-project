@@ -5,8 +5,6 @@ import (
 	"net/http"
 )
 
-// For now I will probably just use json db
-
 type User struct {
 	Id       uint   `json:"id"`
 	Username string `json:"username"`

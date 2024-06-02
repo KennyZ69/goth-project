@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq" // Import the PostgreSQL driver for it to work; ??? idk, it probably wont be used
 )
 
 func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
@@ -21,6 +22,10 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
 			log.Fatal(err)
 		}
 		defer db.Close()
+
+		// TODO: make validation for email, password, username and then start working on adding to the datatabase
+		// newUsr :=
+		fmt.Println("opened successfully")
 		return nil
 	} else if r.Method == "GET" {
 		HandleComponents(w, r)
