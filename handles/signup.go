@@ -3,6 +3,7 @@ package handles
 import (
 	"database/sql"
 	"fmt"
+	"gothstarter/layouts/components"
 	"log"
 	"net/http"
 	"os"
@@ -25,7 +26,11 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
 
 		// TODO: make validation for email, password, username and then start working on adding to the datatabase
 		// newUsr :=
-		fmt.Println("opened successfully")
+		// fmt.Println("opened successfully")
+		// ! if the user is created successfully...
+		if err = Render(components.AccountCreationSuccess(), w, r); err != nil {
+			return fmt.Errorf("there was an error rendering the success message: %v", err)
+		}
 		return nil
 	} else if r.Method == "GET" {
 		HandleComponents(w, r)
