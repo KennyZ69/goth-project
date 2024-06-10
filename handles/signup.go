@@ -13,9 +13,13 @@ import (
 // var db = database.InitDB()
 
 func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
-	username := r.FormValue("username")
-	email := r.FormValue("email")
+	// Parse form data
+	if err := r.ParseForm(); err != nil {
+		return fmt.Errorf("error parsing the form: %v", err)
+	}
 	if r.Method == "POST" {
+		username := r.FormValue("username")
+		email := r.FormValue("email")
 		newUsr := database.User{
 			Username: username,
 			Email:    email,

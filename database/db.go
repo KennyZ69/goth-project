@@ -44,12 +44,12 @@ func HashPwd(pwd string) []byte {
 }
 
 func SaveUser(usr User) error {
-	// if valid := EmailValidator(usr.Email); !valid {
-	// 	return fmt.Errorf("invalid email")
-	// }
-	// if valid := UsernameValidator(usr.Username); !valid {
-	// 	return fmt.Errorf("invalid username")
-	// }
+	if valid := EmailValidator(usr.Email); !valid {
+		return fmt.Errorf("invalid email")
+	}
+	if valid := UsernameValidator(usr.Username); !valid {
+		return fmt.Errorf("invalid username")
+	}
 	if valid := PasswordValidator(string(usr.Password)); !valid {
 		return fmt.Errorf("invalid password")
 	}
@@ -59,7 +59,6 @@ func SaveUser(usr User) error {
 		return err
 	}
 	usr.Id = id
-	fmt.Println(usr.Id)
 
 	_, err = DB.Exec("INSERT INTO users (id, username, email, password) VALUES ($1, $2, $3, $4)", usr.Id, usr.Username, usr.Email, usr.Password)
 	// _, err := DB.Exec("INSERT INTO users (username, email, password) VALUES ($1, $2, $3)", usr.Username, usr.Email, usr.Password)
