@@ -1,33 +1,41 @@
 package handles
 
 import (
-	"database/sql"
 	"fmt"
+	"gothstarter/database"
 	"gothstarter/layouts/components"
-	"log"
 	"net/http"
-	"os"
 
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq" // Import the PostgreSQL driver for it to work; ??? idk, it probably wont be used
 )
 
-func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
-	godotenv.Load()
-	pwd := os.Getenv("PSQ_PWD")
-	host := os.Getenv("PSQ_HOST")
-	port := os.Getenv("PSQ_PORT")
-	if r.Method == "POST" {
-		db, err := sql.Open("postgres", fmt.Sprintf("user=postgres password=%s host=%s port=%s  dbname=testdb sslmode=disable", pwd, host, port))
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer db.Close()
+// TODO : connect to db, add users etc...
+// var db = database.InitDB()
 
-		// TODO: make validation for email, password, username and then start working on adding to the datatabase
-		// newUsr :=
-		// fmt.Println("opened successfully")
-		// ! if the user is created successfully...
+func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
+	username := r.FormValue("username")
+	email := r.FormValue("email")
+	if r.Method == "POST" {
+		newUsr := database.User{
+			Username: username,
+			Email:    email,
+		}
+		exists, err := database.UserExists(newUsr)
+		if err != nil {
+			return fmt.Errorf("there was an error checking if the user exists: %v", err)
+		}
+		if exists {
+			return fmt.Errorf("the user already exists")
+		}
+		if r.FormValue("password") != r.FormValue("confirm-password") {
+			return fmt.Errorf("the password doesnt match")
+		}
+		newUsr.Password = database.HashPwd(r.FormValue("password"))
+		newUsr.ComparePassword(r.FormValue("password"))
+		err = database.SaveUser(newUsr)
+		if err != nil {
+			return fmt.Errorf("there was an error saving the user: %v", err)
+		}
 		if err = Render(components.AccountCreationSuccess(), w, r); err != nil {
 			return fmt.Errorf("there was an error rendering the success message: %v", err)
 		}
