@@ -9,9 +9,6 @@ import (
 	_ "github.com/lib/pq" // Import the PostgreSQL driver for it to work; ??? idk, it probably wont be used
 )
 
-// TODO : connect to db, add users etc...
-// var db = database.InitDB()
-
 func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
 	// Parse form data
 	if err := r.ParseForm(); err != nil {
@@ -40,7 +37,7 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
 		if err != nil {
 			return fmt.Errorf("there was an error saving the user: %v", err)
 		}
-		if err = Render(components.AccountCreationSuccess(), w, r); err != nil {
+		if err = Render(components.AccountCreationSuccess(newUsr.Username), w, r); err != nil {
 			return fmt.Errorf("there was an error rendering the success message: %v", err)
 		}
 		return nil

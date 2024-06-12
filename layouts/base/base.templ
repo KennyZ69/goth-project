@@ -19,15 +19,15 @@ templ Base(r *http.Request) {
 			<script src="https://unpkg.com/alpinejs" defer></script>
 			// <script src="https://cdn.tailwindcss.com"></script>
 		</head>
-		<body class="antialiased ">
-			if strings.Contains(r.URL.Path, "/login"){
+		// !!! For some reason the tailwindcss isnt apllying, again...
+		<body class="antialiased bg-slate-500">
+			if strings.Contains(r.URL.Path, "/login") {
 				@components.Login()
-			} else if strings.Contains(r.URL.Path, "signup"){
+			} else if strings.Contains(r.URL.Path, "signup") {
 				@components.Signup()
-			}
-			 else {
-			@components.Navigation()
-			{ children... }
+			} else {
+				@components.Navigation()
+				{ children... }
 			}
 		</body>
 	</html>
