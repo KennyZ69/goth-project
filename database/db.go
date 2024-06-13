@@ -33,6 +33,36 @@ func InitDB() *sql.DB {
 	return db
 }
 
+func CreateTables(db *sql.DB) error {
+	createTableQuery := `
+    CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        username TEXT NOT NULL,
+        email TEXT UNIQUE NOT NULL
+		password VARCHAR(100) NOT NULL
+    );
+    `
+	_, err := db.Exec(createTableQuery)
+	if err != nil {
+		return fmt.Errorf(err.Error())
+	}
+
+	// Example of creating the users_tokens table
+	createTableQuery = `
+    CREATE TABLE IF NOT EXISTS user_tokens (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users(id),
+        token TEXT NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW()
+    );
+    `
+	_, err = db.Exec(createTableQuery)
+	if err != nil {
+		return fmt.Errorf(err.Error())
+	}
+	return nil
+}
+
 var DB = InitDB()
 
 func HashPwd(pwd string) []byte {

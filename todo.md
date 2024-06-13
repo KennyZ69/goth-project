@@ -1,4 +1,4 @@
-!TODO:
+#TODO:
 
 - Make the token assignement while signing up
 - Make the login func and interaction with some tokens there also maybe? - Save it to the database
