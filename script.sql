@@ -1,9 +1,9 @@
 -- ! PROBABLY NOT USING THIS, BUT A BASH SCRIPT, BUT WILL LEAVE IT HERE FOR A WHILE.
 
--- Check if the 'myapp_db' database exists and create it if not
+-- Check if the database exists and create it if not
 CREATE DATABASE IF NOT EXISTS testdb;
 
--- Connect to the 'myapp_db' database
+-- Connect to the database
 \c testdb;
 
 -- Check if the 'users' table exists and create it if not

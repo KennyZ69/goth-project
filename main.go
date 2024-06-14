@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"os/exec"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
@@ -17,11 +18,11 @@ func main() {
 	}
 
 	// Run the PostgreSQL setup script
-	// // cmd := exec.Command("/bin/bash", "setup_postgres.sh")
-	// // err := cmd.Run()
-	// // if err != nil {
-	// // 	log.Fatalf("Failed to execute setup_postgres.sh: %v", err)
-	// // }
+	cmd := exec.Command("/bin/bash", "setup_postgres.sh")
+	err := cmd.Run()
+	if err != nil {
+		log.Fatalf("Failed to execute setup_postgres.sh: %v", err)
+	}
 
 	// // if err := goose.Up(database.DB, "./script.sql"); err != nil {
 	// // 	log.Fatal(err)

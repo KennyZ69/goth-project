@@ -3,7 +3,7 @@
 # ?? Remember to make your script executable by running chmod +x setup_postgres.sh
 
 source ./.env
-export PSQ_PWD
+export PGPASSWORD=$PSQ_PWD
 
 # Variables
 DB_NAME="testdb"
