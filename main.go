@@ -18,7 +18,7 @@ func main() {
 	}
 
 	// Run the PostgreSQL setup script
-	cmd := exec.Command("/bin/bash", "setup_postgres.sh")
+	cmd := exec.Command("/bin/bash", "./setup_postgres.sh")
 	err := cmd.Run()
 	if err != nil {
 		log.Fatalf("Failed to execute setup_postgres.sh: %v", err)

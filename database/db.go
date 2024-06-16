@@ -33,36 +33,6 @@ func InitDB() *sql.DB {
 	return db
 }
 
-func CreateTables(db *sql.DB) error {
-	createTableQuery := `
-    CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY,
-        username TEXT NOT NULL,
-        email TEXT UNIQUE NOT NULL
-		password VARCHAR(100) NOT NULL
-    );
-    `
-	_, err := db.Exec(createTableQuery)
-	if err != nil {
-		return fmt.Errorf(err.Error())
-	}
-
-	// Example of creating the users_tokens table
-	createTableQuery = `
-    CREATE TABLE IF NOT EXISTS user_tokens (
-        id SERIAL PRIMARY KEY,
-        user_id INTEGER REFERENCES users(id),
-        token TEXT NOT NULL,
-        created_at TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-    `
-	_, err = db.Exec(createTableQuery)
-	if err != nil {
-		return fmt.Errorf(err.Error())
-	}
-	return nil
-}
-
 var DB = InitDB()
 
 func HashPwd(pwd string) []byte {
@@ -80,18 +50,18 @@ func SaveUser(usr User) error {
 	if valid := UsernameValidator(usr.Username); !valid {
 		return fmt.Errorf("invalid username")
 	}
-	if valid := PasswordValidator(string(usr.Password)); !valid {
-		return fmt.Errorf("invalid password")
-	}
-	var id uint
-	err := DB.QueryRow("SELECT COALESCE(MAX(id), 0) + 1 FROM users").Scan(&id)
-	if err != nil {
-		return err
-	}
-	usr.Id = id
+	// ! Just commenting out the pwd validation for easier testing.
+	// if valid := PasswordValidator(string(usr.Password)); !valid {
+	// 	return fmt.Errorf("invalid password")
+	// }
+	// var id uint
+	// err := DB.QueryRow("SELECT COALESCE(MAX(user_id), 0) + 1 FROM users").Scan(&id)
+	// if err != nil {
+	// 	return err
+	// }
+	// usr.Id = id
 
-	_, err = DB.Exec("INSERT INTO users (id, username, email, password) VALUES ($1, $2, $3, $4)", usr.Id, usr.Username, usr.Email, usr.Password)
-	// _, err := DB.Exec("INSERT INTO users (username, email, password) VALUES ($1, $2, $3)", usr.Username, usr.Email, usr.Password)
+	_, err := DB.Exec("INSERT INTO users (user_id, username, email, password_hash) VALUES ($1, $2, $3, $4)", usr.Id, usr.Username, usr.Email, usr.Password)
 	if err != nil {
 		return err
 	}
@@ -110,4 +80,13 @@ func UserExists(usr User) (bool, error) {
 func (u *User) ComparePassword(password string) error {
 	err := bcrypt.CompareHashAndPassword(u.Password, []byte(password))
 	return err
+}
+
+func UsrId() (uint, error) {
+	var id uint
+	err := DB.QueryRow("SELECT COALESCE(MAX(user_id), 0) + 1 FROM users").Scan(&id)
+	if err != nil {
+		return 0, err
+	}
+	return id, nil
 }

@@ -17,10 +17,16 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
 	if r.Method == "POST" {
 		username := r.FormValue("username")
 		email := r.FormValue("email")
+		id, err := database.UsrId()
+		if err != nil {
+			return fmt.Errorf("there was an error getting the user id: %v", err)
+		}
 		newUsr := database.User{
 			Username: username,
 			Email:    email,
+			Id:       id,
 		}
+
 		exists, err := database.UserExists(newUsr)
 		if err != nil {
 			return fmt.Errorf("there was an error checking if the user exists: %v", err)
@@ -28,19 +34,39 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
 		if exists {
 			return fmt.Errorf("the user already exists")
 		}
+
 		if r.FormValue("password") != r.FormValue("confirm-password") {
 			return fmt.Errorf("the password doesnt match")
 		}
 		newUsr.Password = database.HashPwd(r.FormValue("password"))
 		newUsr.ComparePassword(r.FormValue("password"))
-		err = database.SaveUser(newUsr)
-		if err != nil {
+		if err = database.SaveUser(newUsr); err != nil {
 			return fmt.Errorf("there was an error saving the user: %v", err)
 		}
+
+		tokenString, err := database.GenerateTokenString(newUsr)
+		if err != nil {
+			return fmt.Errorf("there was an error generating the token string: %v", err)
+		}
+
+		token, err := database.MakeToken(tokenString, newUsr.Id)
+		if err != nil {
+			return fmt.Errorf("there was an error making the token: %v", err)
+		}
+
+		if err = database.SaveToken(database.DB, token); err != nil {
+			return fmt.Errorf("there was an error saving the token: %v", err)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"token":"` + tokenString + `"}`))
+
 		if err = Render(components.AccountCreationSuccess(newUsr.Username), w, r); err != nil {
 			return fmt.Errorf("there was an error rendering the success message: %v", err)
 		}
 		return nil
+
 	} else if r.Method == "GET" {
 		HandleComponents(w, r)
 		return nil
