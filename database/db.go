@@ -90,3 +90,20 @@ func UsrId() (uint, error) {
 	}
 	return id, nil
 }
+
+func GetUserByName(db *sql.DB, name string) (*User, error) {
+	var usr User
+	err := db.QueryRow("SELECT user_id, username, email, password_hash FROM users WHERE username=$1", name).Scan(&usr.Id, &usr.Username, &usr.Email, &usr.Password)
+	if err != nil {
+		return nil, err
+	}
+	return &usr, nil
+}
+
+func DeleteUserTokens(db *sql.DB, userID uint) error {
+	query := "DELETE FROM user_tokens WHERE user_id = $1"
+	if _, err := db.Exec(query, userID); err != nil {
+		return err
+	}
+	return nil
+}
