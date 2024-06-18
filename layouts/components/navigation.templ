@@ -1,6 +1,6 @@
 package components
 
-templ Navigation(data ComponentsData) {
+templ Navigation(isAuthenticated bool) {
 	<div>
 		<section class="relative w-full px-8 text-gray-700 bg-white body-font">
 			<div class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
@@ -32,7 +32,7 @@ templ Navigation(data ComponentsData) {
 					</a>
 				</nav>
 				// ! Check if the user is authenticated
-				if data.isAuthenticated {
+				if isAuthenticated {
 					<!-- Show user profile icon -->
 					<div class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end transition duration-150 ease-out">
 						<!-- Profile icon and other authenticated user links -->

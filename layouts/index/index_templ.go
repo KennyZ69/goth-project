@@ -12,11 +12,11 @@ import "bytes"
 
 import (
 	layouts "gothstarter/layouts/base"
-	"gothstarter/layouts/components"
 	"net/http"
+	// "gothstarter/layouts/components"
 )
 
-func Index(r *http.Request, data components.ComponentsData) templ.Component {
+func Index(r *http.Request, data bool) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
