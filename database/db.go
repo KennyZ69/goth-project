@@ -54,14 +54,14 @@ func SaveUser(usr User) error {
 	// if valid := PasswordValidator(string(usr.Password)); !valid {
 	// 	return fmt.Errorf("invalid password")
 	// }
-	// var id uint
-	// err := DB.QueryRow("SELECT COALESCE(MAX(user_id), 0) + 1 FROM users").Scan(&id)
-	// if err != nil {
-	// 	return err
-	// }
-	// usr.Id = id
+	var id uint
+	err := DB.QueryRow("SELECT COALESCE(MAX(user_id), 0) + 1 FROM users").Scan(&id)
+	if err != nil {
+		return err
+	}
+	usr.Id = id
 
-	_, err := DB.Exec("INSERT INTO users (user_id, username, email, password_hash) VALUES ($1, $2, $3, $4)", usr.Id, usr.Username, usr.Email, usr.Password)
+	_, err = DB.Exec("INSERT INTO users (user_id, username, email, password_hash) VALUES ($1, $2, $3, $4)", usr.Id, usr.Username, usr.Email, usr.Password)
 	if err != nil {
 		return err
 	}

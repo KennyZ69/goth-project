@@ -3,8 +3,10 @@ package index
 import (
 	layouts "gothstarter/layouts/base"
 	"net/http"
+	// "gothstarter/layouts/components"
+	// "gothstarter/layouts/components"
 )
 
-templ Index(r *http.Request) {
-	@layouts.Base(r)
+templ Index(r *http.Request, data bool) {
+	@layouts.Base(r, data)
 }

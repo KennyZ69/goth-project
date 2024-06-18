@@ -1,6 +1,8 @@
 package handles
 
 import (
+	"fmt"
+	"gothstarter/layouts/components"
 	index "gothstarter/layouts/index"
 	"log/slog"
 	"net/http"
@@ -23,5 +25,7 @@ func MakeHandle(h httpHandler) http.HandlerFunc {
 }
 
 func HandleComponents(w http.ResponseWriter, r *http.Request) error {
-	return Render(index.Index(r), w, r)
+	data := components.GetAuth(r)
+	fmt.Println(data)
+	return Render(index.Index(r, data), w, r)
 }

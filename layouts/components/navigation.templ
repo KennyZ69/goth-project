@@ -1,6 +1,6 @@
 package components
 
-templ Navigation() {
+templ Navigation(data ComponentsData) {
 	<div>
 		<section class="relative w-full px-8 text-gray-700 bg-white body-font">
 			<div class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
@@ -31,16 +31,27 @@ templ Navigation() {
 						</span>
 					</a>
 				</nav>
-				<div class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end transition duration-150 ease-out">
-					<a href="/login" hx-trigger="mouseenter focus" class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-gray-100 whitespace-no-wrap bg-gray-400 border border-gray-300 hover:bg-gray-300 hover:text-gray-600 hover:border-  rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 hover:border-slate-700 transition-transform hover:scale-105 ease-in">
-						Log in
-					</a>
-					<span class="inline-flex rounded-md shadow-sm">
-						<a href="/signup" hx-trigger="mouseenter focus" class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-blue-600 border border-blue-700 rounded-md shadow-sm hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 hover:border-blue-950 transition-transform hover:scale-105 ease-in">
-							Sign up
+				// ! Check if the user is authenticated
+				if data.isAuthenticated {
+					<!-- Show user profile icon -->
+					<div class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end transition duration-150 ease-out">
+						<!-- Profile icon and other authenticated user links -->
+						<p>
+							Profile icon
+						</p>
+					</div>
+				} else {
+					<div class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end transition duration-150 ease-out">
+						<a href="/login" hx-trigger="mouseenter focus" class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-gray-100 whitespace-no-wrap bg-gray-400 border border-gray-300 hover:bg-gray-300 hover:text-gray-600 hover:border-  rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 hover:border-slate-700 transition-transform hover:scale-105 ease-in">
+							Log in
 						</a>
-					</span>
-				</div>
+						<span class="inline-flex rounded-md shadow-sm">
+							<a href="/signup" hx-trigger="mouseenter focus" class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-blue-600 border border-blue-700 rounded-md shadow-sm hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 hover:border-blue-950 transition-transform hover:scale-105 ease-in">
+								Sign up
+							</a>
+						</span>
+					</div>
+				}
 			</div>
 		</section>
 	</div>

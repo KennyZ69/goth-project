@@ -58,9 +58,16 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
 			return fmt.Errorf("there was an error saving the token: %v", err)
 		}
 
+		// Set token as a cookie
+		http.SetCookie(w, &http.Cookie{
+			Name:     "auth_token",
+			Value:    tokenString,
+			Expires:  token.ExpiresAt,
+			HttpOnly: true,
+		})
+
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"token":"` + tokenString + `"}`))
 
 		if err = Render(components.AccountCreationSuccess(newUsr.Username), w, r); err != nil {
 			return fmt.Errorf("there was an error rendering the success message: %v", err)

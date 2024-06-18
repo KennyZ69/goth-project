@@ -38,11 +38,17 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) error {
 			return fmt.Errorf("there was an error saving the token: %v", err)
 		}
 
+		// Set token as a cookie
+		http.SetCookie(w, &http.Cookie{
+			Name:     "auth_token",
+			Value:    tokenString,
+			Expires:  sesToken.ExpiresAt,
+			HttpOnly: true,
+		})
+
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"token":"` + tokenString + `"}`))
 
-		// // ! Render successful login response template
 		if err = Render(components.LoginSuccess(usr.Username), w, r); err != nil {
 			return fmt.Errorf("there was an error rendering the success message: %v", err)
 		}
