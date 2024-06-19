@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -109,26 +108,17 @@ func DeleteUserTokens(db *sql.DB, userID uint) error {
 	return nil
 }
 
-func GetUserByCookie(w http.ResponseWriter, r *http.Request) (*User, error) {
-	var user_id uint
-	cookie, err := r.Cookie("auth_token")
-	if err != nil {
-		// next.ServeHTTP(w, r.WithContext(ctx))
-		http.Error(w, "There was an error with the cookie when getting it", http.StatusUnauthorized)
+func GetUserById(userID uint) (*User, error) {
+	query := "SELECT user_id, username, password_hash, email FROM users WHERE id = $1;"
+	row := DB.QueryRow(query, userID)
+
+	var user User
+	err := row.Scan(&user.Id, &user.Username, &user.Password, &user.Email)
+	if err == sql.ErrNoRows {
+		return nil, fmt.Errorf("User not found")
+	} else if err != nil {
 		return nil, err
 	}
-	tokenString := cookie.Value
-	// claims := &UserClaims{}
-	// token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
-	// 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-	// 		// next.ServeHTTP(w, r.WithContext(ctx))
-	// 		return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-	// 		// fmt.Printf("unexpected signing method: %v", token.Header["alg"])
-	// 	}
-	// 	return []byte(os.Getenv("JWT_SECRET")), nil
-	// })
-	query := "SELECT user_id FROM user_tokens WHERE token = $1;"
-	if err := DB.QueryRow(query, tokenString).Scan(&user_id); err != nil {
-		return nil, err
-	}
+
+	return &user, nil
 }

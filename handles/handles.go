@@ -25,7 +25,12 @@ func MakeHandle(h httpHandler) http.HandlerFunc {
 }
 
 func HandleComponents(w http.ResponseWriter, r *http.Request) error {
+	user, err := components.GetUserByCookie(w, r)
+	if err != nil {
+		fmt.Printf("There was an error handling the GetUserByCookie request: %v", err)
+	}
+
 	data := components.GetAuth(r)
 	fmt.Println(data)
-	return Render(index.Index(r, data), w, r)
+	return Render(index.Index(r, data, user.Username), w, r)
 }

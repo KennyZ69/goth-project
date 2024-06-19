@@ -12,7 +12,7 @@ import (
 
 func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// This cannot be the first thing the server wants to the when it is loading the default path
+		// // This cannot be the first thing the server wants to the when it is loading the default path
 		isAuthenticated := false
 		cookie, err := r.Cookie("auth_token")
 		if err != nil {
