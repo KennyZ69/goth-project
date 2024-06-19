@@ -6,6 +6,6 @@ import (
 	// "gothstarter/layouts/components"
 )
 
-templ Index(r *http.Request, data bool) {
-	@layouts.Base(r, data)
+templ Index(r *http.Request, data bool, username string) {
+	@layouts.Base(r, data, username)
 }

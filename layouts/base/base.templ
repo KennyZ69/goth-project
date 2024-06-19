@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-templ Base(r *http.Request, data bool) {
+templ Base(r *http.Request, data bool, username string) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -30,7 +30,7 @@ templ Base(r *http.Request, data bool) {
 			} else if strings.Contains(r.URL.Path, "signup") {
 				@components.Signup()
 			} else {
-				@components.Navigation(data)
+				@components.Navigation(data, username)
 				{ children... }
 			}
 		</body>
