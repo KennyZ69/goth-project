@@ -109,7 +109,7 @@ func DeleteUserTokens(db *sql.DB, userID uint) error {
 }
 
 func GetUserById(userID uint) (*User, error) {
-	query := "SELECT user_id, username, password_hash, email FROM users WHERE id = $1;"
+	query := "SELECT user_id, username, password_hash, email FROM users WHERE user_id = $1;"
 	row := DB.QueryRow(query, userID)
 
 	var user User

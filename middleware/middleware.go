@@ -19,7 +19,7 @@ func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			ctx := context.WithValue(r.Context(), "isAuthenticated", isAuthenticated)
 
 			next.ServeHTTP(w, r.WithContext(ctx))
-			http.Error(w, "There was an error with the cookie", http.StatusUnauthorized)
+			// http.Error(w, "There was an error with the cookie", http.StatusUnauthorized)
 			return
 		}
 		tokenString := cookie.Value
