@@ -95,6 +95,7 @@ func GetUserByName(db *sql.DB, name string) (*User, error) {
 	var usr User
 	err := db.QueryRow("SELECT user_id, username, email, password_hash FROM users WHERE username=$1", name).Scan(&usr.Id, &usr.Username, &usr.Email, &usr.Password)
 	if err != nil {
+		fmt.Printf("No user with the username: %v\n", name)
 		return nil, err
 	}
 	return &usr, nil

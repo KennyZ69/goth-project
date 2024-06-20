@@ -1,5 +1,7 @@
 package components
 
+import "fmt"
+
 templ Login() {
 	<div>
 		<section class="w-full px-8 py-16 bg-gray-100 xl:px-8 flex items-center" id="form-container">
@@ -46,7 +48,8 @@ templ LoginSuccess(name string) {
 				<a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-block mr-2">
 					Return to Home Page
 				</a>
-				<a href="/profile" class="bg-violet-500 hover:bg-violet-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ">
+				{{ hrefProfile := fmt.Sprintf("/profile/%v", name) }}
+				<a href={ templ.SafeURL(hrefProfile) } class="bg-violet-500 hover:bg-violet-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ">
 					View Profile
 				</a>
 			</div>

@@ -2,8 +2,10 @@ package base
 
 import (
 	"gothstarter/layouts/components"
+	"gothstarter/database"
 	"net/http"
 	"strings"
+	"fmt"
 )
 
 templ Base(r *http.Request, data bool, username string) {
@@ -23,12 +25,19 @@ templ Base(r *http.Request, data bool, username string) {
 			<link rel="icon" type="image/png" sizes="16x16" href="/public/favicon/favicon-16x16.png"/>
 			<link rel="manifest" href="/public/favicon/site.webmanifest"/>
 		</head>
-		// !!! For some reason the tailwindcss isnt apllying, again...
 		<body class="antialiased bg-slate-500">
+			{{ hrefProfile := fmt.Sprintf("/profile/%v", username) }}
 			if strings.Contains(r.URL.Path, "/login") {
 				@components.Login()
-			} else if strings.Contains(r.URL.Path, "signup") {
+			} else if strings.Contains(r.URL.Path, "/signup") {
 				@components.Signup()
+			} else if strings.Contains(r.URL.Path, hrefProfile) {
+				{{ usr, err := database.GetUserByName(database.DB, username) }}
+				if err != nil {
+					// Do some error later
+					{{ fmt.Printf("error getting the user for the profile: %v\n", err) }}
+				}
+				@components.Profile(usr.Username, usr.Email)
 			} else {
 				@components.Navigation(data, username)
 				{ children... }

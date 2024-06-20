@@ -1,14 +1,6 @@
 #TODO:
 
-<!-- - Make the token assignement while signing up -->
-
-<!-- - Make the login func and interaction with some tokens there also maybe? - Save it to the database -->
-
-<!-- - !!! I need the cookies to not be the first thing checked on the server -->
-
-<!-- - !!! Make the authMiddleware, check for the authorization -->
-
-<!-- - !!! Send the token to the user via a cookie, or as a response body (json I suppose) -->
+- !!! error getting the user for the profile: sql: no rows in result set; Got this error when trying to access the profile url page with the username
 
 - Make the profile icon, add possible interactions with it, removing the account for start + Show up maybe a modal asking if the user is sure to delete their acccount
 - Add the error messages rendering and ofc make the error msgs templates
