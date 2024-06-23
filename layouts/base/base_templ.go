@@ -35,7 +35,6 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		hrefProfile := fmt.Sprintf("/profile/%v", username)
 		if strings.Contains(r.URL.Path, "/login") {
 			templ_7745c5c3_Err = components.Login().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
@@ -46,8 +45,9 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-		} else if strings.Contains(r.URL.Path, hrefProfile) {
-			usr, err := database.GetUserByName(database.DB, username)
+		} else if strings.Contains(r.URL.Path, "/profile/") {
+			nameFromPath := r.URL.Path[len("/profile/"):]
+			usr, err := database.GetUserByName(database.DB, nameFromPath)
 			if err != nil {
 				templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
 				if templ_7745c5c3_Err != nil {

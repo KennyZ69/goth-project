@@ -35,7 +35,7 @@ func main() {
 	router.Get("/", middleware.AuthMiddleware(handleHome))
 	router.Handle("/login", handles.MakeHandle(handles.HandleLogin))
 	router.Handle("/signup", handles.MakeHandle(handles.HandleSignUp))
-	router.Handle("GET /profile/{username}", handles.MakeHandle(handles.HandleProfile))
+	router.Handle("/profile/{username}", handles.MakeHandle(handles.HandleProfile))
 
 	listenAddr := os.Getenv("PORT")
 	slog.Info("HTTP server was started", "listenAddr", listenAddr)

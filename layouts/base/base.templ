@@ -26,13 +26,14 @@ templ Base(r *http.Request, data bool, username string) {
 			<link rel="manifest" href="/public/favicon/site.webmanifest"/>
 		</head>
 		<body class="antialiased bg-slate-500">
-			{{ hrefProfile := fmt.Sprintf("/profile/%v", username) }}
+			// {{ hrefProfile := fmt.Sprintf("/profile/%v", username) }}
 			if strings.Contains(r.URL.Path, "/login") {
 				@components.Login()
 			} else if strings.Contains(r.URL.Path, "/signup") {
 				@components.Signup()
-			} else if strings.Contains(r.URL.Path, hrefProfile) {
-				{{ usr, err := database.GetUserByName(database.DB, username) }}
+			} else if strings.Contains(r.URL.Path, "/profile/") {
+				{{ nameFromPath := r.URL.Path[len("/profile/"):] }}
+				{{ usr, err := database.GetUserByName(database.DB, nameFromPath) }}
 				if err != nil {
 					// Do some error later
 					{{ fmt.Printf("error getting the user for the profile: %v\n", err) }}
