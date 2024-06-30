@@ -56,6 +56,7 @@ templ Base(r *http.Request, data bool, username string) {
 
 	@components.Navigation(data, username)
 	@Body()
+	@Footer()
 	{ children... }
 </body>
 

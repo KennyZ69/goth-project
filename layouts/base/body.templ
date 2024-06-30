@@ -2,18 +2,21 @@ package base
 
 templ Body() {
 <!-- Main Section -->
-<main class="flex flex-col items-center justify-center min-h-screen text-center">
-	<h1 class="text-5xl font-bold mb-6">Zijeme tenisom a preto hladame moznosti</h1>
-	<p class="text-lg mb-6">
+<main class="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-center p-6">
+	<h1 class="text-5xl font-bold mb-6 text-gray-800">Zijeme tenisom a preto hladame moznosti</h1>
+	<p class="text-lg mb-6 text-gray-700 max-w-2xl">
 		If you are ready to change the way you design websites, then you'll want to use our
 		block builder to make it fun and easy!
 	</p>
 	<button onclick="document.getElementById('features').scrollIntoView({ behavior: 'smooth' });"
-		class="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600">Learn More</button>
+		class="px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-300">
+		Learn
+		More
+	</button>
 	<!-- Features Section -->
-	<section id="features" class="min-h-screen bg-gray-800 p-6">
+	<section id="features" class="min-h-screen bg-gray-800 text-white p-6 mt-12 rounded-lg shadow-lg">
 		<h2 class="text-4xl font-bold mb-4">Features</h2>
-		<p class="text-lg">Here are some amazing features of our block builder:</p>
+		<p class="text-lg mb-4">Here are some amazing features of our block builder:</p>
 		<!-- Add your feature details here -->
 	</section>
 </main>
