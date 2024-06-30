@@ -1,48 +1,63 @@
 package base
 
 import (
-	"gothstarter/layouts/components"
-	"gothstarter/database"
-	"net/http"
-	"strings"
-	"fmt"
+"gothstarter/layouts/components"
+"gothstarter/database"
+"net/http"
+"strings"
+"fmt"
 )
 
 templ Base(r *http.Request, data bool, username string) {
-	<!DOCTYPE html>
-	<html lang="en">
-		<head>
-			<title>TennisIsUs</title>
-			<meta charset="UTF-8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<link rel="stylesheet" href="/public/styles.css"/>
-			// <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
-			<script src="/public/htmx.min.js"></script>
-			<script src="https://unpkg.com/alpinejs" defer></script>
-			// <script src="https://cdn.tailwindcss.com"></script>
-			<link rel="apple-touch-icon" sizes="180x180" href="/public/favicon/apple-touch-icon.png"/>
-			<link rel="icon" type="image/png" sizes="32x32" href="/public/favicon/favicon-32x32.png"/>
-			<link rel="icon" type="image/png" sizes="16x16" href="/public/favicon/favicon-16x16.png"/>
-			<link rel="manifest" href="/public/favicon/site.webmanifest"/>
-		</head>
-		<body class="antialiased bg-slate-500">
-			// {{ hrefProfile := fmt.Sprintf("/profile/%v", username) }}
-			if strings.Contains(r.URL.Path, "/login") {
-				@components.Login()
-			} else if strings.Contains(r.URL.Path, "/signup") {
-				@components.Signup()
-			} else if strings.Contains(r.URL.Path, "/profile/") {
-				{{ nameFromPath := r.URL.Path[len("/profile/"):] }}
-				{{ usr, err := database.GetUserByName(database.DB, nameFromPath) }}
-				if err != nil {
-					// Do some error later
-					{{ fmt.Printf("error getting the user for the profile: %v\n", err) }}
-				}
-				@components.Profile(usr.Username, usr.Email)
-			} else {
-				@components.Navigation(data, username)
-				{ children... }
-			}
-		</body>
-	</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>TennisIsUs</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="/public/styles.css" />
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="/public/htmx.min.js"></script>
+	<script src="https://unpkg.com/alpinejs" defer></script>
+	<link rel="apple-touch-icon" sizes="180x180" href="/public/favicon/apple-touch-icon.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="/public/favicon/favicon-32x32.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="/public/favicon/favicon-16x16.png" />
+	<link rel="manifest" href="/public/favicon/site.webmanifest" />
+	<style>
+		html {
+			scroll-behavior: smooth;
+		}
+	</style>
+</head>
+
+<body class="antialiased bg-slate-500">
+	// {{ hrefProfile := fmt.Sprintf("/profile/%v", username) }}
+
+	if strings.Contains(r.URL.Path, "/login") {
+	@components.Login()
+	}
+
+	if strings.Contains(r.URL.Path, "/signup") {
+	@components.Signup()
+	}
+
+	if strings.Contains(r.URL.Path, "/profile/") {
+	{{ nameFromPath := r.URL.Path[len("/profile/"):] }}
+	{{ usr, err := database.GetUserByName(database.DB, nameFromPath) }}
+
+	if err != nil {
+	// Do some error later
+	{{ fmt.Printf("error getting the user for the profile: %v\n", err) }}
+	}
+
+	@components.Profile(usr.Username, usr.Email)
+	}
+
+	@components.Navigation(data, username)
+	@Body()
+	{ children... }
+</body>
+
+</html>
 }
