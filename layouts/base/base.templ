@@ -53,12 +53,32 @@ templ Base(r *http.Request, data bool, username string) {
 
 	@components.Profile(usr.Username, usr.Email)
 	}
-
+	if (!(strings.Contains(r.URL.Path, "/profile/")) && !(strings.Contains(r.URL.Path, "/signup")) &&
+	!(strings.Contains(r.URL.Path, "/login"))){
 	@components.Navigation(data, username)
 	@Body()
 	@Footer()
-	{ children... }
+	}
 </body>
+<script>
+	document.addEventListener('alpine:init', () => {
+		Alpine.data('navbar', () => ({
+			showNavbar: true,
+			lastScrollY: window.scrollY,
+			init() {
+				window.addEventListener('scroll', () => {
+					let currentScrollY = window.scrollY;
+					if (currentScrollY < this.lastScrollY || currentScrollY <= 100) {
+						this.showNavbar = true;
+					} else {
+						this.showNavbar = false;
+					}
+					this.lastScrollY = currentScrollY;
+				});
+			}
+		}))
+	})
+</script>
 
 </html>
 }

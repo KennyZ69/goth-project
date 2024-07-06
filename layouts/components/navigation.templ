@@ -4,7 +4,19 @@ import "fmt"
 
 templ Navigation(isAuthenticated bool, name string) {
 <div>
-	<section class="relative w-full px-8 text-gray-700 bg-white body-font">
+	<section class="fixed transition-transform duration-300 w-full px-8 text-gray-700 bg-white bg-opacity-65 body-font"
+		:class="{ '-translate-y-full': !showNavbar, 'translate-y-0': showNavbar }"
+		x-data="{ showNavbar: true, lastScrollY: window.scrollY }" x-init="() => {
+             window.addEventListener('scroll', () => {
+                 let currentScrollY = window.scrollY;
+                 if (currentScrollY < lastScrollY || currentScrollY <= 100) {
+                     showNavbar = true;
+                 } else {
+                     showNavbar = false;
+                 }
+                 lastScrollY = currentScrollY;
+             });
+         }">
 		<div
 			class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
 			<a href="/"
@@ -28,7 +40,7 @@ templ Navigation(isAuthenticated bool, name string) {
 							x-transition:leave-end="scale-0"></span>
 					</span>
 				</a>
-				<a href="#_"
+				<a href="#features"
 					class="relative font-medium leading-6 text-gray-600 transition duration-150 ease-out hover:text-gray-900"
 					x-data="{ hover: false }" @mouseenter="hover = true"
 					@mouseleave="hover = false">
@@ -45,11 +57,11 @@ templ Navigation(isAuthenticated bool, name string) {
 							x-transition:leave-end="scale-0"></span>
 					</span>
 				</a>
-				<a href="#_"
+				<a href="#about"
 					class="relative font-medium leading-6 text-gray-600 transition duration-150 ease-out hover:text-gray-900"
 					x-data="{ hover: false }" @mouseenter="hover = true"
 					@mouseleave="hover = false">
-					<span class="block">Pricing</span>
+					<span class="block">About</span>
 					<span
 						class="absolute bottom-0 left-0 inline-block w-full h-0.5 -mb-1 overflow-hidden">
 						<span x-show="hover"
@@ -62,7 +74,7 @@ templ Navigation(isAuthenticated bool, name string) {
 							x-transition:leave-end="scale-0"></span>
 					</span>
 				</a>
-				<a href="#_"
+				<a href="#contact"
 					class="relative font-medium leading-6 text-gray-600 transition duration-150 ease-out hover:text-gray-900"
 					x-data="{ hover: false }" @mouseenter="hover = true"
 					@mouseleave="hover = false">
