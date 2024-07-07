@@ -9,6 +9,18 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
+type UserProfileData struct {
+	Bio          string
+	ProfileImage string
+}
+
+type UserDetail struct {
+	Location         string
+	Activities       []string
+	ProvidingService []string
+	FindingService   []string
+}
+
 type ComponentsData struct {
 	isAuthenticated bool `json:"isAuthenticated"`
 }
