@@ -123,3 +123,11 @@ func GetUserById(userID uint) (*User, error) {
 
 	return &user, nil
 }
+
+func DeleteTokenByToken(db *sql.DB, tokenString string) error {
+	query := "DELETE FROM user_tokens WHERE token = $1"
+	if _, err := db.Exec(query, tokenString); err != nil {
+		return err
+	}
+	return nil
+}

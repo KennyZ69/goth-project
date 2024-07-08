@@ -149,7 +149,7 @@ templ Navigation(isAuthenticated bool, name string) {
 					class="relative flex cursor-pointer select-none items-center rounded px-2 py-1.5 hover:bg-neutral-100 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
 					<svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 						fill="none" stroke="currentColor" stroke-width="2"
-						stroke-linecap="round" stroke-linejoin="round">
+						stroke-linecap="round" stroke-linejoin="round">naviga
 						<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z">
 						</path>
 					</svg>
@@ -181,8 +181,8 @@ templ Navigation(isAuthenticated bool, name string) {
 					<span>Support</span>
 				</a>
 				<hr class="border-black">
-				<a href="#_"
-					class="relative flex pointer cursor-pointer select-none hover:bg-neutral-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+				<button hx-post="/logout" hx-headers='{"HX-Redirect": "/"}' onclick="logoutAndReload"
+					class="relative w-full flex pointer cursor-pointer select-none hover:bg-neutral-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 						viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 						stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2">
@@ -191,9 +191,14 @@ templ Navigation(isAuthenticated bool, name string) {
 						<line x1="21" x2="9" y1="12" y2="12"></line>
 					</svg>
 					<span class="text-red-500 font-semibold">Log out</span>
-				</a>
+				</button>
 			</div>
 		</div>
+		<script>
+			function logoutAndReload() {
+				window.location.reload(); // Reload the page after successful logout
+			}
+		</script>
 		} else {
 		<div
 			class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end transition duration-150 ease-out">

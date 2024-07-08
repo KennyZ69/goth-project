@@ -31,6 +31,7 @@ func HandleComponents(w http.ResponseWriter, r *http.Request) error {
 		if err != nil {
 			fmt.Printf("There was an error handling the GetUserByCookie request: %v", err)
 		}
+		//TODO: Make handle logout function to be able to logout using the button from the dropdown
 		return Render(index.Index(r, isAuthenticated, user.Username), w, r)
 	}
 	return Render(index.Index(r, isAuthenticated, ""), w, r)
