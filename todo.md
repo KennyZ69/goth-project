@@ -8,6 +8,7 @@
 - Maybe start working on some desings for the home page
 
 **Make the profile page, that everyone will be able to see**
+**Finish the profile dropdown**
 **Then the setting of users profile**
 **Logic for logging out**
 #**Check on youtube and just everywhere how to stop alpine js animations etc from like blinking on the startup / reload of the page/app**#
