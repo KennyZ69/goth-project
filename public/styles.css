@@ -1119,10 +1119,6 @@ video {
   background-image: url(https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=2670&auto=format&fit=crop);
 }
 
-.bg-\[url\(https\:\/\/images\.unsplash\.com\/photo-1489987707025-afc232f7ea0f\?q\=80\&amp\;w\=2670\&amp\;auto\=format\&amp\;fit\=crop\)\] {
-  background-image: url(https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&amp;w=2670&amp;auto=format&amp;fit=crop);
-}
-
 .bg-cover {
   background-size: cover;
 }

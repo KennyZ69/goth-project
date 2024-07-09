@@ -33,7 +33,7 @@ func HandleLogout(w http.ResponseWriter, r *http.Request) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	// Redirect to the home page
-	//http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 
 	return nil
 }
