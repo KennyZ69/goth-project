@@ -64,6 +64,7 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
 			Value:    tokenString,
 			Expires:  token.ExpiresAt,
 			HttpOnly: true,
+			Path:     "/",
 		})
 
 		w.Header().Set("Content-Type", "application/json")

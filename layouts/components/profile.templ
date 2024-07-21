@@ -1,6 +1,6 @@
 package components
 
-templ Profile(username string, email string) {
+templ OwnProfile(username string, email string) {
 	<!-- Profile Header -->
 	<div class="bg-white shadow-md rounded-lg p-6">
 		<div class="flex items-center space-x-4">
@@ -84,4 +84,8 @@ templ Profile(username string, email string) {
 			</div>
 		</div>
 	</div>
+}
+
+templ ElseProfile(username string) {
+	<p>ElseProfile; { username }</p>
 }

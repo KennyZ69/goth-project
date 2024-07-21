@@ -27,7 +27,7 @@ func MakeHandle(h httpHandler) http.HandlerFunc {
 func HandleComponents(w http.ResponseWriter, r *http.Request) error {
 	isAuthenticated := components.GetAuth(r)
 	if isAuthenticated {
-		user, err := components.GetUserByCookie(w, r)
+		user, err := components.GetUserByCookie(r)
 		if err != nil {
 			fmt.Printf("There was an error handling the GetUserByCookie request: %v", err)
 		}

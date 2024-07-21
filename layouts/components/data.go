@@ -37,7 +37,7 @@ func GetAuth(r *http.Request) bool {
 	return isAuthenticated
 }
 
-func GetUserByCookie(w http.ResponseWriter, r *http.Request) (*database.User, error) {
+func GetUserByCookie(r *http.Request) (*database.User, error) {
 	var user_id uint
 	cookie, err := r.Cookie("auth_token")
 	if err != nil {

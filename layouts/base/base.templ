@@ -50,8 +50,18 @@ templ Base(r *http.Request, data bool, username string) {
 	// Do some error later
 	{{ fmt.Printf("error getting the user for the profile: %v\n", err) }}
 	}
+	/* if data{ */
+	{{ currentUser, err := components.GetUserByCookie(r) }}
+	if err != nil{
+	{{ fmt.Printf("error getting the user via cookie: %v\n", err)}}
+	}
+	if currentUser.Username == usr.Username && currentUser.Id == usr.Id{
+	@components.OwnProfile(usr.Username, usr.Email)
+	} else{
+	@components.ElseProfile(usr.Username)
+	}
+	/* } */
 
-	@components.Profile(usr.Username, usr.Email)
 	}
 	if (!(strings.Contains(r.URL.Path, "/profile/")) && !(strings.Contains(r.URL.Path, "/signup")) &&
 	!(strings.Contains(r.URL.Path, "/login"))){
