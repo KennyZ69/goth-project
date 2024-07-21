@@ -13,3 +13,5 @@
 **Logic for logging out**
 #**Check on youtube and just everywhere how to stop alpine js animations etc from like blinking on the startup / reload of the page/app**#
 **Add some user details and user profile data to the profile page and store it in the database maybe under user_id??**
+
+- Look inside the footer, there are other pages for you to make and add ! 

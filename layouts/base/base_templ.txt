@@ -4,5 +4,4 @@
  
  
  
- 
 </body><script>\n\tdocument.addEventListener('alpine:init', () => {\n\t\tAlpine.data('navbar', () => ({\n\t\t\tshowNavbar: true,\n\t\t\tlastScrollY: window.scrollY,\n\t\t\tinit() {\n\t\t\t\twindow.addEventListener('scroll', () => {\n\t\t\t\t\tlet currentScrollY = window.scrollY;\n\t\t\t\t\tif (currentScrollY < this.lastScrollY || currentScrollY <= 100) {\n\t\t\t\t\t\tthis.showNavbar = true;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tthis.showNavbar = false;\n\t\t\t\t\t}\n\t\t\t\t\tthis.lastScrollY = currentScrollY;\n\t\t\t\t});\n\t\t\t}\n\t\t}))\n\t})\n</script></html>
