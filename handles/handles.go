@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gothstarter/layouts/components"
 	index "gothstarter/layouts/index"
+	"html/template"
 	"log/slog"
 	"net/http"
 
@@ -35,4 +36,29 @@ func HandleComponents(w http.ResponseWriter, r *http.Request) error {
 		return Render(index.Index(r, isAuthenticated, user.Username), w, r)
 	}
 	return Render(index.Index(r, isAuthenticated, ""), w, r)
+}
+
+func Static(filename string, w http.ResponseWriter, r *http.Request) error {
+	// Parse the template file
+	tmpl, err := template.ParseFiles("html/" + filename)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return err
+	}
+
+	// Render the template
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return err
+	}
+	return nil
+}
+
+func HandleTeamPage(w http.ResponseWriter, r *http.Request) error {
+	err := Static("team.html", w, r)
+	if err != nil {
+		return fmt.Errorf("there was an error with handling the team page")
+	}
+	return nil
 }

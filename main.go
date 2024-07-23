@@ -38,6 +38,8 @@ func main() {
 	router.Handle("/profile/{username}", handles.MakeHandle(handles.HandleProfile))
 	router.Post("/logout", handles.MakeHandle(handles.HandleLogout))
 
+	router.Get("/team.html", handles.MakeHandle(handles.HandleTeamPage))
+
 	listenAddr := os.Getenv("PORT")
 	slog.Info("HTTP server was started", "listenAddr", listenAddr)
 	log.Fatal(http.ListenAndServe(listenAddr, router))
