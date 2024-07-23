@@ -2,8 +2,8 @@ package base
 
 templ Body() {
 <section
-	class="overflow-hidden bg-[url(https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=2670&auto=format&fit=crop)] bg-cover bg-top bg-no-repeat">
-	<div class="bg-black/50 h-[90vh] flex items-center justify-center p-8 md:p-12 lg:px-16 lg:py-24">
+	class="overflow-hidden bg-[url(../../public/images/tophalfbg.jpg)] bg-cover bg-center bg-no-repeat overflow-hidden">
+	<div class="bg-black/50 h-screen flex items-center justify-center p-8 md:p-12 lg:px-16 lg:py-24">
 		<div class="text-center mt-8 ltr:sm:text-left rtl:sm:text-right">
 			<h2 class="text-2xl font-bold text-white sm:text-3xl md:text-5xl">
 				Zijeme tenisom a spajame ludi!
@@ -14,7 +14,8 @@ templ Body() {
 				people and ideas seamlessly.
 			</p>
 			<div x-data="{ isClicked: false }" class="mt-4 sm:mt-8">
-				<a href="#features" @click="isClicked = true; setTimeout(() => isClicked = false, 300)"
+				<a href="#features-section"
+					@click="isClicked = true; setTimeout(() => isClicked = false, 300)"
 					:class="{ 'animate-bounce': isClicked }"
 					class="inline-block rounded-full bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-yellow-400">
 					Features
@@ -23,34 +24,37 @@ templ Body() {
 		</div>
 	</div>
 </section>
-<section id="about" class="flex items-center justify-center min-h-screen bg-cover bg-center"
-	style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fGJhY2tncm91bmR8ZW58MHx8fHwxNjIzOTY0MTg0&ixlib=rb-1.2.1&q=80&w=1080');">
-	<div class="bg-black/50 p-8 md:p-12 lg:px-16 lg:py-24 rounded-lg text-center">
-		<h2 class="text-2xl font-bold text-white sm:text-3xl md:text-5xl">
-			Welcome to Our Website!
-		</h2>
-		<p class="max-w-lg mx-auto mt-4 text-white/90 md:mt-6 md:text-lg md:leading-relaxed">
-			Discover more about our services and offerings through this introductory video. We connect
-			people and ideas seamlessly.
-		</p>
-		<div class="mt-8">
-			<div class="aspect-w-16 aspect-h-9">
-				<iframe class="w-full h-full rounded-lg" src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-					frameborder="0" allowfullscreen></iframe>
+<section id="about" class="min-h-screen bg-[url(../../public/images/bottomhalfbg.jpg)] bg-cover bg-center bg-no-repeat">
+	<div class="bg-black/50 h-screen w-screen flex items-center justify-center">
+		<div class="p-8 md:p-12 lg:px-16 lg:py-24 rounded-lg text-center w-1/3">
+			<h2 class="text-2xl font-bold text-white sm:text-3xl md:text-5xl">
+				Welcome to Our Website!
+			</h2>
+			<p class="max-w-lg mx-auto mt-4 text-white/90 md:mt-6 md:text-lg md:leading-relaxed">
+				Discover more about our services and offerings through this introductory video. We
+				connect
+				people and ideas seamlessly.
+			</p>
+			<div class="mt-8">
+				<div class="aspect-w-16 aspect-h-9">
+					<iframe class="w-full h-full rounded-lg"
+						src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0"
+						allowfullscreen></iframe>
+				</div>
 			</div>
 		</div>
 	</div>
 </section>
 <!-- ====== Services Section Start -->
-<section id="features-section" class="pt-20 pb-12 lg:pt-[120px] lg:pb-[90px] dark:bg-dark">
+<section id="features-section" class="pt-14 pb-12 lg:pt-[120px] lg:pb-[90px] dark:bg-dark">
 	<div class="container mx-auto">
-		<div class="-mx-4 flex flex-wrap">
+		<div class="-mx-2 flex flex-wrap">
 			<div class="w-full px-4">
 				<div class="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
 					<span class="text-primary mb-2 block text-lg font-semibold">
 						Our Services
 					</span>
-					<h2 id="features"
+					<h2
 						class="text-dark dark:text-white mb-3 text-3xl leading-[1.2] font-bold sm:text-4xl md:text-[40px]">
 						What We Offer
 					</h2>
