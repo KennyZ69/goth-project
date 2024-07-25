@@ -20,7 +20,7 @@ templ Navigation(isAuthenticated bool, name string) {
 			class="relative z-10 flex items-center w-auto text-2xl font-extrabold leading-none text-black select-none">TennisIsUs.</a>
 		<nav
 			class="top-0 left-0 z-0 flex items-center justify-center w-full h-full py-5 -ml-0 space-x-5 text-base md:-ml-5 md:py-0 md:absolute">
-			<a href="#_"
+			<a href="#home"
 				class="relative font-medium leading-6 text-gray-600 transition duration-150 ease-out hover:text-gray-900"
 				x-data="{ hover: false }" @mouseenter="hover = true" x-wait @mouseleave="hover = false">
 				<span class="block">Home</span>
@@ -34,7 +34,7 @@ templ Navigation(isAuthenticated bool, name string) {
 						x-transition:leave-end="scale-0"></span>
 				</span>
 			</a>
-			<a href="#features"
+			<a href="#features-section"
 				class="relative font-medium leading-6 text-gray-600 transition duration-150 ease-out hover:text-gray-900"
 				x-data="{ hover: false }" @mouseenter="hover = true" x-wait @mouseleave="hover = false">
 				<span class="block">Features</span>

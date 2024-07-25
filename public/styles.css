@@ -648,6 +648,11 @@ video {
   grid-column: span 2 / span 2;
 }
 
+.-mx-2 {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
 .-mx-4 {
   margin-left: -1rem;
   margin-right: -1rem;
@@ -656,11 +661,6 @@ video {
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
-}
-
-.-mx-2 {
-  margin-left: -0.5rem;
-  margin-right: -0.5rem;
 }
 
 .-mb-1 {
@@ -775,16 +775,12 @@ video {
   height: 1rem;
 }
 
-.h-6 {
-  height: 1.5rem;
+.h-8 {
+  height: 2rem;
 }
 
 .h-\[70px\] {
   height: 70px;
-}
-
-.h-\[90vh\] {
-  height: 90vh;
 }
 
 .h-auto {
@@ -799,16 +795,12 @@ video {
   height: 100vh;
 }
 
-.h-8 {
-  height: 2rem;
-}
-
-.h-\[100vh\] {
-  height: 100vh;
-}
-
 .min-h-screen {
   min-height: 100vh;
+}
+
+.w-1\/3 {
+  width: 33.333333%;
 }
 
 .w-4 {
@@ -819,8 +811,8 @@ video {
   width: 14rem;
 }
 
-.w-6 {
-  width: 1.5rem;
+.w-8 {
+  width: 2rem;
 }
 
 .w-\[70px\] {
@@ -835,16 +827,16 @@ video {
   width: 100%;
 }
 
-.w-8 {
-  width: 2rem;
-}
-
 .w-screen {
   width: 100vw;
 }
 
-.w-1\/3 {
-  width: 33.333333%;
+.w-\[45vw\] {
+  width: 45vw;
+}
+
+.w-\[60vw\] {
+  width: 60vw;
 }
 
 .max-w-7xl {
@@ -863,8 +855,12 @@ video {
   max-width: 28rem;
 }
 
-.max-w-xl {
-  max-width: 36rem;
+.max-w-\[38vw\] {
+  max-width: 38vw;
+}
+
+.max-w-\[40vw\] {
+  max-width: 40vw;
 }
 
 .-translate-x-1\/2 {
@@ -1134,24 +1130,12 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-black\/35 {
+  background-color: rgb(0 0 0 / 0.35);
+}
+
 .bg-opacity-65 {
   --tw-bg-opacity: 0.65;
-}
-
-.bg-\[url\(https\:\/\/images\.unsplash\.com\/photo-1489987707025-afc232f7ea0f\?q\=80\&w\=2670\&auto\=format\&fit\=crop\)\] {
-  background-image: url(https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=2670&auto=format&fit=crop);
-}
-
-.bg-\[url\(https\:\/\/external-content\.duckduckgo\.com\/iu\/\?u\=https\%3A\%2F\%2Ftse1\.mm\.bing\.net\%2Fth\%3Fid\%3DOIP\.cFUVehq0fjctsNDz2ElE9wHaE8\%26pid\%3DApi\&f\=1\&ipt\=ac0ea6323b927a7c7b6f9eabf505cc59ca9b68eabaafa2f2c629c382efb3cf91\&ipo\=images\)\] {
-  background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.cFUVehq0fjctsNDz2ElE9wHaE8%26pid%3DApi&f=1&ipt=ac0ea6323b927a7c7b6f9eabf505cc59ca9b68eabaafa2f2c629c382efb3cf91&ipo=images);
-}
-
-.bg-\[url\(\.\.\/\.\.\/public\/tophalfbg\.jpg\)\] {
-  background-image: url(../../public/tophalfbg.jpg);
-}
-
-.bg-\[url\(\.\.\/\.\.\/public\/bottomhalfbg\.jpg\)\] {
-  background-image: url(../../public/bottomhalfbg.jpg);
 }
 
 .bg-\[url\(\.\.\/\.\.\/public\/images\/bottomhalfbg\.jpg\)\] {
@@ -1162,16 +1146,24 @@ video {
   background-image: url(../../public/images/tophalfbg.jpg);
 }
 
+.bg-\[url\(\.\.\/\.\.\/public\/images\/featurebg\.jpg\)\] {
+  background-image: url(../../public/images/featurebg.jpg);
+}
+
+.bg-\[url\(\.\.\/\.\.\/public\/images\/featuresbg2\.jpeg\)\] {
+  background-image: url(../../public/images/featuresbg2.jpeg);
+}
+
+.bg-\[url\(\.\.\/\.\.\/public\/images\/Gradient-Background-For-Free-1118598636\.jpg\)\] {
+  background-image: url(../../public/images/Gradient-Background-For-Free-1118598636.jpg);
+}
+
 .bg-cover {
   background-size: cover;
 }
 
 .bg-center {
   background-position: center;
-}
-
-.bg-top {
-  background-position: top;
 }
 
 .bg-no-repeat {
@@ -1293,10 +1285,6 @@ video {
 
 .pt-12 {
   padding-top: 3rem;
-}
-
-.pt-20 {
-  padding-top: 5rem;
 }
 
 .pt-14 {
@@ -1443,6 +1431,21 @@ video {
 
 .text-white\/90 {
   color: rgb(255 255 255 / 0.9);
+}
+
+.text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
+}
+
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 .underline {
