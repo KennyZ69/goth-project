@@ -3,28 +3,15 @@ import "fmt"
 
 templ FeatureNavigation(isAuthenticated bool, name string){
 
-<section class="fixed transition-transform duration-300 w-full px-8 text-gray-700 bg-white bg-opacity-65 body-font"
-	:class="{ '-translate-y-full': !showNavbar, 'translate-y-0': showNavbar }"
-	x-data="{ showNavbar: true, lastScrollY: window.scrollY }" x-init="() => {
-             window.addEventListener('scroll', () => {
-                 let currentScrollY = window.scrollY;
-                 if (currentScrollY < lastScrollY || currentScrollY <= 100) {
-                     showNavbar = true;
-                 } else {
-                     showNavbar = false;
-                 }
-                 lastScrollY = currentScrollY;
-             });
-         }">
-	<div class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
+<section class="w-full px-4 text-gray-700 bg-white bg-opacity-65 body-font">
+	<div class="container flex flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
 		<a href="/"
-			class="relative z-10 flex items-center w-auto text-2xl font-extrabold leading-none text-black select-none">TennisIsUs.</a>
+			class="relative z-10 flex  w-auto text-3xl items-end font-extrabold leading-none text-black select-none ml-auto">TennisIsUs.</a>
 		// ! Check if the user is authenticated
-		<!-- Show user profile icon -->
 		if isAuthenticated {
 		<!-- Show user profile icon -->
 		<div x-data="{ dropdownOpen: false }" x-wait
-			class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end transition duration-150 ease-out ml-auto">
+			class="relative z-10 inline-flex items-center space-x-3 md:ml-5 justify-end transition duration-150 ease-out ml-auto">
 			<!-- Profile icon and other authenticated user links -->
 			{{ hrefProfile := fmt.Sprintf("/profile/%v", name) }}
 			<button @click="dropdownOpen = !dropdownOpen" class="flex items-center focus:outline-none">
@@ -170,7 +157,7 @@ templ FeatureNavigation(isAuthenticated bool, name string){
 		</script>
 		} else {
 		<div
-			class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end transition duration-150 ease-out ml-auto">
+			class="relative z-10 inline-flex items-center space-x-3 md:ml-auto flex-end transition duration-150 ease-outauto">
 			<a href="/login" hx-trigger="mouseenter focus"
 				class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-gray-100 whitespace-no-wrap bg-gray-400 border border-gray-300 hover:bg-gray-300 hover:text-gray-600 hover:border-  rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 hover:border-slate-700 transition-transform hover:scale-105 ease-in">
 				Log in
