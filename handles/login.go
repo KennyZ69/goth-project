@@ -45,6 +45,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) error {
 			Value:    tokenString,
 			Expires:  sesToken.ExpiresAt,
 			HttpOnly: true,
+			Path:     "/",
 		})
 
 		w.Header().Set("Content-Type", "application/json")

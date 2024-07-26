@@ -131,3 +131,11 @@ func DeleteTokenByToken(db *sql.DB, tokenString string) error {
 	}
 	return nil
 }
+
+func GetTokenByUsrId(db *sql.DB, usrId uint) (bool, error) {
+	query := "SELECT FROM user_tokens WHERE token_id = $1"
+	if _, err := db.Exec(query, usrId); err != nil {
+		return false, err
+	}
+	return true, nil
+}

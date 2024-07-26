@@ -40,7 +40,16 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		if strings.Contains(r.URL.Path, "/finder") {
-			templ_7745c5c3_Err = features.Finder(data, username).Render(ctx, templ_7745c5c3_Buffer)
+			user, err := components.GetUserByCookie(r)
+			auth, err := database.GetTokenByUsrId(database.DB, user.Id)
+			if err != nil {
+				fmt.Printf("error getting user by cookie on the finder: %v\n", err)
+			}
+			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = features.Finder(auth, user.Username).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -61,25 +70,25 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 			nameFromPath := r.URL.Path[len("/profile/"):]
 			usr, err := database.GetUserByName(database.DB, nameFromPath)
 			if err != nil {
-				templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+				templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				fmt.Printf("error getting the user for the profile: %v\n", err)
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			currentUser, err := components.GetUserByCookie(r)
-			if err != nil {
-				fmt.Printf("error getting the user via cookie: %v\n", err)
-			}
 			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 4)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			if currentUser.Username == usr.Username && currentUser.Id == usr.Id {
+			user, err := components.GetUserByCookie(r)
+			if err != nil {
+				fmt.Printf("error getting the user via cookie: %v\n", err)
+			}
+			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 5)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			if user.Username == usr.Username && user.Id == usr.Id {
 				templ_7745c5c3_Err = components.OwnProfile(usr.Username, usr.Email).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -96,7 +105,7 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 5)
+			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 6)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -104,7 +113,7 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 6)
+			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 7)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -113,7 +122,7 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 7)
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 8)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

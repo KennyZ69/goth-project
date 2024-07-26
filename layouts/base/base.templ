@@ -33,9 +33,14 @@ templ Base(r *http.Request, data bool, username string) {
 </head>
 
 <body class="antialiased bg-slate-500">
-	// {{ hrefProfile := fmt.Sprintf("/profile/%v", username) }}
 	if strings.Contains(r.URL.Path, "/finder"){
-	@features.Finder(data, username)
+	{{ user, err := components.GetUserByCookie(r) }}
+	{{ auth, err := database.GetTokenByUsrId(database.DB, user.Id)}}
+
+	if err != nil {
+	{{ fmt.Printf("error getting user by cookie on the finder: %v\n", err) }}
+	}
+	@features.Finder(auth, user.Username)
 	}
 	if strings.Contains(r.URL.Path, "/login") {
 	@components.Login()
@@ -46,6 +51,7 @@ templ Base(r *http.Request, data bool, username string) {
 	}
 
 	if strings.Contains(r.URL.Path, "/profile/") {
+
 	{{ nameFromPath := r.URL.Path[len("/profile/"):] }}
 	{{ usr, err := database.GetUserByName(database.DB, nameFromPath) }}
 
@@ -55,12 +61,13 @@ templ Base(r *http.Request, data bool, username string) {
 	}
 	/* Here Imma be checking for whether the user is accesing his own profile page or not and render it
 	accordingly */
-	{{ currentUser, err := components.GetUserByCookie(r) }}
+	{{ user, err := components.GetUserByCookie(r) }}
 	if err != nil{
 	{{ fmt.Printf("error getting the user via cookie: %v\n", err)}}
 	}
 
-	if currentUser.Username == usr.Username && currentUser.Id == usr.Id{
+	if user.Username == usr.Username && user.Id == usr.Id{
+
 
 	@components.OwnProfile(usr.Username, usr.Email)
 	} else{
