@@ -38,6 +38,8 @@ func main() {
 	router.Handle("/profile/{username}", handles.MakeHandle(handles.HandleProfile))
 	router.Post("/logout", handles.MakeHandle(handles.HandleLogout))
 
+	router.Handle("/finder", handles.MakeHandle(handles.HandleFinder))
+
 	router.Get("/team.html", handles.MakeHandle(handles.HandleTeamPage))
 
 	listenAddr := os.Getenv("PORT")

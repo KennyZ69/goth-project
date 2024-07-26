@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"gothstarter/database"
 	"gothstarter/layouts/components"
+	"gothstarter/layouts/features"
 	"net/http"
 	"strings"
 )
@@ -37,6 +38,12 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
+		}
+		if strings.Contains(r.URL.Path, "/finder") {
+			templ_7745c5c3_Err = features.Finder(data, username).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		}
 		if strings.Contains(r.URL.Path, "/login") {
 			templ_7745c5c3_Err = components.Login().Render(ctx, templ_7745c5c3_Buffer)
@@ -84,8 +91,7 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 				}
 			}
 		}
-		if !(strings.Contains(r.URL.Path, "/profile/")) && !(strings.Contains(r.URL.Path, "/signup")) &&
-			!(strings.Contains(r.URL.Path, "/login")) {
+		if r.URL.Path == "/" {
 			templ_7745c5c3_Err = components.Navigation(data, username).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err

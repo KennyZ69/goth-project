@@ -6,6 +6,7 @@ import (
 "net/http"
 "strings"
 "fmt"
+"gothstarter/layouts/features"
 )
 
 templ Base(r *http.Request, data bool, username string) {
@@ -33,7 +34,9 @@ templ Base(r *http.Request, data bool, username string) {
 
 <body class="antialiased bg-slate-500">
 	// {{ hrefProfile := fmt.Sprintf("/profile/%v", username) }}
-
+	if strings.Contains(r.URL.Path, "/finder"){
+	@features.Finder(data, username)
+	}
 	if strings.Contains(r.URL.Path, "/login") {
 	@components.Login()
 	}
@@ -64,10 +67,9 @@ templ Base(r *http.Request, data bool, username string) {
 
 	@components.ElseProfile(usr.Username)
 	}
-
 	}
-	if (!(strings.Contains(r.URL.Path, "/profile/")) && !(strings.Contains(r.URL.Path, "/signup")) &&
-	!(strings.Contains(r.URL.Path, "/login"))){
+
+	if r.URL.Path == "/" {
 	@components.Navigation(data, username)
 	@Body()
 	@Footer()
