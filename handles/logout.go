@@ -5,14 +5,12 @@ import (
 	"gothstarter/database"
 	"log"
 	"net/http"
-	"time"
 )
 
 func HandleLogout(w http.ResponseWriter, r *http.Request) error {
 	// Retrieve the auth token from the cookie
 	cookie, err := r.Cookie("auth_token")
 	if err != nil {
-		log.Print("Problem getting the cookie")
 		return fmt.Errorf("could not retrieve auth_token cookie: %v", err)
 	}
 	tokenString := cookie.Value
@@ -27,7 +25,6 @@ func HandleLogout(w http.ResponseWriter, r *http.Request) error {
 	http.SetCookie(w, &http.Cookie{
 		Name:     "auth_token",
 		Value:    "",
-		Expires:  time.Unix(0, 0),
 		HttpOnly: true,
 	})
 	w.Header().Set("Content-Type", "application/json")

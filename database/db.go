@@ -139,3 +139,53 @@ func GetTokenByUsrId(db *sql.DB, usrId uint) (bool, error) {
 	}
 	return true, nil
 }
+
+func IdToken(db *sql.DB, usrId uint) (string, error) {
+	rows, err := db.Query("SELECT token FROM user_tokens WHERE token_id = $1", usrId)
+	if err != nil {
+		return "", err
+	}
+	defer rows.Close()
+
+	var token string
+	if err := rows.Scan(&token); err != nil {
+		return "", nil
+	}
+	return token, nil
+}
+
+func GetRecommendedUsers(db *sql.DB, n int, excludeUsername string) ([]User, error) {
+	rows, err := db.Query("SELECT user_id, username, email FROM users WHERE username != $1 ORDER BY RANDOM() LIMIT $2", excludeUsername, n)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var users []User
+	for rows.Next() {
+		var usr User
+		if err := rows.Scan(&usr.Id, &usr.Username, &usr.Email); err != nil {
+			return nil, err
+		}
+		users = append(users, usr)
+	}
+	return users, nil
+}
+
+func SearchUsers(db *sql.DB, query string, excludeUsername string) ([]User, error) {
+	rows, err := db.Query("SELECT user_id, username, email FROM users WHERE username ILIKE '%' || $1 || '%' AND username != $2", query, excludeUsername)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var users []User
+	for rows.Next() {
+		var usr User
+		if err := rows.Scan(&usr.Id, &usr.Username, &usr.Email); err != nil {
+			return nil, err
+		}
+		users = append(users, usr)
+	}
+	return users, nil
+}

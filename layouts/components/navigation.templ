@@ -200,7 +200,7 @@ templ Navigation(isAuthenticated bool, name string) {
 					<span>Support</span>
 				</a>
 				<hr class="border-black">
-				<button hx-post="/logout" onclick="logoutAndReload()"
+				<button hx-post="/logout" id="logoutBtn"
 					class="relative w-full flex pointer cursor-pointer select-none hover:bg-neutral-100 items-center rounded px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 						viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -214,17 +214,22 @@ templ Navigation(isAuthenticated bool, name string) {
 			</div>
 		</div>
 		<script>
-			function logoutAndReload() {
-				fetch('/logout', {method: 'POST'})
-					.then(response => {
-						if (response.ok) {
-							location.reload();
-						} else {
-							console.error('Logout failed');
-						}
-					})
-					.catch(error => console.error('Error:', error));
-			}
+			document.getElementById('logoutBtn').addEventListener('click', function () {
+				fetch('/logout', {
+					method: 'POST',
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then(response => {
+					if (response.ok) {
+						window.location.href = '/'; // Redirect to login page after logout
+					} else {
+						console.error('Logout failed');
+					}
+				}).catch(error => {
+					console.error('Error:', error);
+				});
+			});
 		</script>
 		} else {
 		<div

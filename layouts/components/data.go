@@ -44,7 +44,7 @@ func GetUserByCookie(r *http.Request) (*database.User, error) {
 		// next.ServeHTTP(w, r.WithContext(ctx))
 		// http.Error(w, "There was an error with the cookie when getting it", http.StatusUnauthorized)
 		fmt.Printf("Error getting cookie: %v\n", err)
-		return nil, err
+		//		return nil, err
 	}
 	tokenString := cookie.Value
 	claims := &database.UserClaims{}
