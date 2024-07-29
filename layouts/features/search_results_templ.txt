@@ -1,0 +1,6 @@
+<div class=\"mt-4 bg-white shadow-md rounded-lg max-h-96 overflow-y-auto\">
+<div class=\"flex items-center p-2 border-b border-gray-200\"><img class=\"w-10 h-10 rounded-full\" src=\"{ usr.Details.ProfileImage }\" alt=\"{ usr.Username }\"><div class=\"ml-3\"><p class=\"text-sm font-medium\">
+</p><p class=\"text-xs text-gray-500\">
+</p></div></div>
+<p class=\"p-4 text-center text-gray-500\">No results found</p>
+</div>
