@@ -34,6 +34,13 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) UNIQUE NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS user_details (
+    user_id INT REFERENCES users(user_id),
+    bio TEXT,
+    profile_image TEXT,
+    role VARCHAR(100)
+);
+
 CREATE TABLE IF NOT EXISTS user_tokens (
     token_id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id),
@@ -52,6 +59,11 @@ fi
 
 if ! table_exists "users"; then
     echo "Table 'users' does not exist. Creating table."
+    create_tables
+fi
+
+if ! table_exists "user_details"; then
+    echo "Table 'user_details' does not exist. Creating table."
     create_tables
 fi
 

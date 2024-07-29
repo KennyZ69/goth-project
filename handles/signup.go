@@ -18,6 +18,7 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
 		username := r.FormValue("username")
 		email := r.FormValue("email")
 		id, err := database.UsrId()
+		role := r.FormValue("role")
 		if err != nil {
 			return fmt.Errorf("there was an error getting the user id: %v", err)
 		}
@@ -25,6 +26,9 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
 			Username: username,
 			Email:    email,
 			Id:       id,
+			Details: database.UserProfileData{
+				Role: role,
+			},
 		}
 
 		exists, err := database.UserExists(newUsr)

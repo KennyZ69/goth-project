@@ -13,10 +13,17 @@ import (
 )
 
 type User struct {
-	Id       uint   `json:"id"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Password []byte `json:"password"`
+	Id       uint            `json:"id"`
+	Username string          `json:"username"`
+	Email    string          `json:"email"`
+	Password []byte          `json:"password"`
+	Details  UserProfileData `json:"user_details"`
+}
+
+type UserProfileData struct {
+	Bio          string `json:"bio"`
+	ProfileImage string `json:"profile_pic"`
+	Role         string `json:"role"`
 }
 
 func InitDB() *sql.DB {
@@ -44,6 +51,12 @@ func HashPwd(pwd string) []byte {
 }
 
 func SaveUser(usr User) error {
+	tx, err := DB.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
 	if valid := EmailValidator(usr.Email); !valid {
 		return fmt.Errorf("invalid email")
 	}
@@ -55,17 +68,22 @@ func SaveUser(usr User) error {
 	// 	return fmt.Errorf("invalid password")
 	// }
 	var id uint
-	err := DB.QueryRow("SELECT COALESCE(MAX(user_id), 0) + 1 FROM users").Scan(&id)
+	err = tx.QueryRow("SELECT COALESCE(MAX(user_id), 0) + 1 FROM users").Scan(&id)
 	if err != nil {
 		return err
 	}
 	usr.Id = id
 
-	_, err = DB.Exec("INSERT INTO users (user_id, username, email, password_hash) VALUES ($1, $2, $3, $4)", usr.Id, usr.Username, usr.Email, usr.Password)
+	_, err = tx.Exec("INSERT INTO users (user_id, username, email, password_hash) VALUES ($1, $2, $3, $4)", usr.Id, usr.Username, usr.Email, usr.Password)
 	if err != nil {
 		return err
 	}
-	return nil
+
+	_, err = tx.Exec("INSERT INTO user_details (user_id, bio, profile_image, role) VALUES ($1, $2, $3, $4)", usr.Id, usr.Details.Bio, usr.Details.ProfileImage, usr.Details.Role)
+	if err != nil {
+		return err
+	}
+	return tx.Commit()
 }
 
 func UserExists(usr User) (bool, error) {
