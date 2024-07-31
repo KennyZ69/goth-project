@@ -37,7 +37,7 @@ func SearchResults(users []database.User) templ.Component {
 				var templ_7745c5c3_Var2 string
 				templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(usr.Username)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/features/search_results.templ`, Line: 11, Col: 50}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/features/search_results.templ`, Line: 18, Col: 47}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 				if templ_7745c5c3_Err != nil {
@@ -50,7 +50,7 @@ func SearchResults(users []database.User) templ.Component {
 				var templ_7745c5c3_Var3 string
 				templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(usr.Details.Role)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/features/search_results.templ`, Line: 12, Col: 56}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/features/search_results.templ`, Line: 19, Col: 53}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 				if templ_7745c5c3_Err != nil {

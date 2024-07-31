@@ -18,10 +18,14 @@ func EmailValidator(email string) bool {
 }
 
 func UsernameValidator(username string) bool {
-	pattern := `^[a-zA-Z0-9_-]{3,20}$`
-	re := regexp.MustCompile(pattern)
-
-	return re.MatchString(username)
+	// pattern := `^[a-zA-Z0-9_-]{3,20}$`
+	// re := regexp.MustCompile(pattern)
+	//
+	// return re.MatchString(username)
+	if len(username) < 3 {
+		return false
+	}
+	return true
 }
 
 func PasswordValidator(password string) bool {

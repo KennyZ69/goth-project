@@ -151,7 +151,7 @@ templ FeatureNavigation(isAuthenticated bool, name string){
 					}
 				}).then(response => {
 					if (response.ok) {
-						window.location.href = '/'; // Redirect to login page after logout
+						window.location.href = '/finder'; // Redirect to login page after logout
 					} else {
 						console.error('Logout failed');
 					}
