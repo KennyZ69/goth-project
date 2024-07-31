@@ -39,7 +39,7 @@ func main() {
 	router.Post("/logout", handles.MakeHandle(handles.HandleLogout))
 
 	router.Handle("/finder", handles.MakeHandle(handles.HandleFinder))
-	router.Handle("/search", handles.MakeHandle(handles.HandleSearch))
+	router.Handle("/finder/search", handles.MakeHandle(handles.HandleSearch))
 
 	router.Get("/team.html", handles.MakeHandle(handles.HandleTeamPage))
 

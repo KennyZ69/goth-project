@@ -22,6 +22,17 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request) error {
 		if err != nil {
 			return fmt.Errorf("there was an error getting the user id: %v", err)
 		}
+		// Validate the role field
+		validRoles := map[string]bool{
+			"coach":   true,
+			"player":  true,
+			"manager": true,
+			"agent":   true,
+		}
+		if !validRoles[role] {
+			http.Error(w, "Invalid role selected", http.StatusBadRequest)
+			return err
+		}
 		newUsr := database.User{
 			Username: username,
 			Email:    email,

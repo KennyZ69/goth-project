@@ -191,7 +191,13 @@ func GetRecommendedUsers(db *sql.DB, n int, excludeUsername string) ([]User, err
 }
 
 func SearchUsers(db *sql.DB, query string, excludeUsername string) ([]User, error) {
-	rows, err := db.Query("SELECT user_id, username, email FROM users WHERE username ILIKE '%' || $1 || '%' AND username != $2", query, excludeUsername)
+	searchQuery := "%" + query + "%"
+	rows, err := db.Query(
+		`SELECT user_id, username, email 
+		FROM users 
+		WHERE username ILIKE $1 OR username = $2 
+		AND username != $3`,
+		searchQuery, query, excludeUsername)
 	if err != nil {
 		return nil, err
 	}
@@ -203,7 +209,26 @@ func SearchUsers(db *sql.DB, query string, excludeUsername string) ([]User, erro
 		if err := rows.Scan(&usr.Id, &usr.Username, &usr.Email); err != nil {
 			return nil, err
 		}
+		role, err := GetRoleById(db, usr.Id)
+		if err != nil {
+			return nil, err
+		}
+		usr.Details.Role = role
 		users = append(users, usr)
 	}
 	return users, nil
+}
+
+func GetRoleById(db *sql.DB, id uint) (string, error) {
+	row := db.QueryRow("SELECT role FROM user_details WHERE user_id = $1", id)
+
+	var role string
+	err := row.Scan(&role)
+	if err == sql.ErrNoRows {
+		return "", err
+	} else if err != nil {
+		return "", err
+	}
+
+	return role, nil
 }

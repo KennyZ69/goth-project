@@ -1,11 +1,12 @@
 package handles
 
 import (
-	"encoding/json"
 	"fmt"
 	"gothstarter/database"
 	"gothstarter/layouts/components"
+	"gothstarter/layouts/features"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -44,27 +45,25 @@ func HandleFinder(w http.ResponseWriter, r *http.Request) error {
 }
 
 func HandleSearch(w http.ResponseWriter, r *http.Request) error {
-	query := r.URL.Query().Get("q")
+	query := r.URL.Query().Get("search")
 	currentUser, _ := components.GetUserByCookie(r)
-	token, err := database.IdToken(database.DB, currentUser.Id)
-	if err != nil {
-		return fmt.Errorf("there was an error getting the token by usr id in the finder: %v", err)
-	}
-	if token != "" {
-		http.SetCookie(w, &http.Cookie{
-			Name:     "auth_token",
-			Value:    token,
-			Expires:  time.Now().Add(15 * time.Minute),
-			HttpOnly: true,
-			Path:     "/",
-		})
-
-	}
 	users, err := database.SearchUsers(database.DB, query, currentUser.Username)
 	if err != nil {
 		return fmt.Errorf("there was an error searching the users from database: %v", err)
 	}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(users)
+
+	var results []database.User
+	for _, usr := range users {
+		if query != "" && contains(usr.Username, query) {
+			results = append(results, usr)
+		}
+	}
+
+	w.Header().Set("Content-Type", "text/html")
+	Render(features.SearchResults(results), w, r)
 	return nil
+}
+
+func contains(source, query string) bool {
+	return strings.Contains(strings.ToLower(source), strings.ToLower(query))
 }
