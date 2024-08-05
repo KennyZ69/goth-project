@@ -40,12 +40,14 @@ func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			ctx := context.WithValue(r.Context(), "isAuthenticated", isAuthenticated)
 
 			next.ServeHTTP(w, r.WithContext(ctx))
-			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			/* http.Error(w, "auth", http.StatusUnauthorized) */
+			fmt.Println("Unauthorized")
 			return
 		}
 
 		if !token.Valid {
-			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			/* http.Error(w, "auth", http.StatusUnauthorized) */
+			fmt.Println("Unauthorized")
 			ctx := context.WithValue(r.Context(), "isAuthenticated", isAuthenticated)
 
 			next.ServeHTTP(w, r.WithContext(ctx))

@@ -28,7 +28,7 @@ func GenerateTokenString(usr User) (string, error) {
 		return "", fmt.Errorf("there was an error loading the secret")
 	}
 	jwtKey := []byte(os.Getenv("JWT_SECRET"))
-	expirationTime := time.Now().Add(15 * time.Minute)
+	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &UserClaims{
 		UserId: usr.Id,
 		StandardClaims: jwt.StandardClaims{
@@ -53,7 +53,7 @@ func MakeToken(tokenString string, usrId uint) (Token, error) {
 		return Token{}, err
 	}
 
-	tokenExpiration := time.Now().Add(15 * time.Minute)
+	tokenExpiration := time.Now().Add(24 * time.Hour)
 
 	return Token{
 		TokenId:   id,

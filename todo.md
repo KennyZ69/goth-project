@@ -1,10 +1,9 @@
 //TODO:
 
 
-<!-- TODO: Add the javascript for filtering the search and rendering and then remove the uneccessary code like templ for results, /search, etc... -->
+<!--TODO: Make the chat app for the web, look in gpt for the idea on how to do it -->
+<!--TODO: Check all the paths for compatibility with all kinds of screens and remake the ui depending on that (the ElseProfile is kind of f_ed)-->
 
-!! Make the logic for the finder and of course the ui... actually have no idea rn how to do it, so just google then !!
-- !!! Got an idea -> make the hero with some desc of the whole product and have a button there to smoothly scroll down the page to the features section
 - Add the error messages rendering and ofc make the error msgs templates
 - Make the whole profile page and data for it, think about it !
 
