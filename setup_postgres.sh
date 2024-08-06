@@ -38,7 +38,9 @@ CREATE TABLE IF NOT EXISTS user_details (
     user_id INT REFERENCES users(user_id),
     bio TEXT,
     profile_image TEXT,
-    role VARCHAR(100)
+    role VARCHAR(100),
+    country VARCHAR(100),
+    city VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS user_tokens (

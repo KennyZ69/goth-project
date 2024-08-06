@@ -9,7 +9,7 @@ import (
 	"github.com/joho/godotenv"
 	"golang.org/x/crypto/bcrypt"
 
-	_ "github.com/lib/pq" // Import the PostgreSQL driver for it to work; ??? idk, it probably wont be used
+	_ "github.com/lib/pq"
 )
 
 type User struct {
@@ -24,6 +24,8 @@ type UserProfileData struct {
 	Bio          string `json:"bio"`
 	ProfileImage string `json:"profile_pic"`
 	Role         string `json:"role"`
+	Country      string `json:"country"`
+	City         string `json:"city"`
 }
 
 func InitDB() *sql.DB {

@@ -25,8 +25,10 @@ if err != nil {
 			</svg>
 		</div>
 	</section>
-	<section class="relative py-16 bg-blueGray-200 h-[50vh]">
-		<div class="container mx-auto px-4">
+	<section
+		class="relative py-16  h-[50vh] bg-center bg-cover bg-[url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallup.net%2Fwp-content%2Fuploads%2F2017%2F03%2F27%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient.jpg&f=1&nofb=1&ipt=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215&ipo=images')]">
+		<span id="blackOverlay" class="w-full h-[43vh] absolute opacity-50 bg-black"></span>
+		<div class="container mx-auto px-4 w-screen h-[50vh]">
 			<div
 				class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
 				<div class="px-6">
@@ -83,26 +85,14 @@ if err != nil {
 								<p
 									class="mb-4 text-lg leading-relaxed text-blueGray-700">
 									{ user.Details.Bio }
-									User Bio
+									.......
 								</p>
-								<a href="#pablo" class="font-normal text-pink-500">
-									Show
-									more
-								</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<footer class="relative bg-blueGray-200 pt-8 pb-6 mt-8">
-			<div class="container mx-auto px-4">
-				<div class="flex flex-wrap items-center md:justify-between justify-center">
-					<div class="w-full md:w-6/12 px-4 mx-auto text-center text-2xl font-bold">
-						TennisIsUs</div>
-				</div>
-			</div>
-		</footer>
 	</section>
 </main>
 <div id="editProfileModal"
@@ -128,18 +118,35 @@ if err != nil {
 			<!-- Body -->
 			<div class="relative p-6 flex-auto z-50">
 				<!-- Add form fields for profile editing here -->
-				<form>
+				<form hx-post="/edit-profile">
 					<div class="mb-4">
 						<label class="block text-sm font-medium text-gray-700">Username</label>
 						<input type="text"
 							class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-							value="{ username }">
+							value={ username }>
 					</div>
 					<div class="mb-4">
-						<label class="block text-sm font-medium text-gray-700">Bio</label>
-						<textarea
-							class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{
+						<label class="block text-gray-700 text-sm font-medium mb-2" for="role">
+							Role
+						</label>
+						<select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+							id="role" name="role">
+							<option value="">Change your role</option>
+							<option value="coach">Coach</option>
+							<option value="player">Player</option>
+							<option value="manager">Manager</option>
+							<option value="agent">Agent</option>
+						</select>
+					</div>
+					<div class="mb-4">
+						<label class="block text-sm font-medium text-gray-700"
+							for="bio">Bio</label>
+						<textarea id="bio"
+							class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+							maxlength="170" oninput="updateCharacterCount()">{
 							user.Details.Bio }</textarea>
+						<p id="charCount" class="text-sm text-gray-500">170 characters remaining
+						</p>
 					</div>
 					<!-- Add more fields as needed -->
 				</form>
@@ -153,7 +160,7 @@ if err != nil {
 					Close
 				</button>
 				<button class="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-					type="button">
+					type="submit" hx-post="/edit-profile">
 					Save Changes
 				</button>
 			</div>
@@ -170,6 +177,17 @@ if err != nil {
 
 	function closeModal() {
 		document.getElementById('editProfileModal').classList.add('hidden');
+	}
+	function updateCharacterCount() {
+		const bio = document.getElementById('bio');
+		const charCount = document.getElementById('charCount');
+		const max = 170
+		const remaining = max - bio.value.length;
+
+		if (remaining < 0) {
+			bio.value = bio.value.substring(0, max);
+		}
+		charCount.textContent = `${remaining} characters remaining`;
 	}
 </script>
 }
