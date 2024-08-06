@@ -89,7 +89,7 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			if user.Username == usr.Username && user.Id == usr.Id {
-				templ_7745c5c3_Err = components.OwnProfile(usr.Username, usr.Email).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = components.OwnProfile(usr.Username).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

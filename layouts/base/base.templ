@@ -69,7 +69,7 @@ templ Base(r *http.Request, data bool, username string) {
 	if user.Username == usr.Username && user.Id == usr.Id{
 
 
-	@components.OwnProfile(usr.Username, usr.Email)
+	@components.OwnProfile(usr.Username)
 	} else{
 
 	@components.ElseProfile(usr.Username)
