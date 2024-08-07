@@ -108,7 +108,7 @@ func OwnProfile(username string) templ.Component {
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(
 			user.Details.Bio)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/components/profile.templ`, Line: 147, Col: 23}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/components/profile.templ`, Line: 171, Col: 23}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -154,7 +154,7 @@ func ElseProfile(username string) templ.Component {
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(username)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/components/profile.templ`, Line: 260, Col: 17}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/components/profile.templ`, Line: 308, Col: 17}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
@@ -178,7 +178,7 @@ func ElseProfile(username string) templ.Component {
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(role)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/components/profile.templ`, Line: 273, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/components/profile.templ`, Line: 321, Col: 31}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
@@ -191,7 +191,7 @@ func ElseProfile(username string) templ.Component {
 		var templ_7745c5c3_Var10 string
 		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(user.Details.Bio)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/components/profile.templ`, Line: 286, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/components/profile.templ`, Line: 334, Col: 27}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {

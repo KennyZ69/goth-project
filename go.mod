@@ -24,6 +24,7 @@ require (
 	github.com/bep/godartsass v1.2.0 // indirect
 	github.com/bep/godartsass/v2 v2.0.0 // indirect
 	github.com/bep/golibsass v1.1.1 // indirect
+	github.com/biter777/countries v1.7.5 // indirect
 	github.com/cli/safeexec v1.0.1 // indirect
 	github.com/creack/pty v1.1.21 // indirect
 	github.com/fatih/color v1.16.0 // indirect
