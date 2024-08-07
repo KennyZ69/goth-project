@@ -1,5 +1,6 @@
 package components
 
+
 import (
 "gothstarter/database"
 )
@@ -130,7 +131,7 @@ if err != nil {
 							class="block text-sm font-medium text-gray-700">Country</label>
 						<input type="text" id="country" name="country"
 							class="block mt-1 w-full border border-gray-300 rounded-md shadow-sm"
-							hx-get="/api/countries" hx-trigger="input changed delay:300ms"
+							hx-get="/api/countries" hx-trigger="input changed delay:150ms"
 							hx-params="country" hx-target="#country-select"
 							hx-indicator="#loader">
 						<select id="country-select" name="country-select"
@@ -141,11 +142,16 @@ if err != nil {
 					<div class="mb-4">
 						<label for="city"
 							class="block text-sm font-medium text-gray-700">City</label>
+						<!-- Input field for filtering cities -->
+						<input type="text" id="city-filter"
+							placeholder="Type to filter cities..."
+							class="block mt-1 w-full border border-gray-300 rounded-md shadow-sm mb-2"
+							hx-get="/api/cities" hx-trigger="input changed delay:150ms"
+							hx-target="#city-select" hx-params="country-select"
+							hx-indicator="#loader">
 						<select id="city-select" name="city"
 							class="block mt-1 w-full border-gray-300 rounded-md shadow-sm"
-							hx-get="/api/cities" hx-trigger="change from:#country-select"
-							hx-params="country-select" hx-target="#city-select"
-							hx-indicator="#loader">
+							hx-trigger="change from:#country-select, change from:#city-filter">
 							<option value="">Select a city</option>
 						</select>
 					</div>
@@ -237,9 +243,23 @@ if err != nil {
 			});
 			ul.appendChild(li);
 		});
-	}</script>
-}
+	}
+	// JavaScript for filtering cities in the select menu
+	document.getElementById('city-filter').addEventListener('input', function () {
+		var filter = this.value.toLowerCase();
+		var options = document.getElementById('city-select').options;
 
+		for (var i = 0; i < options.length; i++) {
+			var option = options[i];
+			var text = option.text.toLowerCase();
+
+			// Show the option if it matches the filter, otherwise hide it
+			option.style.display = text.includes(filter) ? '' : 'none';
+		}
+	});
+</script>
+
+}
 
 templ ElseProfile(username string) {
 {{ user, err := database.GetUserByName(database.DB, username ) }}
