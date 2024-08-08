@@ -797,6 +797,10 @@ video {
   margin-top: 4rem;
 }
 
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
 .mt-32 {
   margin-top: 8rem;
 }
@@ -811,10 +815,6 @@ video {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
 }
 
 .block {
@@ -1063,10 +1063,6 @@ video {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
-}
-
-.list-none {
-  list-style-type: none;
 }
 
 .appearance-none {
@@ -1369,10 +1365,6 @@ video {
 
 .bg-\[url\(\.\.\/\.\.\/public\/images\/tophalfbg\.jpg\)\] {
   background-image: url(../../public/images/tophalfbg.jpg);
-}
-
-.bg-\[url\(\&\#39\;https\:\/\/external-content\.duckduckgo\.com\/iu\/\?u\=https\%3A\%2F\%2Fwallup\.net\%2Fwp-content\%2Fuploads\%2F2017\%2F03\%2F27\%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient\.jpg\&amp\;f\=1\&amp\;nofb\=1\&amp\;ipt\=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215\&amp\;ipo\=images\&\#39\;\)\] {
-  background-image: url(&#39;https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallup.net%2Fwp-content%2Fuploads%2F2017%2F03%2F27%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient.jpg&amp;f=1&amp;nofb=1&amp;ipt=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215&amp;ipo=images&#39;);
 }
 
 .bg-cover {
@@ -1794,6 +1786,10 @@ video {
   outline-offset: 2px;
 }
 
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 .transition {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
@@ -1892,6 +1888,11 @@ video {
   background-color: rgb(30 64 175 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-gray-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-gray-300:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
@@ -1910,11 +1911,6 @@ video {
 .hover\:bg-violet-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(109 40 217 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-gray-200:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
 .hover\:text-gray-600:hover {

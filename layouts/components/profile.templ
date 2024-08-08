@@ -134,26 +134,31 @@ if err != nil {
 							hx-get="/api/countries" hx-trigger="input changed delay:150ms"
 							hx-params="country" hx-target="#country-select"
 							hx-indicator="#loader">
+						/* <select id="country-select" name="country-select" */ /*
+							class="mt-2 block w-full border-gray-300 rounded-md shadow-sm"
+							*/ /* hx-trigger="change" hx-get="/api/cities" */ /*
+							hx-target="#city-select" hx-params="country_code" */ /*
+							hx-indicator="#loader"> */
+							/* </select> */
 						<select id="country-select" name="country-select"
-							class="mt-2 block w-full border-gray-300 rounded-md shadow-sm"></select>
+							class="mt-2 block w-full border-gray-300 rounded-md shadow-sm"
+							hx-indicator="#loader"></select>
 					</div>
 
-					<!-- City selection -->
 					<div class="mb-4">
 						<label for="city"
 							class="block text-sm font-medium text-gray-700">City</label>
-						<!-- Input field for filtering cities -->
-						<input type="text" id="city-filter"
-							placeholder="Type to filter cities..."
-							class="block mt-1 w-full border border-gray-300 rounded-md shadow-sm mb-2"
-							hx-get="/api/cities" hx-trigger="input changed delay:150ms"
-							hx-target="#city-select" hx-params="country-select"
+						/* <input type="text" id="city" name="city" */ /*
+							class="block mt-1 w-full border border-gray-300 rounded-md shadow-sm"
+							*/ /* hx-get="/api/cities"
+							hx-trigger="input changed delay:150ms" */ /* hx-params="city"
+							hx-target="#city-select" */ /* hx-indicator="#loader"> */
+						/* <select id="city-select" name="city-select" */ /*
+							class="mt-2 block w-full border-gray-300 rounded-md shadow-sm"></select>
+						*/
+						<input type="text" id="city" name="city"
+							class=" block mt-1 w-full border border-gray-300 rounded-md shadow-sm"
 							hx-indicator="#loader">
-						<select id="city-select" name="city"
-							class="block mt-1 w-full border-gray-300 rounded-md shadow-sm"
-							hx-trigger="change from:#country-select, change from:#city-filter">
-							<option value="">Select a city</option>
-						</select>
 					</div>
 					<div class="mb-4">
 						<label class="block text-gray-700 text-sm font-medium mb-2" for="role">

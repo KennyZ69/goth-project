@@ -42,7 +42,7 @@ func main() {
 	router.Handle("/finder/search", handles.MakeHandle(handles.HandleSearch))
 
 	router.Handle("/api/countries", handles.MakeHandle(handles.CountryHandler))
-	router.Handle("/api/cities", handles.MakeHandle(handles.CityHandler))
+	// router.Handle("/api/cities", handles.MakeHandle(handles.CityHandler))
 
 	router.Get("/team.html", handles.MakeHandle(handles.HandleTeamPage))
 
