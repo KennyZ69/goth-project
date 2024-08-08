@@ -31,7 +31,7 @@ func HandleFinder(w http.ResponseWriter, r *http.Request) error {
 			http.SetCookie(w, &http.Cookie{
 				Name:     "auth_token",
 				Value:    token,
-				Expires:  time.Now().Add(15 * time.Minute),
+				Expires:  time.Now().Add(24 * time.Hour),
 				HttpOnly: true,
 				Path:     "/",
 			})

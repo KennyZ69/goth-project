@@ -121,8 +121,9 @@ if err != nil {
 				<!-- Add form fields for profile editing here -->
 				<form hx-post="/edit-profile">
 					<div class="mb-4">
-						<label class="block text-sm font-medium text-gray-700">Username</label>
-						<input type="text"
+						<label class="block text-sm font-medium text-gray-700"
+							for="username">Username</label>
+						<input type="text" id="username" name="username"
 							class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 							value={ username }>
 					</div>
@@ -133,7 +134,7 @@ if err != nil {
 							class="block mt-1 w-full border border-gray-300 rounded-md shadow-sm"
 							hx-get="/api/countries" hx-trigger="input changed delay:150ms"
 							hx-params="country" hx-target="#country-select"
-							hx-indicator="#loader">
+							hx-indicator="#loader" value={ user.Details.Country }>
 						/* <select id="country-select" name="country-select" */ /*
 							class="mt-2 block w-full border-gray-300 rounded-md shadow-sm"
 							*/ /* hx-trigger="change" hx-get="/api/cities" */ /*
@@ -142,7 +143,12 @@ if err != nil {
 							/* </select> */
 						<select id="country-select" name="country-select"
 							class="mt-2 block w-full border-gray-300 rounded-md shadow-sm"
-							hx-indicator="#loader"></select>
+							hx-indicator="#loader">
+							if user.Details.Country != ""{
+							<option value={ user.Details.Country }>{ user.Details.Country}
+							</option>
+							}
+						</select>
 					</div>
 
 					<div class="mb-4">
@@ -158,7 +164,7 @@ if err != nil {
 						*/
 						<input type="text" id="city" name="city"
 							class=" block mt-1 w-full border border-gray-300 rounded-md shadow-sm"
-							hx-indicator="#loader">
+							hx-indicator="#loader" value={ user.Details.City }>
 					</div>
 					<div class="mb-4">
 						<label class="block text-gray-700 text-sm font-medium mb-2" for="role">
@@ -166,7 +172,12 @@ if err != nil {
 						</label>
 						<select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 							id="role" name="role">
+							if user.Details.Role != ""{
+							<option value={ user.Details.Role }>{ user.Details.Role}
+							</option>
+							} else{
 							<option value="">Change your role</option>
+							}
 							<option value="coach">Coach</option>
 							<option value="player">Player</option>
 							<option value="manager">Manager</option>
@@ -176,7 +187,7 @@ if err != nil {
 					<div class="mb-4">
 						<label class="block text-sm font-medium text-gray-700"
 							for="bio">Bio</label>
-						<textarea id="bio"
+						<textarea id="bio" name="bio"
 							class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 							maxlength="170" oninput="updateCharacterCount()">{
 							user.Details.Bio }</textarea>
@@ -188,7 +199,7 @@ if err != nil {
 					<div id="loader" class="hidden">Loading...</div>
 				</form>
 			</div>
-			<!-- Footer -->
+			<!-- Footer of the modal -->
 			<div
 				class="flex items-center justify-end z-50 p-6 border-t border-solid border-blueGray-200 rounded-b">
 				<button onclick="closeModal()" type="button"

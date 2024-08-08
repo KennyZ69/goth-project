@@ -35,8 +35,10 @@ func main() {
 	router.Get("/", middleware.AuthMiddleware(handleHome))
 	router.Handle("/login", handles.MakeHandle(handles.HandleLogin))
 	router.Handle("/signup", handles.MakeHandle(handles.HandleSignUp))
-	router.Handle("/profile/{username}", handles.MakeHandle(handles.HandleProfile))
 	router.Post("/logout", handles.MakeHandle(handles.HandleLogout))
+
+	router.Handle("/profile/{username}", handles.MakeHandle(handles.HandleProfile))
+	router.Handle("/edit-profile", handles.MakeHandle(handles.EditProfileHandler))
 
 	router.Handle("/finder", handles.MakeHandle(handles.HandleFinder))
 	router.Handle("/finder/search", handles.MakeHandle(handles.HandleSearch))

@@ -1,6 +1,6 @@
 //TODO:
 
-
+<!--TODO: Make the backend for editing own profile -->
 <!--TODO: Make the chat app for the web, look in gpt for the idea on how to do it -->
 <!--TODO: Check all the paths for compatibility with all kinds of screens and remake the ui depending on that (the ElseProfile is kind of f_ed)-->
 
