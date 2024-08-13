@@ -69,6 +69,8 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 		if strings.Contains(r.URL.Path, "/profile/") {
 			nameFromPath := r.URL.Path[len("/profile/"):]
 			usr, err := database.GetUserByName(database.DB, nameFromPath)
+			usrDetails, err := database.GetDetailsById(database.DB, usr.Id)
+			usr.Details = *usrDetails
 			if err != nil {
 				templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
 				if templ_7745c5c3_Err != nil {
@@ -89,12 +91,12 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			if user.Username == usr.Username && user.Id == usr.Id {
-				templ_7745c5c3_Err = components.OwnProfile(usr.Username).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = components.OwnProfile(*usr).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			} else {
-				templ_7745c5c3_Err = components.ElseProfile(usr.Username).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = components.ElseProfile(*usr).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

@@ -5,11 +5,7 @@ import (
 "gothstarter/database"
 )
 
-templ OwnProfile(username string){
-{{ user, err := database.GetUserByName(database.DB, username ) }}
-if err != nil {
-<p>There was an error getting user for this profile</p>
-}
+templ OwnProfile(user database.User){
 <main class="profile-page">
 	<section class="relative block h-[50vh]">
 		<div class="absolute top-0 w-full h-full bg-center bg-cover" style="
@@ -59,7 +55,7 @@ if err != nil {
 					<div class="text-center mt-12 py-8">
 						<h3
 							class="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-							{ username }
+							{ user.Username }
 						</h3>
 						<div
 							class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
@@ -68,11 +64,12 @@ if err != nil {
 							Location of the user
 						</div>
 						<div class="mb-2 text-blueGray-600 mt-6">
-							{{ role, err := database.GetRoleById(database.DB, user.Id) }}
-							if err != nil{
-							<p>There was an error with the user role</p>
-							}
-							<p class="italic">{ role }</p>
+							/* {{ role, err := database.GetRoleById(database.DB, user.Id) }}
+							*/
+							/* if err != nil{ */
+							/* <p>There was an error with the user role</p> */
+							/* } */
+							<p class="italic">{ user.Details.Role }</p>
 						</div>
 						<div>
 							// There should be the icons for the things the user linked for
@@ -119,13 +116,13 @@ if err != nil {
 			<!-- Body -->
 			<div class="relative p-6 flex-auto z-50">
 				<!-- Add form fields for profile editing here -->
-				<form hx-post="/edit-profile">
+				<form hx-post="/edit-profile" hx-target="#response-message" hx-swap="innerHTML">
 					<div class="mb-4">
 						<label class="block text-sm font-medium text-gray-700"
-							for="username">Username</label>
-						<input type="text" id="username" name="username"
+							for="user.Username">Username</label>
+						<input type="text" id="user.Username" name="username"
 							class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-							value={ username }>
+							value={ user.Username }>
 					</div>
 					<div class="mb-4">
 						<label for="country"
@@ -172,16 +169,19 @@ if err != nil {
 						</label>
 						<select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 							id="role" name="role">
-							if user.Details.Role != ""{
-							<option value={ user.Details.Role }>{ user.Details.Role}
-							</option>
-							} else{
 							<option value="">Change your role</option>
-							}
-							<option value="coach">Coach</option>
-							<option value="player">Player</option>
-							<option value="manager">Manager</option>
-							<option value="agent">Agent</option>
+							<option value="coach" if user.Details.Role=="coach" { selected
+								}>
+								Coach</option>
+							<option value="player" if user.Details.Role=="player" { selected
+								}>
+								Player</option>
+							<option value="manager" if user.Details.Role=="manager" {
+								selected }>
+								Manager</option>
+							<option value="agent" if user.Details.Role=="agent" { selected
+								}>
+								Agent</option>
 						</select>
 					</div>
 					<div class="mb-4">
@@ -215,6 +215,19 @@ if err != nil {
 		</div>
 	</div>
 	<div class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+</div>
+
+<div id="response-message"
+	class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4 hidden" role="alert">
+	<strong class="font-bold">Success!</strong>
+	<span class="block sm:inline">Your profile has been updated.</span>
+	<button id="close-button" class="absolute top-0 bottom-0 right-0 px-4 py-3 text-green-700">
+		<svg class="fill-current h-6 w-6" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+			<title>Close</title>
+			<path
+				d="M14.348 14.849a1 1 0 0 1-1.414 0L10 11.414l-2.935 2.935a1 1 0 1 1-1.414-1.414l2.935-2.935-2.935-2.935a1 1 0 1 1 1.414-1.414L10 8.586l2.935-2.935a1 1 0 0 1 1.414 1.414L11.414 10l2.935 2.935a1 1 0 0 1 0 1.414z" />
+		</svg>
+	</button>
 </div>
 
 <!-- JavaScript to Handle Modal -->
@@ -260,28 +273,31 @@ if err != nil {
 			ul.appendChild(li);
 		});
 	}
-	// JavaScript for filtering cities in the select menu
-	document.getElementById('city-filter').addEventListener('input', function () {
-		var filter = this.value.toLowerCase();
-		var options = document.getElementById('city-select').options;
-
-		for (var i = 0; i < options.length; i++) {
-			var option = options[i];
-			var text = option.text.toLowerCase();
-
-			// Show the option if it matches the filter, otherwise hide it
-			option.style.display = text.includes(filter) ? '' : 'none';
+	/* // JavaScript for filtering cities in the select menu */
+	/* document.getElementById('city-filter').addEventListener('input', function () { */
+	/* 	var filter = this.value.toLowerCase(); */
+	/* 	var options = document.getElementById('city-select').options; */
+	/**/
+	/* 	for (var i = 0; i < options.length; i++) { */
+	/* 		var option = options[i]; */
+	/* 		var text = option.text.toLowerCase(); */
+	/**/
+	/* 		// Show the option if it matches the filter, otherwise hide it */
+	/* 		option.style.display = text.includes(filter) ? '' : 'none'; */
+	/* 	} */
+	/* }); */
+	document.addEventListener('htmx:afterRequest', function (evt) {
+		if (evt.detail.target.id === "response-message" && evt.detail.xhr.status === 200) {
+			document.getElementById('close-button').addEventListener('click', function () {
+				window.location.href = '/profile/{{.User.user.Username}}';
+			});
 		}
 	});
 </script>
 
 }
 
-templ ElseProfile(username string) {
-{{ user, err := database.GetUserByName(database.DB, username ) }}
-if err != nil {
-<p>There was an error getting user for this profile</p>
-}
+templ ElseProfile(user database.User) {
 <main class="profile-page">
 	<section class="relative block h-[50vh]">
 		<div class="absolute top-0 w-full h-full bg-center bg-cover" style="
@@ -341,7 +357,7 @@ if err != nil {
 					<div class="text-center mt-12">
 						<h3
 							class="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-							{ username }
+							{ user.Username }
 						</h3>
 						<div
 							class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">

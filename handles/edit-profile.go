@@ -23,7 +23,7 @@ func EditProfileHandler(w http.ResponseWriter, r *http.Request) error {
 	}
 	token, err := database.IdToken(database.DB, currentUser.Id)
 	if err != nil {
-		return fmt.Errorf("there was an error getting the token by usr id in the finder: %v", err)
+		return fmt.Errorf("there was an error getting the token by usr id to edit the profile: %v", err)
 	}
 	if token != "" {
 		http.SetCookie(w, &http.Cookie{
@@ -46,12 +46,16 @@ func EditProfileHandler(w http.ResponseWriter, r *http.Request) error {
 	role := r.FormValue("role")
 	bio := r.FormValue("bio")
 
-	_, err = database.DB.Exec(`
+	if newUsername != currentUser.Username {
+		_, err = database.DB.Exec(`
         UPDATE users 
         SET username = $1 
         WHERE user_id = $2`, newUsername, currentUser.Id)
-	if err != nil {
-		return fmt.Errorf("There was an error updating the username by his ID: %v", err)
+		if err != nil {
+			return fmt.Errorf("There was an error updating the username by his ID: %v", err)
+
+		}
+		currentUser.Username = newUsername
 	}
 
 	_, err = database.DB.Exec(`
@@ -69,7 +73,6 @@ func EditProfileHandler(w http.ResponseWriter, r *http.Request) error {
 		City:    city,
 	}
 	currentUser.Details = newUserData
-	currentUser.Username = newUsername
 
 	w.WriteHeader(http.StatusOK)
 	fmt.Printf("Profile updated successfully for user %v", currentUser.Id)

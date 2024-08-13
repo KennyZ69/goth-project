@@ -54,6 +54,8 @@ templ Base(r *http.Request, data bool, username string) {
 
 	{{ nameFromPath := r.URL.Path[len("/profile/"):] }}
 	{{ usr, err := database.GetUserByName(database.DB, nameFromPath) }}
+	{{ usrDetails, err := database.GetDetailsById(database.DB, usr.Id) }}
+	{{ usr.Details = *usrDetails }}
 
 	if err != nil {
 	// Do some error later
@@ -69,10 +71,10 @@ templ Base(r *http.Request, data bool, username string) {
 	if user.Username == usr.Username && user.Id == usr.Id{
 
 
-	@components.OwnProfile(usr.Username)
+	@components.OwnProfile(*usr)
 	} else{
 
-	@components.ElseProfile(usr.Username)
+	@components.ElseProfile(*usr)
 	}
 	}
 

@@ -81,7 +81,7 @@ func SaveUser(usr User) error {
 		return err
 	}
 
-	_, err = tx.Exec("INSERT INTO user_details (user_id, bio, profile_image, role) VALUES ($1, $2, $3, $4)", usr.Id, usr.Details.Bio, usr.Details.ProfileImage, usr.Details.Role)
+	_, err = tx.Exec("INSERT INTO user_details (user_id, bio, profile_image, role, country, city) VALUES ($1, $2, $3, $4, $5, $6)", usr.Id, usr.Details.Bio, usr.Details.ProfileImage, usr.Details.Role, usr.Details.Country, usr.Details.City)
 	if err != nil {
 		return err
 	}
@@ -233,4 +233,23 @@ func GetRoleById(db *sql.DB, id uint) (string, error) {
 	}
 
 	return role, nil
+}
+
+func GetDetailsById(db *sql.DB, id uint) (*UserProfileData, error) {
+	var role, bio, profile_image, city, country string
+	row := db.QueryRow("SELECT bio, profile_image, role, country, city FROM user_details WHERE user_id = $1", id)
+	err := row.Scan(&bio, &profile_image, &role, &country, &city)
+	if err == sql.ErrNoRows {
+		return nil, err
+	} else if err != nil {
+		return nil, err
+	}
+	data := UserProfileData{
+		Role:         role,
+		Bio:          bio,
+		ProfileImage: profile_image,
+		Country:      country,
+		City:         city,
+	}
+	return &data, nil
 }
