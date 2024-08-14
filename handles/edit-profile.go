@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gothstarter/database"
 	"gothstarter/layouts/components"
+	"log"
 	"net/http"
 	"time"
 )
@@ -40,6 +41,10 @@ func EditProfileHandler(w http.ResponseWriter, r *http.Request) error {
 	if err != nil {
 		return fmt.Errorf("Problem parsing the form data: %v", err)
 	}
+
+	for key, value := range r.Form {
+		log.Printf("Form key: %s, value: %s", key, value)
+	}
 	newUsername := r.FormValue("username")
 	country := r.FormValue("country-select")
 	city := r.FormValue("city")
@@ -75,7 +80,7 @@ func EditProfileHandler(w http.ResponseWriter, r *http.Request) error {
 	currentUser.Details = newUserData
 
 	w.WriteHeader(http.StatusOK)
-	fmt.Printf("Profile updated successfully for user %v", currentUser.Id)
+	fmt.Printf("Profile updated successfully for user: %s; %v\n", currentUser.Username, currentUser.Id)
 	redirectUrl := fmt.Sprintf("/profile/%v", currentUser.Username)
 	http.Redirect(w, r, redirectUrl, http.StatusSeeOther)
 	return nil
