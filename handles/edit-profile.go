@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"gothstarter/database"
 	"gothstarter/layouts/components"
-	"log"
 	"net/http"
 	"time"
 )
 
 func EditProfileHandler(w http.ResponseWriter, r *http.Request) error {
+	if err := r.ParseForm(); err != nil {
+		return fmt.Errorf("error parsing the form in edit-profile: %v", err)
+	}
 	if r.Method != http.MethodPost {
 		return fmt.Errorf("Invalid request method")
 	}
@@ -37,21 +39,16 @@ func EditProfileHandler(w http.ResponseWriter, r *http.Request) error {
 
 	}
 
-	err = r.ParseForm()
-	if err != nil {
-		return fmt.Errorf("Problem parsing the form data: %v", err)
-	}
-
-	for key, value := range r.Form {
-		log.Printf("Form key: %s, value: %s", key, value)
-	}
+	// for key, value := range r.Form {
+	// 	log.Printf("Form key: %s, value: %s", key, value)
+	// }
 	newUsername := r.FormValue("username")
 	country := r.FormValue("country-select")
 	city := r.FormValue("city")
 	role := r.FormValue("role")
 	bio := r.FormValue("bio")
 
-	if newUsername != currentUser.Username {
+	if newUsername != currentUser.Username && !database.UsernameExists(newUsername) {
 		_, err = database.DB.Exec(`
         UPDATE users 
         SET username = $1 

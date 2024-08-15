@@ -1361,6 +1361,10 @@ video {
   --tw-bg-opacity: 0.65;
 }
 
+.bg-\[url\(\&\#39\;https\:\/\/external-content\.duckduckgo\.com\/iu\/\?u\=https\%3A\%2F\%2Fwallup\.net\%2Fwp-content\%2Fuploads\%2F2017\%2F03\%2F27\%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient\.jpg\&amp\;f\=1\&amp\;nofb\=1\&amp\;ipt\=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215\&amp\;ipo\=images\&\#39\;\)\] {
+  background-image: url(&#39;https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallup.net%2Fwp-content%2Fuploads%2F2017%2F03%2F27%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient.jpg&amp;f=1&amp;nofb=1&amp;ipt=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215&amp;ipo=images&#39;);
+}
+
 .bg-\[url\(\'https\:\/\/external-content\.duckduckgo\.com\/iu\/\?u\=https\%3A\%2F\%2Fwallup\.net\%2Fwp-content\%2Fuploads\%2F2017\%2F03\%2F27\%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient\.jpg\&f\=1\&nofb\=1\&ipt\=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215\&ipo\=images\'\)\] {
   background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallup.net%2Fwp-content%2Fuploads%2F2017%2F03%2F27%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient.jpg&f=1&nofb=1&ipt=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215&ipo=images');
 }
@@ -1375,10 +1379,6 @@ video {
 
 .bg-\[url\(\.\.\/\.\.\/public\/images\/tophalfbg\.jpg\)\] {
   background-image: url(../../public/images/tophalfbg.jpg);
-}
-
-.bg-\[url\(\&\#39\;https\:\/\/external-content\.duckduckgo\.com\/iu\/\?u\=https\%3A\%2F\%2Fwallup\.net\%2Fwp-content\%2Fuploads\%2F2017\%2F03\%2F27\%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient\.jpg\&amp\;f\=1\&amp\;nofb\=1\&amp\;ipt\=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215\&amp\;ipo\=images\&\#39\;\)\] {
-  background-image: url(&#39;https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallup.net%2Fwp-content%2Fuploads%2F2017%2F03%2F27%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient.jpg&amp;f=1&amp;nofb=1&amp;ipt=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215&amp;ipo=images&#39;);
 }
 
 .bg-cover {

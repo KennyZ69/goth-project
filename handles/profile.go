@@ -14,5 +14,12 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) error {
 		}
 		return nil
 	}
+	if r.Method == http.MethodPost {
+		err := EditProfileHandler(w, r)
+		if err != nil {
+			return fmt.Errorf("problem handling edit-profile on the profile handler: %v", err)
+		}
+		return nil
+	}
 	return fmt.Errorf("this method is not allowed")
 }

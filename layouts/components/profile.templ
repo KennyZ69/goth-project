@@ -3,9 +3,11 @@ package components
 
 import (
 "gothstarter/database"
+"fmt"
 )
 
 templ OwnProfile(user database.User){
+{{ postUrl := fmt.Sprintf("/profile/%v", user.Username) }}
 <main class="profile-page">
 	<section class="relative block h-[50vh]">
 		<div class="absolute top-0 w-full h-full bg-center bg-cover" style="
@@ -116,7 +118,7 @@ templ OwnProfile(user database.User){
 			<!-- Body -->
 			<div class="relative p-6 flex-auto z-50">
 				<!-- Add form fields for profile editing here -->
-				<form hx-post="/edit-profile" hx-target="#response-message" hx-swap="innerHTML">
+				<form hx-post={ postUrl }>
 					<div class="mb-4">
 						<label class="block text-sm font-medium text-gray-700"
 							for="username">Username</label>
@@ -208,7 +210,7 @@ templ OwnProfile(user database.User){
 					Close
 				</button>
 				<button class="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-					type="submit" hx-post="/edit-profile">
+					type="submit" hx-post={ postUrl }>
 					Save Changes
 				</button>
 			</div>
@@ -217,19 +219,6 @@ templ OwnProfile(user database.User){
 	<div class="opacity-25 fixed inset-0 z-40 bg-black"></div>
 </div>
 
-<div id="response-message"
-	class="bg-green-100 flex border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4 hidden"
-	role="alert">
-	<strong class="font-bold">Success!</strong>
-	<span class="block sm:inline">Your profile has been updated.</span>
-	<button id="close-button" class="absolute top-0 bottom-0 right-0 px-4 py-3 text-green-700">
-		<svg class="fill-current h-6 w-6" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-			<title>Close</title>
-			<path
-				d="M14.348 14.849a1 1 0 0 1-1.414 0L10 11.414l-2.935 2.935a1 1 0 1 1-1.414-1.414l2.935-2.935-2.935-2.935a1 1 0 1 1 1.414-1.414L10 8.586l2.935-2.935a1 1 0 0 1 1.414 1.414L11.414 10l2.935 2.935a1 1 0 0 1 0 1.414z" />
-		</svg>
-	</button>
-</div>
 
 <!-- JavaScript to Handle Modal -->
 <script>
@@ -406,4 +395,20 @@ templ ElseProfile(user database.User) {
 		</footer>
 	</section>
 </main>
+}
+
+templ EditProfileResponse(newUsr database.User){
+<div id="response-message"
+	class="bg-green-100 flex border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4 hidden"
+	role="alert">
+	<strong class="font-bold">Success!</strong>
+	<span class="block sm:inline">Your profile has been updated.</span>
+	<button id="close-button" class="absolute top-0 bottom-0 right-0 px-4 py-3 text-green-700">
+		<svg class="fill-current h-6 w-6" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+			<title>Close</title>
+			<path
+				d="M14.348 14.849a1 1 0 0 1-1.414 0L10 11.414l-2.935 2.935a1 1 0 1 1-1.414-1.414l2.935-2.935-2.935-2.935a1 1 0 1 1 1.414-1.414L10 8.586l2.935-2.935a1 1 0 0 1 1.414 1.414L11.414 10l2.935 2.935a1 1 0 0 1 0 1.414z" />
+		</svg>
+	</button>
+</div>
 }

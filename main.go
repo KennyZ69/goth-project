@@ -38,7 +38,7 @@ func main() {
 	router.Post("/logout", handles.MakeHandle(handles.HandleLogout))
 
 	router.Handle("/profile/{username}", handles.MakeHandle(handles.HandleProfile))
-	router.Handle("/edit-profile", handles.MakeHandle(handles.EditProfileHandler))
+	// router.Handle("/edit-profile", handles.MakeHandle(handles.EditProfileHandler))
 
 	router.Handle("/finder", handles.MakeHandle(handles.HandleFinder))
 	router.Handle("/finder/search", handles.MakeHandle(handles.HandleSearch))

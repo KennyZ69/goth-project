@@ -97,13 +97,13 @@ func UserExists(usr User) (bool, error) {
 	return count > 0, nil
 }
 
-func UsernameExists(username string) (bool, error) {
+func UsernameExists(username string) bool {
 	var count int
 	err := DB.QueryRow("SELECT COUNT(*) FROM users WHERE username=$1", username).Scan(&count)
 	if err != nil {
-		return false, err
+		return false
 	}
-	return count > 0, nil
+	return count > 0
 }
 
 func (u *User) ComparePassword(password string) error {
