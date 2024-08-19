@@ -66,11 +66,6 @@ templ OwnProfile(user database.User){
 							Location of the user
 						</div>
 						<div class="mb-2 text-blueGray-600 mt-6">
-							/* {{ role, err := database.GetRoleById(database.DB, user.Id) }}
-							*/
-							/* if err != nil{ */
-							/* <p>There was an error with the user role</p> */
-							/* } */
 							<p class="italic">{ user.Details.Role }</p>
 						</div>
 						<div>
@@ -85,7 +80,6 @@ templ OwnProfile(user database.User){
 								<p
 									class="mb-4 text-lg leading-relaxed text-blueGray-700">
 									{ user.Details.Bio }
-									.......
 								</p>
 							</div>
 						</div>
@@ -97,7 +91,7 @@ templ OwnProfile(user database.User){
 </main>
 <div id="editProfileModal"
 	class="hidden fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
-	<div class="relative w-auto my-6 mx-auto max-w-3xl z-50">
+	<div class="relative w-auto my-6 mx-auto max-w-3xl z-50" id="changeForResponse">
 		<!-- Modal content -->
 		<div
 			class="border-0 rounded-lg shadow-lg z-50 relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -118,13 +112,13 @@ templ OwnProfile(user database.User){
 			<!-- Body -->
 			<div class="relative p-6 flex-auto z-50">
 				<!-- Add form fields for profile editing here -->
-				<form hx-post={ postUrl }>
+				<form hx-post={ postUrl } hx-target="#changeForResponse" hx-swap="innerHTML">
 					<div class="mb-4">
 						<label class="block text-sm font-medium text-gray-700"
 							for="username">Username</label>
 						<input type="text" id="username" name="username"
 							class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-							value={ user.Username }>
+							value={ user.Username } />
 					</div>
 					<div class="mb-4">
 						<label for="country"
@@ -133,7 +127,7 @@ templ OwnProfile(user database.User){
 							class="block mt-1 w-full border border-gray-300 rounded-md shadow-sm"
 							hx-get="/api/countries" hx-trigger="input changed delay:150ms"
 							hx-params="country" hx-target="#country-select"
-							hx-indicator="#loader" value={ user.Details.Country }>
+							hx-indicator="#loader" value={ user.Details.Country } />
 						/* <select id="country-select" name="country-select" */ /*
 							class="mt-2 block w-full border-gray-300 rounded-md shadow-sm"
 							*/ /* hx-trigger="change" hx-get="/api/cities" */ /*
@@ -163,7 +157,7 @@ templ OwnProfile(user database.User){
 						*/
 						<input type="text" id="city" name="city"
 							class=" block mt-1 w-full border border-gray-300 rounded-md shadow-sm"
-							hx-indicator="#loader" value={ user.Details.City }>
+							hx-indicator="#loader" value={ user.Details.City } />
 					</div>
 					<div class="mb-4">
 						<label class="block text-gray-700 text-sm font-medium mb-2" for="role">
@@ -199,20 +193,21 @@ templ OwnProfile(user database.User){
 					<!-- Add more fields as needed -->
 
 					<div id="loader" class="hidden">Loading...</div>
+					<!-- Footer of the modal -->
+					<div
+						class="flex items-center justify-end z-50 p-6 border-t border-solid border-blueGray-200 rounded-b">
+						<button onclick="closeModal()" type="button"
+							class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 cursor-pointer"
+							type="button">
+							Close
+						</button>
+						<button class="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+							type="submit">
+							Save Changes
+						</button>
+					</div>
+
 				</form>
-			</div>
-			<!-- Footer of the modal -->
-			<div
-				class="flex items-center justify-end z-50 p-6 border-t border-solid border-blueGray-200 rounded-b">
-				<button onclick="closeModal()" type="button"
-					class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 cursor-pointer"
-					type="button">
-					Close
-				</button>
-				<button class="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-					type="submit" hx-post={ postUrl }>
-					Save Changes
-				</button>
 			</div>
 		</div>
 	</div>
@@ -399,8 +394,7 @@ templ ElseProfile(user database.User) {
 
 templ EditProfileResponse(newUsr database.User){
 <div id="response-message"
-	class="bg-green-100 flex border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4 hidden"
-	role="alert">
+	class="bg-green-100 flex border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4 " role="alert">
 	<strong class="font-bold">Success!</strong>
 	<span class="block sm:inline">Your profile has been updated.</span>
 	<button id="close-button" class="absolute top-0 bottom-0 right-0 px-4 py-3 text-green-700">

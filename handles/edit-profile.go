@@ -26,7 +26,7 @@ func EditProfileHandler(w http.ResponseWriter, r *http.Request) error {
 	}
 	token, err := database.IdToken(database.DB, currentUser.Id)
 	if err != nil {
-		return fmt.Errorf("there was an error getting the token by usr id to edit the profile: %v", err)
+		return fmt.Errorf("there was an error getting the token by user id to edit the profile: %v", err)
 	}
 	if token != "" {
 		http.SetCookie(w, &http.Cookie{
@@ -48,25 +48,8 @@ func EditProfileHandler(w http.ResponseWriter, r *http.Request) error {
 	role := r.FormValue("role")
 	bio := r.FormValue("bio")
 
-	if newUsername != currentUser.Username && !database.UsernameExists(newUsername) {
-		_, err = database.DB.Exec(`
-        UPDATE users 
-        SET username = $1 
-        WHERE user_id = $2`, newUsername, currentUser.Id)
-		if err != nil {
-			return fmt.Errorf("There was an error updating the username by his ID: %v", err)
-
-		}
-		currentUser.Username = newUsername
-	}
-
-	_, err = database.DB.Exec(`
-	UPDATE user_details
-	SET role = $1, bio = $2, country = $3, city = $4
-	WHERE user_id = $5`, role, bio, country, city, currentUser.Id)
-	if err != nil {
-		return fmt.Errorf("There was an error updating the user_details: %v", err)
-	}
+	var newUser database.User
+	newUser = *currentUser
 
 	newUserData := database.UserProfileData{
 		Bio:     bio,
@@ -74,11 +57,60 @@ func EditProfileHandler(w http.ResponseWriter, r *http.Request) error {
 		Country: country,
 		City:    city,
 	}
-	currentUser.Details = newUserData
+	newUser.Details = newUserData
+	newUser.Username = newUsername
 
+	if err := UpdateUser(newUser, currentUser.Username); err != nil {
+		return fmt.Errorf("There was an error updating the user profile in the database: %v", err)
+	}
+	// Return a success message as an HTML snippet
+	fmt.Fprintf(w, `
+   <div id="response-message"
+	class="bg-green-100 flex flex-col justify-between items-center border border-green-400 text-green-700 gap-4 px-4 py-3 rounded relative mt-4 " role="alert">
+	<strong class="font-bold">Success!  </strong>
+	<span class="block sm:inline">Your profile has been updated %s.</span>
+<button onclick="window.location.href='/profile/%s'"
+           class="bg-transparent cursor-pointer border-0 text-black font-semibold outline-none focus:outline-none h-4 w-4 text-3xl self-center">
+		×
+        </button>	
+</div>
+    `, newUsername, newUsername)
 	w.WriteHeader(http.StatusOK)
 	fmt.Printf("Profile updated successfully for user: %s; %v\n", currentUser.Username, currentUser.Id)
-	redirectUrl := fmt.Sprintf("/profile/%v", currentUser.Username)
-	http.Redirect(w, r, redirectUrl, http.StatusSeeOther)
 	return nil
+}
+
+func UpdateUser(user database.User, oldName string) error {
+	tx, err := database.DB.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if user.Username != oldName {
+		if valid := database.UsernameValidator(user.Username); !valid {
+			return fmt.Errorf("there was an error validating the username")
+		}
+
+		if exists := database.UsernameExists(user.Username); exists {
+			return fmt.Errorf("this username already exists")
+		}
+		_, err = tx.Exec("UPDATE users SET username = $1 WHERE user_id = $2",
+			user.Username, user.Id)
+		if err != nil {
+			return err
+		}
+
+	}
+
+	// Update the user_details table
+	_, err = tx.Exec("UPDATE user_details SET bio = $1, profile_image = $2, role = $3, country = $4, city = $5 WHERE user_id = $6",
+		user.Details.Bio, user.Details.ProfileImage, user.Details.Role, user.Details.Country, user.Details.City, user.Id)
+	if err != nil {
+		return err
+	}
+
+	// Commit the transaction
+	return tx.Commit()
+
 }
