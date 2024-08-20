@@ -63,10 +63,18 @@ templ OwnProfile(user database.User){
 							class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
 							<i
 								class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+							if user.Details.Country != "" && user.Details.City != ""{
+							{ user.Details.City }, { user.Details.Country }
+							} else {
 							Location of the user
+							}
 						</div>
 						<div class="mb-2 text-blueGray-600 mt-6">
+							if user.Details.Role != ""{
 							<p class="italic">{ user.Details.Role }</p>
+							} else {
+							<p class="italic"> Role of the user </p>
+							}
 						</div>
 						<div>
 							// There should be the icons for the things the user linked for
@@ -79,7 +87,11 @@ templ OwnProfile(user database.User){
 							<div class="w-full lg:w-9/12 px-4">
 								<p
 									class="mb-4 text-lg leading-relaxed text-blueGray-700">
+									if user.Details.Bio != ""{
 									{ user.Details.Bio }
+									} else{
+									User Bio
+									}
 								</p>
 							</div>
 						</div>
@@ -264,20 +276,6 @@ templ OwnProfile(user database.User){
 			ul.appendChild(li);
 		});
 	}
-	/* // JavaScript for filtering cities in the select menu */
-	/* document.getElementById('city-filter').addEventListener('input', function () { */
-	/* 	var filter = this.value.toLowerCase(); */
-	/* 	var options = document.getElementById('city-select').options; */
-	/**/
-	/* 	for (var i = 0; i < options.length; i++) { */
-	/* 		var option = options[i]; */
-	/* 		var text = option.text.toLowerCase(); */
-	/**/
-	/* 		// Show the option if it matches the filter, otherwise hide it */
-	/* 		option.style.display = text.includes(filter) ? '' : 'none'; */
-	/* 	} */
-	/* }); */
-
 </script>
 
 }
@@ -348,14 +346,18 @@ templ ElseProfile(user database.User) {
 							class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
 							<i
 								class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+							if user.Details.Country != "" && user.Details.City != ""{
+							{ user.Details.City }, { user.Details.Country }
+							} else {
 							Location of the user
+							}
 						</div>
 						<div class="mb-2 text-blueGray-600 mt-6">
-							{{ role, err := database.GetRoleById(database.DB, user.Id) }}
-							if err != nil{
-							<p>There was an error with the user role</p>
+							if user.Details.Role != ""{
+							<p class="italic">{ user.Details.Role }</p>
+							} else {
+							user role
 							}
-							<p class="italic">{ role }</p>
 						</div>
 						<div>
 							// There should be the icons for the things the user linked for
@@ -368,8 +370,11 @@ templ ElseProfile(user database.User) {
 							<div class="w-full lg:w-9/12 px-4">
 								<p
 									class="mb-4 text-lg leading-relaxed text-blueGray-700">
+									if user.Details.Bio != ""{
 									{ user.Details.Bio }
+									} else {
 									User Bio
+									}
 								</p>
 								<a href="#pablo" class="font-normal text-pink-500">
 									Show
@@ -390,19 +395,4 @@ templ ElseProfile(user database.User) {
 		</footer>
 	</section>
 </main>
-}
-
-templ EditProfileResponse(newUsr database.User){
-<div id="response-message"
-	class="bg-green-100 flex border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4 " role="alert">
-	<strong class="font-bold">Success!</strong>
-	<span class="block sm:inline">Your profile has been updated.</span>
-	<button id="close-button" class="absolute top-0 bottom-0 right-0 px-4 py-3 text-green-700">
-		<svg class="fill-current h-6 w-6" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-			<title>Close</title>
-			<path
-				d="M14.348 14.849a1 1 0 0 1-1.414 0L10 11.414l-2.935 2.935a1 1 0 1 1-1.414-1.414l2.935-2.935-2.935-2.935a1 1 0 1 1 1.414-1.414L10 8.586l2.935-2.935a1 1 0 0 1 1.414 1.414L11.414 10l2.935 2.935a1 1 0 0 1 0 1.414z" />
-		</svg>
-	</button>
-</div>
 }

@@ -103,7 +103,7 @@ func CountryHandler(w http.ResponseWriter, r *http.Request) error {
 	w.Header().Set("Content-Type", "text/html")
 	for _, country := range countries {
 		if query == "" || strings.Contains(strings.ToLower(country["name"]), strings.ToLower(query)) {
-			fmt.Fprintf(w, `<option value="%s">%s</option>`, country["code"], country["name"])
+			fmt.Fprintf(w, `<option value="%s">%s</option>`, country["name"], country["name"])
 		}
 	}
 	return nil
