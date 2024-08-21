@@ -35,7 +35,7 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><title>TennisIsUs</title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><link rel=\"stylesheet\" href=\"/public/styles.css\"><script src=\"https://cdn.tailwindcss.com\" defer async></script><script src=\"/public/htmx.min.js\" defer async></script><script src=\"https://unpkg.com/alpinejs\" async defer></script><link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/public/favicon/apple-touch-icon.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/public/favicon/favicon-32x32.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/public/favicon/favicon-16x16.png\"><link rel=\"manifest\" href=\"/public/favicon/site.webmanifest\"><style>\n\t\thtml {\n\t\t\tscroll-behavior: smooth;\n\t\t}\n\t</style></head><body class=\"antialiased bg-slate-500\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -45,7 +45,7 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 			if err != nil {
 				fmt.Printf("error getting user by cookie on the finder: %v\n", err)
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -72,13 +72,13 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 			usrDetails, err := database.GetDetailsById(database.DB, usr.Id)
 			usr.Details = *usrDetails
 			if err != nil {
-				templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" ")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				fmt.Printf("error getting the user for the profile: %v\n", err)
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 4)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("  ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -86,7 +86,7 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 			if err != nil {
 				fmt.Printf("error getting the user via cookie: %v\n", err)
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 5)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -107,7 +107,7 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 6)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -115,7 +115,7 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 7)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -124,7 +124,7 @@ func Base(r *http.Request, data bool, username string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 8)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><script>\n\tdocument.addEventListener('alpine:init', () => {\n\t\tAlpine.data('navbar', () => ({\n\t\t\tshowNavbar: true,\n\t\t\tlastScrollY: window.scrollY,\n\t\t\tinit() {\n\t\t\t\twindow.addEventListener('scroll', () => {\n\t\t\t\t\tlet currentScrollY = window.scrollY;\n\t\t\t\t\tif (currentScrollY < this.lastScrollY || currentScrollY <= 100) {\n\t\t\t\t\t\tthis.showNavbar = true;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tthis.showNavbar = false;\n\t\t\t\t\t}\n\t\t\t\t\tthis.lastScrollY = currentScrollY;\n\t\t\t\t});\n\t\t\t}\n\t\t}))\n\t})\n</script></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
