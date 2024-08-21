@@ -74,7 +74,7 @@ templ Base(r *http.Request, data bool, username string) {
 	@components.OwnProfile(*usr)
 	} else{
 
-	@components.ElseProfile(*usr)
+	@components.ElseProfile(*usr, r)
 	}
 	}
 

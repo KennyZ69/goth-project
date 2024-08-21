@@ -4,6 +4,7 @@ package components
 import (
 "gothstarter/database"
 "fmt"
+"net/http"
 )
 
 templ OwnProfile(user database.User){
@@ -280,7 +281,12 @@ templ OwnProfile(user database.User){
 
 }
 
-templ ElseProfile(user database.User) {
+templ ElseProfile(user database.User, r *http.Request) {
+{{ profileUrl := fmt.Sprintf("/profile/%s", user.Username) }}
+{{ currentUser, err := GetUserByCookie(r) }}
+if err != nil {
+<p>There was an error getting current user</p>
+}
 <main class="profile-page">
 	<section class="relative block h-[50vh]">
 		<div class="absolute top-0 w-full h-full bg-center bg-cover" style="
@@ -298,6 +304,12 @@ templ ElseProfile(user database.User) {
 		</div>
 	</section>
 	<section class="relative py-16 bg-blueGray-200 h-[50vh]">
+		<div id="respDiv"
+			class=" hidden fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
+
+			<div class="relative w-auto my-6 mx-auto max-w-3xl z-50" id="changeForResponse">
+			</div>
+		</div>
 		<div class="container mx-auto px-4">
 			<div
 				class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
@@ -330,10 +342,25 @@ templ ElseProfile(user database.User) {
 						<div
 							class="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center md:text-left">
 							<div class="py-6 px-3 mt-32 sm:mt-0">
+								{{ reqStatus, err :=
+								database.GetConnectionReq(*currentUser, user) }}
+								if err != nil {
+								<p>There was an error getting the connection request
+									status</p>
+								}
+								if reqStatus == "" {
 								<button class="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
-									type="button">
+									type="button" hx-post={ profileUrl }
+									hx-swap="innerHTML"
+									hx-target="#changeForResponse"
+									onclick="respDivFunc()">
 									Connect
 								</button>
+								} else if reqStatus == database.StatusSent {
+								<p>StatusSent</p>
+								} else if reqStatus == database.StatusReceived {
+								<p>StatusReceived</p>
+								}
 							</div>
 						</div>
 					</div>
@@ -395,4 +422,9 @@ templ ElseProfile(user database.User) {
 		</footer>
 	</section>
 </main>
+<script>
+	function respDivFunc() {
+		document.getElementById("respDiv").classList.remove("hidden")
+	}
+</script>
 }

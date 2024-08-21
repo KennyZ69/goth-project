@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"golang.org/x/crypto/bcrypt"
@@ -27,6 +28,31 @@ type UserProfileData struct {
 	Country      string `json:"country"`
 	City         string `json:"city"`
 }
+
+type RequestStatus string
+
+const (
+	StatusPending  RequestStatus = "pending"
+	StatusAccepted RequestStatus = "accepted"
+	StatusDenied   RequestStatus = "denied"
+	StatusReceived RequestStatus = "received"
+	StatusSent     RequestStatus = "sent"
+)
+
+type Connection_req struct {
+	Id          uint          `json:"id"`
+	Sender_id   uint          `json:"sender_id"`
+	Receiver_id uint          `json:"receiver_id"`
+	Status      RequestStatus `json:"status"`
+	CreatedAt   time.Time     `json:"created_at"`
+}
+
+// type Friend struct{
+// 	Id uint `json"id"`
+// 	User_id uint `json:"user_id"`
+// 	Friend_id uint `json:"friend_id"`
+//
+// }
 
 func InitDB() *sql.DB {
 	godotenv.Load()
@@ -261,4 +287,20 @@ func GetDetailsById(db *sql.DB, id uint) (*UserProfileData, error) {
 		City:         city,
 	}
 	return &data, nil
+}
+
+func GetConnectionReq(currentUser User, receiver User) (RequestStatus, error) {
+	var count int
+	err := DB.QueryRow("SELECT COUNT(*) FROM connection_requests WHERE sender_id=$1 AND receiver_id=$2", currentUser.Id, receiver.Id).Scan(&count)
+	if err != nil {
+		return "", fmt.Errorf("there was an error getting the count of requests for the button: %s", err)
+	}
+	if count > 0 {
+		return StatusSent, nil
+	}
+	err = DB.QueryRow("SELECT COUNT(*) FROM connection_requests WHERE sender_id=$1 AND receiver_id=$2", receiver.Id, currentUser.Id).Scan(&count)
+	if count > 0 {
+		return StatusReceived, nil
+	}
+	return "", nil
 }

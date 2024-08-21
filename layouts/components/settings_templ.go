@@ -26,7 +26,7 @@ func SettingsProfile(username string, email string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!-- Profile Header --><div class=\"bg-white shadow-md rounded-lg p-6\"><div class=\"flex items-center space-x-4\"><div><h2 class=\"text-2xl font-bold\">")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -39,7 +39,7 @@ func SettingsProfile(username string, email string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h2><p class=\"text-gray-600\">Some bio</p></div></div></div><!-- Profile Content --><div class=\"mt-6\"><div class=\"grid grid-cols-1 lg:grid-cols-3 gap-6\"><!-- User Details --><div class=\"bg-white shadow-md rounded-lg p-6\"><h3 class=\"text-xl font-bold mb-4\">User Details</h3><ul class=\"space-y-2\"><li><strong>Email: ")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -52,7 +52,7 @@ func SettingsProfile(username string, email string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</strong></li><li><strong>Phone:</strong></li><li><strong>Location:</strong></li></ul></div><!-- User Activity --><div class=\"bg-white shadow-md rounded-lg p-6 col-span-2\"><h3 class=\"text-xl font-bold mb-4\">Recent Activity</h3></div></div></div><!-- Settings Section --><div class=\"mt-6\"><div class=\"bg-white shadow-md rounded-lg p-6\"><h3 class=\"text-xl font-bold mb-4\">Settings</h3><div x-data=\"{ activeTab: &#39;account&#39; }\"><div class=\"flex space-x-4 mb-4\"><button @click=\"activeTab = &#39;account&#39;\" :class=\"{&#39;bg-blue-500 text-white&#39;: activeTab === &#39;account&#39;}\" class=\"px-4 py-2 rounded\">Account</button> <button @click=\"activeTab = &#39;privacy&#39;\" :class=\"{&#39;bg-blue-500 text-white&#39;: activeTab === &#39;privacy&#39;}\" class=\"px-4 py-2 rounded\">Privacy</button> <button @click=\"activeTab = &#39;notifications&#39;\" :class=\"{&#39;bg-blue-500 text-white&#39;: activeTab === &#39;notifications&#39;}\" class=\"px-4 py-2 rounded\">Notifications</button></div><div x-show=\"activeTab === &#39;account&#39;\" class=\"space-y-4\"><div><label class=\"block text-gray-700\">Username</label> <input type=\"text\" class=\"w-full mt-1 p-2 border rounded\" value=\"")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -65,7 +65,7 @@ func SettingsProfile(username string, email string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></div><div><label class=\"block text-gray-700\">Email</label> <input type=\"email\" class=\"w-full mt-1 p-2 border rounded\" value=\"")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 4)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -78,7 +78,7 @@ func SettingsProfile(username string, email string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></div></div><div x-show=\"activeTab === &#39;privacy&#39;\" class=\"space-y-4\"><div><label class=\"block text-gray-700\">Change Password</label> <input type=\"password\" class=\"w-full mt-1 p-2 border rounded\"></div><div><label class=\"block text-gray-700\">Two-Factor Authentication</label> <input type=\"checkbox\" class=\"mt-1\"></div></div><div x-show=\"activeTab === &#39;notifications&#39;\" class=\"space-y-4\"><div><label class=\"block text-gray-700\">Email Notifications</label> <input type=\"checkbox\" class=\"mt-1\" checked></div><div><label class=\"block text-gray-700\">SMS Notifications</label> <input type=\"checkbox\" class=\"mt-1\"></div></div></div></div></div>")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 5)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

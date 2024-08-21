@@ -26,7 +26,7 @@ func Signup() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"min-h-screen flex items-center justify-center bg-gray-100\" id=\"form-container\"><div class=\" bg-white p-8 rounded shadow-md w-full max-w-md\"><div class=\"flex items-center justify-center flex-col\"><h2 class=\"text-3xl font-bold mb-4\">Sign Up</h2><p class=\"text-gray-700 mb-6 italic underline\">Join our community</p></div><form hx-post=\"/signup\" hx-target=\"#form-container\" hx-swap=\"outerHTML\"><div class=\"mb-4\"><label class=\"block text-gray-700 text-sm font-bold mb-2\" for=\"username\">Username</label> <input required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\" id=\"username\" type=\"text\" name=\"username\" placeholder=\"JankoHrasko123\"></div><div class=\"mb-4\"><label class=\"block text-gray-700 text-sm font-bold mb-2\" for=\"email\">Email Address</label> <input required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\" id=\"email\" type=\"email\" name=\"email\" placeholder=\"yourmail@gmail.com\"></div><div class=\"mb-4\"><label class=\"block text-gray-700 text-sm font-bold mb-2\" for=\"role\">Role</label> <select required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\" id=\"role\" name=\"role\"><option value=\"\">Select a role </option> <option value=\"coach\">Coach</option> <option value=\"player\">Player</option> <option value=\"manager\">Manager</option> <option value=\"agent\">Agent</option></select></div><div class=\"mb-4\"><label class=\"block text-gray-700 text-sm font-bold mb-2\" for=\"password\">Password</label> <input required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\" id=\"password\" name=\"password\" type=\"password\" placeholder=\"Password\"></div><div class=\"mb-4\"><label class=\"block text-gray-700 text-sm font-bold mb-2\" for=\"confirm-password\">Confirm Password</label> <input required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\" id=\"confirm-password\" type=\"password\" name=\"confirm-password\" placeholder=\"Confirm Password\"></div><div class=\"mb-6\"><label class=\"flex items-center\"><input type=\"checkbox\" class=\"form-checkbox\" required> <span class=\"ml-2 text-sm text-gray-700\">By signing up, you agree to our <a href=\"/terms-of-service\">Terms of Service</a></span></label></div><div class=\"flex items-center justify-center\"><button class=\"bg-blue-500 hover:bg-blue-700 text-white  font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline\" type=\"submit\">CREATE ACCOUNT</button></div></form></div></div>")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -52,7 +52,7 @@ func AccountCreationSuccess(name string) templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"min-h-screen flex items-center justify-center bg-gray-100\" id=\"form-container\"><div class=\"bg-white p-8 rounded shadow-md w-full max-w-md text-center\" id=\"AccountCreationSuccessMsg\"><h2 class=\" text-2xl font-bold mb-2\">Welcome <i>")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -65,7 +65,7 @@ func AccountCreationSuccess(name string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</i>!</h2><p class=\"text-gray-700 mb-6\">Your account has been created successfully.</p><a href=\"/\" class=\"bg-blue-500 hover:bg-blue-700 text-white underline font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-block\">Return to Home Page</a></div></div>")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
