@@ -304,3 +304,12 @@ func GetConnectionReq(currentUser User, receiver User) (RequestStatus, error) {
 	}
 	return "", nil
 }
+
+func GetIfHasRequests(user *User) (bool, error) {
+	var count int
+	err := DB.QueryRow("SELECT COUNT(*) FROM connection_requests WHERE receiver_id=$1 AND status=$2", user.Id, StatusPending).Scan(&count)
+	if err != nil {
+		return false, fmt.Errorf("there was a problem getting the requests of the user: %v", err)
+	}
+	return count > 0, nil
+}

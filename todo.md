@@ -1,6 +1,6 @@
 //TODO:
 
-<!--TODO: Make functionality for the connect (and message) buttons on the ElseProfile -->
+<!-- TODO: Make the requests page and notifications on the avatar and in the dropdown menu based on the db saved requests -->
 <!--TODO: Make the chat app for the web, look in gpt for the idea on how to do it -->
 <!--TODO: Check all the paths for compatibility with all kinds of screens and remake the ui depending on that (the ElseProfile is kind of f_ed)-->
 

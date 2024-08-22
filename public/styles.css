@@ -649,6 +649,30 @@ video {
   top: auto;
 }
 
+.right-\[-12px\] {
+  right: -12px;
+}
+
+.top-\[-5px\] {
+  top: -5px;
+}
+
+.left-6 {
+  left: 1.5rem;
+}
+
+.right-6 {
+  right: 1.5rem;
+}
+
+.right-\[-15px\] {
+  right: -15px;
+}
+
+.right-\[-19px\] {
+  right: -19px;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -817,6 +841,26 @@ video {
   margin-top: 2rem;
 }
 
+.mr-4 {
+  margin-right: 1rem;
+}
+
+.ml-\[-6px\] {
+  margin-left: -6px;
+}
+
+.ml-\[-3px\] {
+  margin-left: -3px;
+}
+
+.ml-\[-8px\] {
+  margin-left: -8px;
+}
+
+.ml-\[-10px\] {
+  margin-left: -10px;
+}
+
 .block {
   display: block;
 }
@@ -901,6 +945,14 @@ video {
   height: 100vh;
 }
 
+.h-2 {
+  height: 0.5rem;
+}
+
+.h-2\.5 {
+  height: 0.625rem;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -959,6 +1011,14 @@ video {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-2 {
+  width: 0.5rem;
+}
+
+.w-2\.5 {
+  width: 0.625rem;
 }
 
 .min-w-0 {
@@ -1347,12 +1407,13 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-opacity-65 {
-  --tw-bg-opacity: 0.65;
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
-.bg-\[url\(\&\#39\;https\:\/\/external-content\.duckduckgo\.com\/iu\/\?u\=https\%3A\%2F\%2Fwallup\.net\%2Fwp-content\%2Fuploads\%2F2017\%2F03\%2F27\%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient\.jpg\&amp\;f\=1\&amp\;nofb\=1\&amp\;ipt\=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215\&amp\;ipo\=images\&\#39\;\)\] {
-  background-image: url(&#39;https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallup.net%2Fwp-content%2Fuploads%2F2017%2F03%2F27%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient.jpg&amp;f=1&amp;nofb=1&amp;ipt=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215&amp;ipo=images&#39;);
+.bg-opacity-65 {
+  --tw-bg-opacity: 0.65;
 }
 
 .bg-\[url\(\'https\:\/\/external-content\.duckduckgo\.com\/iu\/\?u\=https\%3A\%2F\%2Fwallup\.net\%2Fwp-content\%2Fuploads\%2F2017\%2F03\%2F27\%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient\.jpg\&f\=1\&nofb\=1\&ipt\=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215\&ipo\=images\'\)\] {
