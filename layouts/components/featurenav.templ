@@ -1,9 +1,11 @@
 package components
 import (
+"net/http"
 "gothstarter/database"
+"strings"
 "fmt")
 
-templ FeatureNavigation(isAuthenticated bool, name string){
+templ FeatureNavigation(isAuthenticated bool, name string, r *http.Request){
 {{ user, err := database.GetUserByName(database.DB, name) }}
 if err != nil{
 <p>Error getting user</p>
@@ -12,8 +14,15 @@ if err != nil{
 
 <section class="w-full px-4 text-gray-700 bg-white bg-opacity-65 body-font">
 	<div class="container flex flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
+		if strings.Contains(r.URL.Path, "/requests/"){
 		<a href="/"
-			class="relative z-10 flex  w-auto text-3xl items-end font-extrabold leading-none text-black select-none ml-auto">TennisIsUs.</a>
+			class="relative z-10 flex  w-auto text-3xl items-end font-extrabold leading-none text-black select-none ml-auto mr-[33%]">TennisIsUs.</a>
+
+		} else {
+		<a href="/"
+			class="relative z-10 flex  w-auto text-3xl items-end font-extrabold leading-none text-black select-none ml-auto mr-[-10%]">TennisIsUs.</a>
+		}
+
 		// ! Check if the user is authenticated
 		if isAuthenticated {
 		<!-- Show user profile icon -->
@@ -87,7 +96,8 @@ if err != nil{
 					<span>Team</span>
 				</a>
 
-				<a href="/requests" @click="dropdownOpen=false"
+				{{ reqUrl := fmt.Sprintf("/requests/%s", name) }}
+				<a href={ templ.SafeURL(reqUrl) } @click="dropdownOpen=false"
 					class="relative flex cursor-pointer select-none items-center rounded px-2 py-1.5 hover:bg-neutral-100 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
 
 					<svg fill="#000000" width="28px" height="28px" viewBox="0 0 24 24"

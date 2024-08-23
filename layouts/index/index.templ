@@ -5,6 +5,6 @@ layouts "gothstarter/layouts/base"
 "net/http"
 )
 
-templ Index(r *http.Request, data bool, username string) {
-@layouts.Base(r, data, username)
+templ Index(r *http.Request, data bool) {
+@layouts.Base(r, data)
 }

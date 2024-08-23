@@ -1,14 +1,10 @@
 package components
 import (
+"net/http"
 "gothstarter/database"
 "fmt")
 
-templ Navigation(isAuthenticated bool, name string) {
-{{ user, err := database.GetUserByName(database.DB, name) }}
-if err != nil{
-<p>Error getting user</p>
-}
-{{ hasReq, err := database.GetIfHasRequests(user) }}
+templ Navigation(isAuthenticated bool, r *http.Request) {
 
 <section class="fixed transition-transform duration-300 w-full px-8 text-gray-700 bg-white bg-opacity-65 body-font"
 	:class="{ '-translate-y-full': !showNavbar, 'translate-y-0': showNavbar }"
@@ -88,14 +84,23 @@ if err != nil{
 		// ! Check if the user is authenticated
 		<!-- Show user profile icon -->
 		if isAuthenticated {
+		{{ user, err := GetUserByCookie(r) }}
+		if err != nil {
+		<p>error getting user</p>
+		}
+		{{ hasReq, err := database.GetIfHasRequests(user) }}
+		if err != nil {
+		<p> error getting the requests on the user from db</p>
+		}
+
 		<!-- Show user profile icon -->
 		<div x-data="{ dropdownOpen: false }" x-wait
 			class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end transition duration-150 ease-out">
 			<!-- Profile icon and other authenticated user links -->
-			{{ hrefProfile := fmt.Sprintf("/profile/%v", name) }}
+			{{ hrefProfile := fmt.Sprintf("/profile/%v", user.Username) }}
 			<button @click="dropdownOpen = !dropdownOpen" class="flex items-center focus:outline-none">
 				<a class="font-semibold">
-					{ name }
+					{ user.Username }
 				</a>
 			</button>
 			<button @click="dropdownOpen = !dropdownOpen" class="flex items-center focus:outline-none">
@@ -158,7 +163,8 @@ if err != nil{
 					<span>Team</span>
 				</a>
 
-				<a href="/requests" @click="dropdownOpen=false"
+				{{ hrefRequests := fmt.Sprintf("/requests/%s", user.Username) }}
+				<a href={ templ.SafeURL(hrefRequests) } @click="dropdownOpen=false"
 					class="relative flex cursor-pointer select-none items-center rounded px-2 py-1.5 hover:bg-neutral-100 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
 
 					<svg fill="#000000" width="28px" height="28px" viewBox="0 0 24 24"

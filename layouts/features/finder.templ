@@ -4,10 +4,11 @@ import (
 "gothstarter/database"
 "gothstarter/layouts/components"
 "fmt"
+"net/http"
 )
 
-templ Finder(isAuthenticated bool, name string) {
-@components.FeatureNavigation(isAuthenticated, name)
+templ Finder(isAuthenticated bool, name string, r *http.Request) {
+@components.FeatureNavigation(isAuthenticated, name, r)
 //TODO: Make the body for the finder, big search bar, kind of long searches of players trainers etc... just simple
 //lookup with the ability to inspect (click) on somebodys profile
 <section class="bg-gray-200 w-screen h-screen py-8 ">

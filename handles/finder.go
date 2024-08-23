@@ -13,12 +13,12 @@ import (
 func HandleFinder(w http.ResponseWriter, r *http.Request) error {
 	if r.Method == http.MethodGet {
 		// Check if the auth_token cookie is present
-		_, err := r.Cookie("auth_token")
-		if err != nil {
-			// If the cookie is not present, redirect to the login page
-			http.Redirect(w, r, "/finder", http.StatusSeeOther)
-			return nil
-		}
+		// _, err := r.Cookie("auth_token")
+		// if err != nil {
+		// 	// If the cookie is not present, redirect to the login page
+		// 	http.Redirect(w, r, "/finder", http.StatusSeeOther)
+		// 	return nil
+		// }
 		currentUser, err := components.GetUserByCookie(r)
 		if err != nil {
 			fmt.Printf("couldnt get the user on finder by cookie: %v", err)
@@ -37,7 +37,10 @@ func HandleFinder(w http.ResponseWriter, r *http.Request) error {
 			})
 
 		}
-		HandleComponents(w, r)
+		err = HandleComponents(w, r)
+		if err != nil {
+			return fmt.Errorf("there was a problem handling the finder page: %v", err)
+		}
 		return nil
 	}
 	return fmt.Errorf("this method is not allowed")

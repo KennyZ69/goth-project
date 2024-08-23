@@ -313,3 +313,21 @@ func GetIfHasRequests(user *User) (bool, error) {
 	}
 	return count > 0, nil
 }
+
+func GetRequestsOnUser(user *User) ([]Connection_req, error) {
+	rows, err := DB.Query("SELECT status, sender_id, created_at FROM connection_requests WHERE receiver_id=$1 AND status=$2", user.Id, StatusPending)
+	if err != nil {
+		return nil, fmt.Errorf("there was an error getting the pending requests on the user: %v", err)
+	}
+	defer rows.Close()
+
+	var requests []Connection_req
+	for rows.Next() {
+		var req Connection_req
+		if err := rows.Scan(&req.Status, &req.Sender_id, &req.CreatedAt); err != nil {
+			return nil, fmt.Errorf("problem scanning the rows on db while getting requests for the user: %v", err)
+		}
+		requests = append(requests, req)
+	}
+	return requests, nil
+}

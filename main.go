@@ -43,6 +43,8 @@ func main() {
 	router.Handle("/finder", handles.MakeHandle(handles.HandleFinder))
 	router.Handle("/finder/search", handles.MakeHandle(handles.HandleSearch))
 
+	router.Handle("/requests/{username}", handles.MakeHandle(handles.HandleRequestPage))
+
 	router.Handle("/api/countries", handles.MakeHandle(handles.CountryHandler))
 	// router.Handle("/api/cities", handles.MakeHandle(handles.CityHandler))
 
