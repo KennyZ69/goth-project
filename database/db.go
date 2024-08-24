@@ -331,3 +331,17 @@ func GetRequestsOnUser(user *User) ([]Connection_req, error) {
 	}
 	return requests, nil
 }
+
+func UpdateReqStatus(sender_id, receiver_id uint, newStatus RequestStatus) error {
+	tx, err := DB.Begin()
+	if err != nil {
+		return fmt.Errorf("problem beginning transaction: %v", err)
+	}
+	defer tx.Rollback()
+
+	_, err = tx.Exec("UPDATE connection_requests SET status=$1 WHERE sender_id=$2 AND receiver_id=$3", newStatus, sender_id, receiver_id)
+	if err != nil {
+		return fmt.Errorf("problem updating in the db: %v", err)
+	}
+	return tx.Commit()
+}

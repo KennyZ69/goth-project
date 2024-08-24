@@ -5,6 +5,7 @@ import (
 	"gothstarter/database"
 	"gothstarter/layouts/components"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -37,11 +38,41 @@ func HandleRequestPage(w http.ResponseWriter, r *http.Request) error {
 	}
 	if r.Method == http.MethodPost {
 		//TODO:Make the accept and deny button for the requests
-		user, err := components.GetUserByCookie(r)
+		currentUser, err := components.GetUserByCookie(r)
 		if err != nil {
-			return fmt.Errorf("problem getting user on post req on the req-page: %v", err)
+			return fmt.Errorf("problem getting the user on post on the req-page: %v", err)
 		}
-		requests, err := database.GetRequestsOnUser(user)
+		r.ParseForm()
+
+		action := r.FormValue("action")
+		fmt.Printf("action: %v\n", action)
+		sender_id := r.FormValue("sender_id")
+		fmt.Printf("sender_id: %v\n", sender_id)
+		sender_int, err := strconv.Atoi(sender_id)
+		if err != nil {
+			return fmt.Errorf("problem parsing the sender_id to int: %v", err)
+		}
+
+		switch action {
+		case "accept":
+			// Handle accept logic
+			err := database.UpdateReqStatus(uint(sender_int), currentUser.Id, database.StatusAccepted)
+			if err != nil {
+				return fmt.Errorf("there was a problem updating the request status: %v", err)
+			}
+			fmt.Fprintf(w, "Request from sender %s accepted.", sender_id)
+			return nil
+		case "deny":
+			// Handle deny logic
+			err := database.UpdateReqStatus(uint(sender_int), currentUser.Id, database.StatusDenied)
+			if err != nil {
+				return fmt.Errorf("there was a problem updating the request status: %v", err)
+			}
+			fmt.Fprintf(w, "Request from sender %s denied.", sender_id)
+			return nil
+		default:
+			return fmt.Errorf("somehow invalid operation with buttons")
+		}
 	}
 	return fmt.Errorf("method not allowed on the requests page")
 }

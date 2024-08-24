@@ -11,8 +11,11 @@ if err != nil{
 <p>Error getting user</p>
 }
 {{ hasReq, err := database.GetIfHasRequests(user) }}
+if err != nil {
+{{ fmt.Printf("error getting whether user has some requests: %v\n", err) }}
+}
 
-<section class="w-full px-4 text-gray-700 bg-white bg-opacity-65 body-font">
+<section class="w-full px-4 text-gray-700 bg-white body-font">
 	<div class="container flex flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
 		if strings.Contains(r.URL.Path, "/requests/"){
 		<a href="/"
@@ -114,9 +117,12 @@ if err != nil{
 					</svg>
 					<span class="relative">
 						Requests
-						<span v-if="hasReq"
+						if hasReq{
+						<span
 							class="absolute right-[-19px] top[-14px] inline-block w-2.5 h-2.5 bg-red-500 rounded-full">
 						</span>
+
+						}
 					</span>
 				</a>
 

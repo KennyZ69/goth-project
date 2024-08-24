@@ -181,9 +181,12 @@ templ Navigation(isAuthenticated bool, r *http.Request) {
 					</svg>
 					<span class="relative">
 						Requests
-						<span v-if="hasReq"
+						if hasReq{
+						<span
 							class="absolute right-[-19px] top[-14px] inline-block w-2.5 h-2.5 bg-red-500 rounded-full">
 						</span>
+
+						}
 					</span>
 				</a>
 
