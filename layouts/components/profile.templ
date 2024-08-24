@@ -341,7 +341,7 @@ if err != nil {
 						</div>
 						<div
 							class="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center md:text-left">
-							<div class="py-6 px-3 mt-32 sm:mt-0">
+							<div class="flex py-6 px-3 mt-32 sm:mt-0 justify-end">
 								{{ reqStatus, err :=
 								database.GetConnectionReq(*currentUser, user) }}
 								if err != nil {
@@ -357,9 +357,25 @@ if err != nil {
 									Connect
 								</button>
 								} else if reqStatus == database.StatusSent {
-								<p>StatusSent</p>
+								<div
+									class="bg-blue-500 shadow font-bold text-white px-4 py-2 rounded w-[40%]">
+									Request sent</div>
+
 								} else if reqStatus == database.StatusReceived {
-								<p>StatusReceived</p>
+								{{ reqUrl := fmt.Sprintf("/requests/%s",
+								currentUser.Username) }}
+								<a href={ templ.SafeURL(reqUrl) }
+									class="bg-green-600 text-white px-4 shadow font-bold hover:shadow-md hover:bg-green-500 py-2 rounded cursor-pointer w-auto max-w-[55vw]">
+									Request received
+								</a>
+								} else if reqStatus == database.StatusDenied {
+								<div
+									class="bg-red-400 text-white font-bold px-4 shadow hover:shadow-md py-2 roundedw-auto">
+									Request denied</div>
+								} else if reqStatus == database.StatusAccepted{
+								<div
+									class="bg-pink-400 text-white font-bold px-4 py-2 shadow rounded w-auto">
+									Connected</div>
 								}
 							</div>
 						</div>

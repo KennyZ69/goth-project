@@ -949,6 +949,10 @@ video {
   height: 6rem;
 }
 
+.max-h-\[75vh\] {
+  max-height: 75vh;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1075,6 +1079,10 @@ video {
 
 .max-w-md {
   max-width: 28rem;
+}
+
+.max-w-\[55vw\] {
+  max-width: 55vw;
 }
 
 .flex-auto {
@@ -1451,6 +1459,26 @@ video {
   background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
 
+.bg-green-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(22 163 74 / var(--tw-bg-opacity));
+}
+
+.bg-pink-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 168 212 / var(--tw-bg-opacity));
+}
+
+.bg-red-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
+}
+
+.bg-pink-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(244 114 182 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-65 {
   --tw-bg-opacity: 0.65;
 }
@@ -1469,6 +1497,10 @@ video {
 
 .bg-\[url\(\.\.\/\.\.\/public\/images\/tophalfbg\.jpg\)\] {
   background-image: url(../../public/images/tophalfbg.jpg);
+}
+
+.bg-\[url\(\&\#39\;https\:\/\/external-content\.duckduckgo\.com\/iu\/\?u\=https\%3A\%2F\%2Fwallup\.net\%2Fwp-content\%2Fuploads\%2F2017\%2F03\%2F27\%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient\.jpg\&amp\;f\=1\&amp\;nofb\=1\&amp\;ipt\=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215\&amp\;ipo\=images\&\#39\;\)\] {
+  background-image: url(&#39;https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallup.net%2Fwp-content%2Fuploads%2F2017%2F03%2F27%2F400609-abstract-colorful-warm_colors-blurred-soft_gradient.jpg&amp;f=1&amp;nofb=1&amp;ipt=d548517f05e3058c2a1678027a10519562e3bbcc82ce31b410e30a10c2284215&amp;ipo=images&#39;);
 }
 
 .bg-cover {
@@ -2021,6 +2053,16 @@ video {
 .hover\:bg-red-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-green-400:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-green-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
 
 .hover\:text-gray-600:hover {

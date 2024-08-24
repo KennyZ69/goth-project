@@ -60,7 +60,23 @@ func HandleRequestPage(w http.ResponseWriter, r *http.Request) error {
 			if err != nil {
 				return fmt.Errorf("there was a problem updating the request status: %v", err)
 			}
-			fmt.Fprintf(w, "Request from sender %s accepted.", sender_id)
+
+			w.Header().Set("Content-Type", "text/html")
+			fmt.Fprintf(w, `<div class="bg-blue-500 text-white px-4 py-2 rounded">Accepted</div>
+			<button onclick="refreshPage()" type="button"
+					class="p-1 ml-auto bg-transparent cursor-pointer border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
+					<span
+						class="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
+						×
+					</span>
+				</button>
+			<script>
+				function refreshPage(){
+				window.location.href="%s"
+				}
+			</script>
+				`, r.URL.Path)
+
 			return nil
 		case "deny":
 			// Handle deny logic
@@ -68,7 +84,23 @@ func HandleRequestPage(w http.ResponseWriter, r *http.Request) error {
 			if err != nil {
 				return fmt.Errorf("there was a problem updating the request status: %v", err)
 			}
-			fmt.Fprintf(w, "Request from sender %s denied.", sender_id)
+
+			w.Header().Set("Content-Type", "text/html")
+			fmt.Fprintf(w, `<div class="bg-blue-500 text-white px-4 py-2 rounded">Denied</div>
+			<button onclick="refreshPage()" type="button"
+					class="p-1 ml-auto bg-transparent cursor-pointer border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
+					<span
+						class="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
+						×
+					</span>
+				</button>
+			<script>
+				function refreshPage(){
+				window.location.href="%s"
+				}
+			</script>
+				`, r.URL.Path)
+
 			return nil
 		default:
 			return fmt.Errorf("somehow invalid operation with buttons")

@@ -291,16 +291,24 @@ func GetDetailsById(db *sql.DB, id uint) (*UserProfileData, error) {
 
 func GetConnectionReq(currentUser User, receiver User) (RequestStatus, error) {
 	var count int
-	err := DB.QueryRow("SELECT COUNT(*) FROM connection_requests WHERE sender_id=$1 AND receiver_id=$2", currentUser.Id, receiver.Id).Scan(&count)
+	err := DB.QueryRow("SELECT COUNT(*) FROM connection_requests WHERE sender_id=$1 AND receiver_id=$2 AND status=$3", currentUser.Id, receiver.Id, StatusPending).Scan(&count)
 	if err != nil {
 		return "", fmt.Errorf("there was an error getting the count of requests for the button: %s", err)
 	}
 	if count > 0 {
 		return StatusSent, nil
 	}
-	err = DB.QueryRow("SELECT COUNT(*) FROM connection_requests WHERE sender_id=$1 AND receiver_id=$2", receiver.Id, currentUser.Id).Scan(&count)
+	err = DB.QueryRow("SELECT COUNT(*) FROM connection_requests WHERE sender_id=$1 AND receiver_id=$2 AND status=$3", receiver.Id, currentUser.Id, StatusPending).Scan(&count)
 	if count > 0 {
 		return StatusReceived, nil
+	}
+	err = DB.QueryRow("SELECT COUNT(*) FROM connection_requests WHERE sender_id=$1 AND receiver_id=$2 AND status=$3 OR sender_id=$4 AND receiver_id=$5 AND status=$6", currentUser.Id, receiver.Id, StatusAccepted, receiver.Id, currentUser.Id, StatusAccepted).Scan(&count)
+	if count > 0 {
+		return StatusAccepted, nil
+	}
+	err = DB.QueryRow("SELECT COUNT(*) FROM connection_requests WHERE sender_id=$1 AND receiver_id=$2 AND status=$3 OR sender_id=$4 AND receiver_id=$5 AND status=$6", currentUser.Id, receiver.Id, StatusDenied, receiver.Id, currentUser.Id, StatusDenied).Scan(&count)
+	if count > 0 {
+		return StatusDenied, nil
 	}
 	return "", nil
 }

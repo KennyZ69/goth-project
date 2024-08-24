@@ -10,7 +10,7 @@ import (
 templ Requests(user database.User, isAuth bool, r *http.Request) {
 @FeatureNavigation(isAuth, user.Username, r)
 <section class="bg-gray-200 w-screen h-screen py-8">
-	<div class="flex items-center flex-col">
+	<div class="flex items-center flex-col max-h-[75vh] overflow-y-auto">
 		<div id="requests" class="mt-8 flex items-center flex-col w-[68vw] bg-white shadow-2xl rounded-lg p-4">
 			<h2 class="text-2xl font-bold mb-2">Your incoming requests:</h2>
 			<div class="space-y-2 w-full ml-10 mt-6 h-full">
@@ -19,7 +19,7 @@ templ Requests(user database.User, isAuth bool, r *http.Request) {
 				{{ fmt.Printf("error getting requests on req-page: %v\n", err) }}
 				}
 				if requests == nil{
-				<h3 class="italic text-xl mt-12 mb-2 flex justify-center">You have no
+				<h3 class="italic text-xl mt-12 mb-2 flex justify-center mr-6">You have no
 					requests for now...
 				</h3>
 				<hr>
@@ -50,7 +50,7 @@ templ Requests(user database.User, isAuth bool, r *http.Request) {
 					</div>
 					<div class="flex space-x-2 w-full justify-end mr-6 mt-2">
 						{{ senderId_string := strconv.FormatUint(uint64(sender.Id), 10) }}
-						<form hx-post={ r.URL.Path } hx-swap="outerHTML"
+						<form hx-post={ r.URL.Path } hx-swap="innerHTML"
 							hx-target="closest div">
 							<input type="hidden" name="sender_id" value={ senderId_string }>
 							<button type="submit" name="action" value="accept"
@@ -58,7 +58,7 @@ templ Requests(user database.User, isAuth bool, r *http.Request) {
 								Accept
 							</button>
 						</form>
-						<form hx-post={ r.URL.Path } hx-swap="outerHTML"
+						<form hx-post={ r.URL.Path } hx-swap="innerHTML"
 							hx-target="closest div">
 							<input type="hidden" name="sender_id" value={ senderId_string }>
 							<button type="submit" name="action" value="deny"
