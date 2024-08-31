@@ -57,8 +57,8 @@ CREATE TABLE IF NOT EXISTS connection_requests (
     receiver_id INT NOT NULL,
     status VARCHAR(50) NOT NULL, -- "pending", "accepted", "denied"
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (sender_id) REFERENCES users(id),
-    FOREIGN KEY (receiver_id) REFERENCES users(id)
+    FOREIGN KEY (sender_id) REFERENCES users(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE IF NOT EXISTS friends (
@@ -66,8 +66,23 @@ CREATE TABLE IF NOT EXISTS friends (
     user_id INT NOT NULL,
     friend_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (friend_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (friend_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE IF NOT EXISTS chats (
+    chat_id SERIAL PRIMARY KEY,
+    user1_id INT REFERENCES users(user_id),
+    user2_id INT REFERENCES users(user_id),
+    last_message TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS messages (
+    chat_id INT REFERENCES chats(chat_id),
+    sender_id INT REFERENCES users(user_id),
+    receiver_id INT REFERENCES users(user_id),
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 EOF

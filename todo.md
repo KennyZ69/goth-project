@@ -8,3 +8,5 @@
 
 **the setting of users profile**
 **Check on youtube and just everywhere how to stop alpine js animations etc from like blinking on the startup / reload of the page/app**#
+
+<!-- TODO: Make the handleinbox handler for the chat page, make hub, client and wshandler for sockets and try that shit out -->

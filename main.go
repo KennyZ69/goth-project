@@ -3,6 +3,7 @@ package main
 import (
 	"gothstarter/handles"
 	"gothstarter/middleware"
+	"gothstarter/ws"
 	"log"
 	"log/slog"
 	"net/http"
@@ -14,6 +15,8 @@ import (
 )
 
 func main() {
+	go ws.GlobalHub.Run()
+
 	if err := godotenv.Load(); err != nil {
 		log.Fatal(err)
 	}
@@ -29,10 +32,11 @@ func main() {
 
 	handleHome := handles.MakeHandle(handles.HandleComponents)
 
-	// router.Use(middleware.AuthMiddleware())
+	router.Use(middleware.AuthMiddleware)
 
 	router.Handle("/*", public())
-	router.Get("/", middleware.AuthMiddleware(handleHome))
+	router.Get("/", handleHome)
+	// router.Get("/", middleware.AuthMiddleware(handleHome))
 	router.Handle("/login", handles.MakeHandle(handles.HandleLogin))
 	router.Handle("/signup", handles.MakeHandle(handles.HandleSignUp))
 	router.Post("/logout", handles.MakeHandle(handles.HandleLogout))
@@ -44,6 +48,10 @@ func main() {
 	router.Handle("/finder/search", handles.MakeHandle(handles.HandleSearch))
 
 	router.Handle("/requests/{username}", handles.MakeHandle(handles.HandleRequestPage))
+
+	router.Handle("/ws", handles.MakeHandle(handles.WsHandler))
+	router.Handle("/chat-try", handles.MakeHandle(handles.HandleChatTry))
+	// router.Handle("/inbox/{username}", handles.MakeHandle(handles.HandleInbox))
 
 	router.Handle("/api/countries", handles.MakeHandle(handles.CountryHandler))
 	// router.Handle("/api/cities", handles.MakeHandle(handles.CityHandler))

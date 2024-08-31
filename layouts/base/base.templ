@@ -18,13 +18,23 @@ templ Base(r *http.Request, data bool) {
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" href="/public/styles.css" />
+
+	<!-- HTMX -->
+	<script src="https://unpkg.com/htmx.org@1.9.10"
+		integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+		crossorigin="anonymous"></script>
+	<!-- HTMX Websockets extension https://htmx.org/extensions/web-sockets/ -->
+	<script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
+
 	<script src="https://cdn.tailwindcss.com" defer async></script>
-	<script src="/public/htmx.min.js" defer async></script>
+
 	<script src="https://unpkg.com/alpinejs" async defer></script>
+
 	<link rel="apple-touch-icon" sizes="180x180" href="/public/favicon/apple-touch-icon.png" />
 	<link rel="icon" type="image/png" sizes="32x32" href="/public/favicon/favicon-32x32.png" />
 	<link rel="icon" type="image/png" sizes="16x16" href="/public/favicon/favicon-16x16.png" />
 	<link rel="manifest" href="/public/favicon/site.webmanifest" />
+
 	<style>
 		html {
 			scroll-behavior: smooth;
@@ -32,7 +42,21 @@ templ Base(r *http.Request, data bool) {
 	</style>
 </head>
 
-<body class="antialiased bg-slate-500">
+<body class="antialiased bg-slate-500" hx-ext="reset-on-success">
+	if strings.Contains(r.URL.Path, "/chat-try"){
+
+	{{ user, err := components.GetUserByCookie(r) }}
+	if err != nil {
+	{{ fmt.Printf("error getting user on chat-try: %v\n", err) }}
+	}
+
+	{{ auth, err := database.GetTokenByUsrId(database.DB, user.Id)}}
+	if err != nil {
+	{{ fmt.Printf("error getting user by cookie on the finder: %v\n", err) }}
+	}
+
+	@components.ChatTry(auth, user, r)
+	}
 	if strings.Contains(r.URL.Path, "/finder"){
 	{{ user, err := components.GetUserByCookie(r) }}
 	if err != nil {
