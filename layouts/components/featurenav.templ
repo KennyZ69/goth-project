@@ -136,7 +136,9 @@ if err != nil {
 					</svg>
 					<span>Blog</span>
 				</a>
-				<a href="" @click="dropdownOpen=false"
+
+				{{ inboxHref := fmt.Sprintf("/inbox/%s", name)}}
+				<a href={ templ.SafeURL(inboxHref) } @click="dropdownOpen=false"
 					class="relative flex cursor-pointer select-none items-center rounded px-2 py-1.5 hover:bg-neutral-100 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
 					<svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
 						fill="none" stroke="currentColor" stroke-width="2"

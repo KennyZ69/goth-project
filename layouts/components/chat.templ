@@ -1,25 +1,51 @@
 package components
 
 import (
-	"gothstarter/database"
-	"net/http"
+"gothstarter/database"
+"net/http"
 )
 
 templ ChatTry(isAuth bool, currentUser *database.User, r *http.Request) {
-	// @FeatureNavigation(isAuth, currentUser.Username, r)
-	<h1 class="mt-10 text-3xl text-center p-4">Chat</h1>
-	<div hx-ext="ws" ws-connect="/ws">
-		<div class="flex bg-gray-100 p-4">
-			<ul id="chat_room" hx-swap="beforeend" hx-swap-oob="beforeend"></ul>
-		</div>
-		<form id="form" ws-send autocomplete="off" class="mt-4">
-			<input
-				name="text"
-				type="text"
-				class="border-2 border-gray-300 p-2 overflow-y-auto width-[20%]"
-				placeholder="Type your message"
-			/>
-			<button type="submit" class="bg-blue-500 text-white px-4 py-2">Send</button>
-		</form>
+// @FeatureNavigation(isAuth, currentUser.Username, r)
+<h1 class="mt-10 text-3xl text-center p-4">Chat</h1>
+<div hx-ext="ws" ws-connect="/ws">
+	<div class="flex bg-gray-100 p-4">
+		<ul id="chat_room" hx-swap="beforeend" hx-swap-oob="beforeend"></ul>
 	</div>
+	<form id="form" ws-send autocomplete="off" class="mt-4">
+		<input name="text" type="text" class="border-2 border-gray-300 p-2 overflow-y-auto width-[20%]"
+			placeholder="Type your message" />
+		<button type="submit" class="bg-blue-500 text-white px-4 py-2">Send</button>
+	</form>
+</div>
+<!--
+<h1 class="mt-10 text-3xl text-center p-4">Chat</h1>
+	
+	//Chat Header with the Other User's Information //
+<div class="flex items-center justify-center bg-gray-200 p-4">
+	<img src="{{otherUser.ProfileImageURL}}" alt="Profile Picture" class="w-12 h-12 rounded-full mr-4">
+	<h2 class="text-xl font-semibold">{{otherUser.Username}}</h2>
+</div>
+
+// Chat Messages Section 
+<div hx-ext="ws" ws-connect="/ws" class="p-4 bg-gray-100 h-[500px] overflow-y-scroll">
+	<ul id="chat_room" hx-swap="beforeend" hx-swap-oob="beforeend">
+		{{range .Messages}}
+		<li class="mb-4 {{if eq .SenderUsername currentUser.Username}}text-right{{else}}text-left{{end}}">
+			<div
+				class="inline-block px-4 py-2 rounded-lg {{if eq .SenderUsername currentUser.Username}}bg-blue-500 text-white{{else}}bg-gray-300 text-black{{end}}">
+				{{.Text}}
+			</div>
+		</li>
+		{{end}}
+	</ul>
+</div>
+
+// Chat Input Form 
+<form id="form" ws-send autocomplete="off" class="flex items-center p-4">
+	<input name="text" type="text" class="flex-grow border-2 border-gray-300 p-2 rounded-lg mr-4"
+		placeholder="Type your message" />
+	<button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Send</button>
+</form>
+-->
 }

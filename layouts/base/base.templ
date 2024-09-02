@@ -43,6 +43,9 @@ templ Base(r *http.Request, data bool) {
 </head>
 
 <body class="antialiased bg-slate-500" hx-ext="reset-on-success">
+	if strings.Contains(r.URL.Path, "/inbox/"){
+	@components.Inbox()
+	}
 	if strings.Contains(r.URL.Path, "/chat-try"){
 
 	{{ user, err := components.GetUserByCookie(r) }}

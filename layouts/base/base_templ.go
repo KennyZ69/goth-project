@@ -39,6 +39,12 @@ func Base(r *http.Request, data bool) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
+		if strings.Contains(r.URL.Path, "/inbox/") {
+			templ_7745c5c3_Err = components.Inbox().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
 		if strings.Contains(r.URL.Path, "/chat-try") {
 			user, err := components.GetUserByCookie(r)
 			if err != nil {

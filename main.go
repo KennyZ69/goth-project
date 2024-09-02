@@ -51,7 +51,8 @@ func main() {
 
 	router.Handle("/ws", handles.MakeHandle(handles.WsHandler))
 	router.Handle("/chat-try", handles.MakeHandle(handles.HandleChatTry))
-	// router.Handle("/inbox/{username}", handles.MakeHandle(handles.HandleInbox))
+
+	router.Handle("/inbox/{username}", handles.MakeHandle(handles.HandleInbox))
 
 	router.Handle("/api/countries", handles.MakeHandle(handles.CountryHandler))
 	// router.Handle("/api/cities", handles.MakeHandle(handles.CityHandler))
