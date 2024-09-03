@@ -637,10 +637,6 @@ video {
   left: 50%;
 }
 
-.left-16 {
-  left: 4rem;
-}
-
 .right-0 {
   right: 0px;
 }
@@ -653,12 +649,12 @@ video {
   top: 0px;
 }
 
-.top-auto {
-  top: auto;
-}
-
 .top-12 {
   top: 3rem;
+}
+
+.top-auto {
+  top: auto;
 }
 
 .z-0 {
@@ -973,10 +969,6 @@ video {
   width: 3rem;
 }
 
-.w-16 {
-  width: 4rem;
-}
-
 .w-2 {
   width: 0.5rem;
 }
@@ -1003,10 +995,6 @@ video {
 
 .w-6 {
   width: 1.5rem;
-}
-
-.w-64 {
-  width: 16rem;
 }
 
 .w-8 {
@@ -1081,16 +1069,16 @@ video {
   max-width: 55vw;
 }
 
+.max-w-full {
+  max-width: 100%;
+}
+
 .max-w-lg {
   max-width: 32rem;
 }
 
 .max-w-md {
   max-width: 28rem;
-}
-
-.max-w-full {
-  max-width: 100%;
 }
 
 .flex-auto {
@@ -1201,6 +1189,10 @@ video {
 
 .items-center {
   align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
 }
 
 .justify-end {
@@ -1333,20 +1325,12 @@ video {
   border-width: 2px;
 }
 
-.border-4 {
-  border-width: 4px;
-}
-
 .border-b {
   border-bottom-width: 1px;
 }
 
 .border-b-2 {
   border-bottom-width: 2px;
-}
-
-.border-r {
-  border-right-width: 1px;
 }
 
 .border-t {
@@ -1386,13 +1370,13 @@ video {
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
-.border-transparent {
-  border-color: transparent;
-}
-
 .border-gray-400 {
   --tw-border-opacity: 1;
   border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+
+.border-transparent {
+  border-color: transparent;
 }
 
 .bg-black {
@@ -2006,6 +1990,12 @@ video {
   transition-duration: 150ms;
 }
 
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .transition-transform {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -2060,6 +2050,22 @@ video {
 
 .animate-bounce {
   animation: bounce 0.3s;
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-align: center;
+  white-space: nowrap;
+  /* font-size: 2rem; */
+  /* Adjust the font size as needed */
+}
+
+.horizontal-text {
+  writing-mode: horizontal-tb;
+  transform: none;
+  text-align: right;
+  /* white-space: nowrap; */
 }
 
 .hover\:scale-105:hover {
@@ -2247,8 +2253,8 @@ video {
   background-color: rgb(219 39 119 / var(--tw-bg-opacity));
 }
 
-.group:hover .group-hover\:block {
-  display: block;
+.group:hover .group-hover\:opacity-100 {
+  opacity: 1;
 }
 
 .data-\[disabled\]\:pointer-events-none[data-disabled] {
@@ -2346,12 +2352,12 @@ video {
     width: 50%;
   }
 
-  .md\:w-6\/12 {
-    width: 50%;
-  }
-
   .md\:w-16 {
     width: 4rem;
+  }
+
+  .md\:w-6\/12 {
+    width: 50%;
   }
 
   .md\:w-64 {

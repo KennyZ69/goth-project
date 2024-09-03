@@ -60,6 +60,10 @@ func HandleRequestPage(w http.ResponseWriter, r *http.Request) error {
 			if err != nil {
 				return fmt.Errorf("there was a problem updating the request status: %v", err)
 			}
+			err = saveFriendInDb(uint(sender_int), currentUser.Id)
+			if err != nil {
+				return err
+			}
 
 			w.Header().Set("Content-Type", "text/html")
 			fmt.Fprintf(w, `<div class="bg-blue-500 text-white px-4 py-2 rounded">Accepted</div>
@@ -107,4 +111,12 @@ func HandleRequestPage(w http.ResponseWriter, r *http.Request) error {
 		}
 	}
 	return fmt.Errorf("method not allowed on the requests page")
+}
+
+func saveFriendInDb(user1_id, user2_id uint) error {
+	_, err := database.DB.Exec("INSERT INTO friends (user_id, friend_id, created_at) VALUES ($1, $2, $3)", user1_id, user2_id, time.Now())
+	if err != nil {
+		return fmt.Errorf("there was an error saving the friend to database: %v", err)
+	}
+	return nil
 }

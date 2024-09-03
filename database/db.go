@@ -347,9 +347,23 @@ func UpdateReqStatus(sender_id, receiver_id uint, newStatus RequestStatus) error
 	}
 	defer tx.Rollback()
 
-	_, err = tx.Exec("UPDATE connection_requests SET status=$1 WHERE sender_id=$2 AND receiver_id=$3", newStatus, sender_id, receiver_id)
-	if err != nil {
-		return fmt.Errorf("problem updating in the db: %v", err)
+	if newStatus == StatusDenied {
+		_, err = tx.Exec("UPDATE connection_requests SET status=$1 expires_at=$2 WHERE sender_id=$3 AND receiver_id=$4", newStatus, time.Now().Add(5*24*time.Hour), sender_id, receiver_id)
+		if err != nil {
+			return fmt.Errorf("problem updating in the db: %v", err)
+		}
+	}
+	if newStatus == StatusPending {
+		_, err = tx.Exec("UPDATE connection_requests SET status=$1 expires_at=$2 WHERE sender_id=$3 AND receiver_id=$4", newStatus, time.Now().Add(30*24*time.Hour), sender_id, receiver_id)
+		if err != nil {
+			return fmt.Errorf("problem updating in the db: %v", err)
+		}
+	} else {
+
+		_, err = tx.Exec("UPDATE connection_requests SET status=$1 WHERE sender_id=$2 AND receiver_id=$3", newStatus, sender_id, receiver_id)
+		if err != nil {
+			return fmt.Errorf("problem updating in the db: %v", err)
+		}
 	}
 	return tx.Commit()
 }

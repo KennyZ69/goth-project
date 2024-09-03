@@ -25,3 +25,19 @@
 .animate-bounce {
 	animation: bounce 0.3s;
 }
+
+.vertical-text {
+	writing-mode: vertical-rl;
+	transform: rotate(180deg);
+	text-align: center;
+	white-space: nowrap;
+	/* font-size: 2rem; */
+	/* Adjust the font size as needed */
+}
+
+.horizontal-text {
+	writing-mode: horizontal-tb;
+	transform: none;
+	text-align: right;
+	/* white-space: nowrap; */
+}
