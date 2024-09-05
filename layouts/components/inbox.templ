@@ -142,9 +142,64 @@ templ Inbox(currentUser *database.User) {
 			}</h2>
 		<!-- Search bar -->
 		<div class="mb-4">
-			<input type="text" placeholder="Search..."
-				class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:border-blue-300" />
+			<input type="text" placeholder="Search..." id="friendSearch" name="friendSearch"
+				hx-params="friendSearch"
+				class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
+				hx-get="/api/searchFriends" hx-trigger="input changed delay:150ms"
+				hx-target="#searchResults" hx-indicator="#loader" />
+			<!-- Search results dropdown -->
+			<ul id="searchResults"
+				class="w-full bg-white shadow-lg rounded-lg mt-2 z-10 transition-all duration-150 ease-in-out max-h-60 overflow-auto border border-gray-300">
+				<!-- Friends list will be dynamically inserted here by HTMX -->
+			</ul>
 		</div>
+
+		<div id="loader" class="hidden">Searching...</div>
+		<script>
+
+			const searchResults = document.getElementById('searchResults');
+			const searchInput = document.getElementById('friendSearch');
+
+			document.addEventListener('htmx:afterRequest', function (event) {
+				// Check if the request is for the search friends API
+
+				// Check if the request is for the search friends API
+				if (event.detail.requestConfig.url.includes("/api/searchFriends")) {
+					if (searchInput.value.trim() == "") {
+						// If input is empty, clear the results
+						searchResults.innerHTML = '';
+					} else {
+						updateFriendSuggestions(event.detail.target, event.detail.xhr.responseText);
+					}
+				});
+
+			searchInput.addEventListener('focusout', function () {
+				searchResults.classList.add('opacity-0', 'pointer-events-none');
+			});
+
+			// Show results again when the input is focused
+			searchInput.addEventListener('focus', function () {
+				searchResults.classList.remove('opacity-0', 'pointer-events-none');
+			});
+
+			function updateFriendSuggestions(target, responseText) {
+				const suggestions = JSON.parse(responseText);
+				const ul = document.getElementById('searchResults');
+				ul.innerHTML = ''; // Clear previous results
+
+				suggestions.forEach(item => {
+					const li = document.createElement('li');
+					li.setAttribute('hx-get', `/api/openChatWithFriend?friendId=${item.Friend_id}`);
+					li.setAttribute('hx-trigger', 'click');
+					li.setAttribute('hx-target', 'this');
+					li.textContent = item.Friend_name;
+					ul.appendChild(li);
+				});
+
+				// Ensure search results are visible when new results are loaded
+				searchResults.classList.remove('opacity-0', 'pointer-events-none');
+			}
+		</script>
 		<!-- Chat list -->
 		<div class="flex-grow overflow-y-auto">
 			<div class="space-y-2">

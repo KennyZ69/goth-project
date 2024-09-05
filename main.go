@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"gothstarter/api"
+	"gothstarter/database"
 	"gothstarter/handles"
 	"gothstarter/middleware"
 	"gothstarter/ws"
@@ -9,13 +12,31 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 )
 
+func startBackgroundJobs() {
+	ticker := time.NewTicker(24 * time.Hour) // Runs the job every 24 hours
+	go func() {
+		for {
+			select {
+			case <-ticker.C:
+				err := database.DeleteExpiredRequests()
+				if err != nil {
+					// Handle the error, maybe log it
+					fmt.Printf("error deleting expired requests: %v\n", err)
+				}
+			}
+		}
+	}()
+}
+
 func main() {
 	go ws.GlobalHub.Run()
+	startBackgroundJobs()
 
 	if err := godotenv.Load(); err != nil {
 		log.Fatal(err)
@@ -36,6 +57,7 @@ func main() {
 
 	router.Handle("/*", public())
 	router.Get("/", handleHome)
+
 	// router.Get("/", middleware.AuthMiddleware(handleHome))
 	router.Handle("/login", handles.MakeHandle(handles.HandleLogin))
 	router.Handle("/signup", handles.MakeHandle(handles.HandleSignUp))
@@ -56,6 +78,8 @@ func main() {
 
 	router.Handle("/api/countries", handles.MakeHandle(handles.CountryHandler))
 	// router.Handle("/api/cities", handles.MakeHandle(handles.CityHandler))
+
+	router.Handle("/api/searchFriends", handles.MakeHandle(api.SearchFriends))
 
 	router.Get("/team.html", handles.MakeHandle(handles.HandleTeamPage))
 

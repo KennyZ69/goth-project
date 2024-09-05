@@ -64,7 +64,9 @@ CREATE TABLE IF NOT EXISTS connection_requests (
 CREATE TABLE IF NOT EXISTS friends (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
+    user_name VARCHAR(50) NOT NULL,
     friend_id INT NOT NULL,
+    friend_name VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (friend_id) REFERENCES users(user_id)

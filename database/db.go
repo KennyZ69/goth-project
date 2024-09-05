@@ -47,12 +47,14 @@ type Connection_req struct {
 	CreatedAt   time.Time     `json:"created_at"`
 }
 
-// type Friend struct{
-// 	Id uint `json"id"`
-// 	User_id uint `json:"user_id"`
-// 	Friend_id uint `json:"friend_id"`
-//
-// }
+type Friend struct {
+	Id          uint      `json:"id"`
+	User_id     uint      `json:"user_id"`
+	User_name   string    `json:"user_name"`
+	Friend_name string    `json:"friend_name"`
+	Friend_id   uint      `json:"friend_id"`
+	Created_at  time.Time `json:"created_at"`
+}
 
 func InitDB() *sql.DB {
 	godotenv.Load()
@@ -366,4 +368,25 @@ func UpdateReqStatus(sender_id, receiver_id uint, newStatus RequestStatus) error
 		}
 	}
 	return tx.Commit()
+}
+
+func DeleteExpiredRequests() error {
+	_, err := DB.Exec(`
+		DELETE FROM connection_requests 
+		WHERE expires_at < NOW()`)
+	if err != nil {
+		return fmt.Errorf("problem deleting expired requests: %v", err)
+	}
+	return nil
+}
+
+func GetFriendNameById(id uint) (error, string) {
+	query := "SELECT username FROM users WHERE user_id=$1"
+	row := DB.QueryRow(query, id)
+	var username string
+	err := row.Scan(&username)
+	if err != nil {
+		return err, ""
+	}
+	return err, username
 }

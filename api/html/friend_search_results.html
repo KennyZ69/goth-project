@@ -1,0 +1,8 @@
+{{range .}}
+<div class="p-2 hover:bg-blue-100 cursor-pointer" hx-get="/api/openChatWithFriend?friendId={{.Friend_id}}"
+	hx-trigger="click" hx-target="this">
+	{{.Friend_name}}
+</div>
+{{ else }}
+<div class="p-2 text-gray-500">No results found</div>
+{{end}}

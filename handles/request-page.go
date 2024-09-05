@@ -67,19 +67,19 @@ func HandleRequestPage(w http.ResponseWriter, r *http.Request) error {
 
 			w.Header().Set("Content-Type", "text/html")
 			fmt.Fprintf(w, `<div class="bg-blue-500 text-white px-4 py-2 rounded">Accepted</div>
-			<button onclick="refreshPage()" type="button"
-					class="p-1 ml-auto bg-transparent cursor-pointer border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
-					<span
-						class="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
-						×
-					</span>
-				</button>
-			<script>
-				function refreshPage(){
-				window.location.href="%s"
-				}
-			</script>
-				`, r.URL.Path)
+		<button onclick="refreshPage()" type="button"
+				class="p-1 ml-auto bg-transparent cursor-pointer border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
+				<span
+					class="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
+					×
+				</span>
+			</button>
+		<script>
+			function refreshPage(){
+			window.location.href="%s"
+			}
+		</script>
+			`, r.URL.Path)
 
 			return nil
 		case "deny":
@@ -91,19 +91,19 @@ func HandleRequestPage(w http.ResponseWriter, r *http.Request) error {
 
 			w.Header().Set("Content-Type", "text/html")
 			fmt.Fprintf(w, `<div class="bg-blue-500 text-white px-4 py-2 rounded">Denied</div>
-			<button onclick="refreshPage()" type="button"
-					class="p-1 ml-auto bg-transparent cursor-pointer border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
-					<span
-						class="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
-						×
-					</span>
-				</button>
-			<script>
-				function refreshPage(){
-				window.location.href="%s"
-				}
-			</script>
-				`, r.URL.Path)
+		<button onclick="refreshPage()" type="button"
+				class="p-1 ml-auto bg-transparent cursor-pointer border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
+				<span
+					class="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
+					×
+				</span>
+			</button>
+		<script>
+			function refreshPage(){
+			window.location.href="%s"
+			}
+		</script>
+			`, r.URL.Path)
 
 			return nil
 		default:
@@ -114,9 +114,23 @@ func HandleRequestPage(w http.ResponseWriter, r *http.Request) error {
 }
 
 func saveFriendInDb(user1_id, user2_id uint) error {
-	_, err := database.DB.Exec("INSERT INTO friends (user_id, friend_id, created_at) VALUES ($1, $2, $3)", user1_id, user2_id, time.Now())
+	user, err := database.GetUserById(user1_id)
+	if err != nil {
+		return err
+	}
+	friend, err := database.GetUserById(user2_id)
+	if err != nil {
+		return err
+	}
+	_, err = database.DB.Exec("INSERT INTO friends (user_id, friend_id, created_at, user_name, friend_name) VALUES ($1, $2, $3, $4, $5)", user1_id, user2_id, time.Now(), user.Username, friend.Username)
 	if err != nil {
 		return fmt.Errorf("there was an error saving the friend to database: %v", err)
 	}
+
+	_, err = database.DB.Exec("INSERT INTO friends (user_id, friend_id, created_at, user_name, friend_name) VALUES ($1, $2, $3, $4, $5)", user2_id, user1_id, time.Now(), friend.Username, user.Username)
+	if err != nil {
+		return fmt.Errorf("there was an error saving the friend to database: %v", err)
+	}
+
 	return nil
 }
