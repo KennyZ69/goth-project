@@ -1,7 +1,6 @@
 //TODO:
 
 <!--TODO: Make the chat app for the web, look in gpt for the idea on how to do it -->
-    <!-- - Got the dropdown and sidebar done -->
     - Implement the possibility to open (create) the chat by clicking on the option in the search bar
 
 
