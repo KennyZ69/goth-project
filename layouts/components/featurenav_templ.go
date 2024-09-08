@@ -125,7 +125,7 @@ func FeatureNavigation(isAuthenticated bool, name string, r *http.Request) templ
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			inboxHref := fmt.Sprintf("/inbox/%s", name)
+			inboxHref := fmt.Sprintf("/inbox/%s", user.Username)
 			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 15)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err

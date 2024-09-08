@@ -53,7 +53,7 @@ func Inbox(currentUser *database.User) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(currentUser.Username)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/components/inbox.templ`, Line: 141, Col: 106}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `layouts/components/inbox.templ`, Line: 140, Col: 106}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

@@ -10,9 +10,8 @@ templ Inbox(currentUser *database.User) {
 //<h1 class="mt-10 text-3xl text-center p-4">Inbox</h1>
 <div class="flex flex-col md:flex-row h-screen font-sans">
 	<!-- Thin column for the dropdown menu -->
-	<div
-		class="w-full md:w-16 bg-gray-800 text-white flex flex-row md:flex-col items-center justify-between md:justify-start p-4">
-		<div class="relative group h-full" x-data="{ dropdownOpen: false }" x-wait>
+	<div class="w-full md:w-16 bg-gray-800 text-white flex flex-row md:flex-col items-center justify-between  p-4">
+		<div class="relative group h-full md:w-full" x-data="{ dropdownOpen: false }" x-wait>
 			<!-- Dropdown icon -->
 			<div @click="dropdownOpen = !dropdownOpen"
 				class="cursor-pointer justify-start transition duration-150 ease-in-out" role="button">
@@ -110,7 +109,7 @@ templ Inbox(currentUser *database.User) {
 					</span>
 				</a>
 			</div>
-			<div class="h-full flex justify-center items-center">
+			<div class="h-full hidden justify-center items-center md:flex">
 				<h1 class="font-bold text-white vertical-text text-3xl mb-4">
 					TennisIsUs</h1>
 			</div>
@@ -189,9 +188,9 @@ templ Inbox(currentUser *database.User) {
 
 				suggestions.forEach(item => {
 					const li = document.createElement('li');
-					li.setAttribute('hx-get', `/api/openChatWithFriend?friendId=${item.Friend_id}`);
+					li.setAttribute('hx-get', `/api/openChat?friendId=${item.Friend_id}`);
 					li.setAttribute('hx-trigger', 'click');
-					li.setAttribute('hx-target', 'this');
+					li.setAttribute('hx-target', '#chatContent');
 					li.textContent = item.Friend_name;
 					ul.appendChild(li);
 				});
@@ -207,7 +206,8 @@ templ Inbox(currentUser *database.User) {
 					<div class="font-semibold">Chat 1</div>
 					<div class="text-sm text-gray-500">Last message...</div>
 				</div>
-				<div class="p-3 bg-white rounded-lg shadow cursor-pointer hover:bg-blue-100">
+				<div
+					class="hidden md:block p-3 bg-white rounded-lg shadow cursor-pointer hover:bg-blue-100">
 					<div class="font-semibold">Chat 2</div>
 					<div class="text-sm text-gray-500">Last message...</div>
 				</div>
@@ -216,7 +216,7 @@ templ Inbox(currentUser *database.User) {
 		</div>
 	</div>
 	<!-- Wide column for chat content -->
-	<div class="flex-grow bg-white p-6 flex flex-col">
+	<div id="chatContent" class="flex-grow bg-white p-6 flex flex-col">
 		<!-- Chat header -->
 		<div class="border-b border-gray-300 pb-3 mb-4">
 			<h1 class="text-2xl font-bold">Chat with User</h1>

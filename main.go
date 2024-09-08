@@ -80,6 +80,7 @@ func main() {
 	// router.Handle("/api/cities", handles.MakeHandle(handles.CityHandler))
 
 	router.Handle("/api/searchFriends", handles.MakeHandle(api.SearchFriends))
+	router.Handle("/api/openChat", handles.MakeHandle(api.CreateChatHandle))
 
 	router.Get("/team.html", handles.MakeHandle(handles.HandleTeamPage))
 
