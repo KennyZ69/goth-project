@@ -1,0 +1,100 @@
+{{ define "chat" }}
+<div class="flex flex-col h-full w-full">
+	<!-- Chat Header -->
+	<div class="border-b border-gray-300 p-4">
+		<div class="text-2xl font-bold" id="chatUsername">{{ .Friend.Username }}</div>
+	</div>
+
+	<!-- Messages Section -->
+	<div class="flex-grow overflow-y-auto p-4 space-y-4" id="chatMessages">
+		{{ range .Messages }}
+		{{ if eq .Client_id $.CurrentUser.Id }}
+		<!-- Your message -->
+		<div class="flex justify-end">
+			<div class="bg-blue-100 p-3 rounded-lg shadow max-w-xs">
+				<div class="text-sm text-gray-800">{{ .Text }}</div>
+				<div class="text-xs text-gray-500 mt-1">{{ .created_at }}</div>
+			</div>
+		</div>
+		{{ else }}
+		<!-- Friend's message -->
+		<div class="flex justify-start">
+			<div class="bg-gray-100 p-3 rounded-lg shadow max-w-xs">
+				<div class="text-sm text-gray-800">{{ .Text }}</div>
+				<div class="text-xs text-gray-500 mt-1">{{ .created_at }}</div>
+			</div>
+		</div>
+		{{ end }}
+		{{ else }}
+		<div class="text-center text-gray-500 mt-10">No messages yet. Say hello!</div>
+		{{ end }}
+	</div>
+
+	<!-- Input Bar -->
+	<div class="border-t border-gray-300 p-4 flex items-center">
+		<button id="emojiButton" class="text-gray-400 hover:text-gray-600 mr-2">
+			<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+					d="M14.828 14.828a4 4 0 005.656 0m-5.656 0a4 4 0 01-5.656 0m5.656 0L12 17.657m0-8a5 5 0 110-10 5 5 0 010 10z" />
+			</svg>
+		</button>
+
+		<input id="chatInput" type="text" placeholder="Type a message..."
+			class="flex-grow p-3 border rounded-lg focus:outline-none focus:ring focus:border-blue-300" />
+
+		<button id="sendButton" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+			Send
+		</button>
+	</div>
+</div>
+
+<script>
+	const chatId = `{{ .ChatId }}`;
+	const socket = new WebSocket(`ws://localhost:1769/ws?chat_id=${chatId}`);
+
+	socket.onmessage = function (event) {
+		const msg = JSON.parse(event.data);
+		const messageContainer = document.getElementById('chatMessages');
+		const newMessage = document.createElement('div');
+
+		if (msg.Client_id === `{{ .CurrentUser.Id }}`
+		) {
+			newMessage.innerHTML = `
+                <div class="flex justify-end">
+                    <div class="bg-blue-100 p-3 rounded-lg shadow max-w-xs">
+                        <div class="text-sm text-gray-800">${msg.Text}</div>
+                        <div class="text-xs text-gray-500 mt-1">${msg.created_at}</div>
+                    </div>
+                </div>`;
+		} else {
+			newMessage.innerHTML = `
+                <div class="flex justify-start">
+                    <div class="bg-gray-100 p-3 rounded-lg shadow max-w-xs">
+                        <div class="text-sm text-gray-800">${msg.Text}</div>
+                        <div class="text-xs text-gray-500 mt-1">${msg.created_at}</div>
+                    </div>
+                </div>`;
+		}
+
+		messageContainer.appendChild(newMessage);
+		messageContainer.scrollTop = messageContainer.scrollHeight;
+	};
+
+	document.getElementById('sendButton').addEventListener('click', function () {
+		const inputField = document.getElementById('chatInput');
+		const message = inputField.value;
+
+		if (message.trim() !== "") {
+			const msg = JSON.stringify({
+				chat_id: chatId,
+				client_id: `{{ .CurrentUser.Id }}`,
+				text: message
+			});
+
+			socket.send(msg);
+			inputField.value = '';
+		}
+	});
+</script>
+{{ end }}

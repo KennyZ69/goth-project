@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS chats (
 CREATE TABLE IF NOT EXISTS messages (
     chat_id INT REFERENCES chats(chat_id),
     sender_id INT REFERENCES users(user_id),
-    receiver_id INT REFERENCES users(user_id),
+    sender_name VARCHAR(50) NOT NULL, 
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

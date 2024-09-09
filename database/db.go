@@ -390,3 +390,59 @@ func GetFriendNameById(id uint) (error, string) {
 	}
 	return err, username
 }
+
+// func GetMessagesByChatId(chatId uint) ([]*ws.Message, error) {
+// 	var msgArr []*ws.Message
+// 	var msg *ws.Message
+// 	var count int
+// 	tx, err := DB.Begin()
+// 	if err != nil {
+// 		return nil, err
+// 	}
+//
+// 	err = tx.QueryRow("SELECT COUNT(*) FROM messages WHERE chat_id=$1", chatId).Scan(&count)
+// 	if err != nil {
+// 		return nil, fmt.Errorf("Error counting messages for given chat: %v", err)
+// 	}
+// 	for _ = range count {
+// 		// err = tx.QueryRow("SELECT *")
+// 	}
+//
+// 	return msgArr, tx.Commit()
+// }
+
+func SaveMsgsToDb(senderId uint, chatId uint, content string) error {
+	tx, err := DB.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	// Get the sender's username from the users table
+	var senderName string
+	err = tx.QueryRow("SELECT username FROM users WHERE user_id=$1", senderId).Scan(&senderName)
+	if err != nil {
+		return fmt.Errorf("error getting sender name: %v", err)
+	}
+
+	// Insert the message into the messages table
+	_, err = tx.Exec(`
+        INSERT INTO messages (chat_id, sender_id, sender_name, content, created_at) 
+        VALUES ($1, $2, $3, $4, $5)`,
+		chatId, senderId, senderName, content, time.Now())
+	if err != nil {
+		return fmt.Errorf("error inserting message: %v", err)
+	}
+
+	// Update the last_message timestamp in the chats table
+	_, err = tx.Exec(`
+        UPDATE chats 
+        SET last_message = $1
+        WHERE chat_id = $2`,
+		time.Now(), chatId)
+	if err != nil {
+		return fmt.Errorf("error updating last message: %v", err)
+	}
+
+	return tx.Commit()
+}

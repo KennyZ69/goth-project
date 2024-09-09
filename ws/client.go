@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"gothstarter/database"
+
 	"gothstarter/layouts/components"
 	"log"
 	"net/http"
@@ -34,7 +35,7 @@ type Message struct {
 	Client_id  uint      `json:"client_id"`
 	Username   string    `json:"username"`
 	Text       string    `json:"text"`
-	created_at time.Time `json:"created_at"`
+	Created_at time.Time `json:"created_at"`
 }
 
 // type WsMessage struct {
@@ -148,11 +149,18 @@ func (c *Client) readPump() {
 		if err != nil {
 			fmt.Printf("error getting user by id in readPump(): %v\n", err)
 		}
+
+		err = database.SaveMsgsToDb(c.User_id, msg.Chat_id, msg.Text)
+		if err != nil {
+			log.Printf("error saving msg to database: %v\n", err)
+		}
 		log.Printf("Broadcasting message: %v, from user: %v\n", msg.Text, user.Username)
 		GlobalHub.Broadcast <- &Message{
-			Text:      msg.Text,
-			Client_id: c.User_id,
-			Username:  user.Username,
+			Text:       msg.Text,
+			Client_id:  c.User_id,
+			Username:   user.Username,
+			Chat_id:    msg.Chat_id,
+			Created_at: time.Now(),
 		}
 	}
 }

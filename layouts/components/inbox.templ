@@ -148,7 +148,7 @@ templ Inbox(currentUser *database.User) {
 				hx-target="#searchResults" hx-indicator="#loader" />
 			<!-- Search results dropdown -->
 			<ul id="searchResults"
-				class="w-full bg-white shadow-lg rounded-lg mt-2 z-10 transition-all duration-150 ease-in-out max-h-60 overflow-auto border border-gray-300">
+				class="w-full bg-white shadow-lg rounded-lg mt-2 z-10 transition-all duration-150 ease-in-out max-h-[20vh] overflow-auto border border-gray-300">
 				<!-- Friends list will be dynamically inserted here by HTMX -->
 			</ul>
 		</div>
@@ -191,6 +191,7 @@ templ Inbox(currentUser *database.User) {
 					li.setAttribute('hx-get', `/api/openChat?friendId=${item.Friend_id}`);
 					li.setAttribute('hx-trigger', 'click');
 					li.setAttribute('hx-target', '#chatContent');
+					li.setAttribute('hx-swap', 'innerHTML')
 					li.textContent = item.Friend_name;
 					ul.appendChild(li);
 				});
