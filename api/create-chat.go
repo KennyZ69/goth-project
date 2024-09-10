@@ -11,10 +11,10 @@ import (
 )
 
 type ChatData struct {
-	Messages    []*ws.Message
-	CurrentUser *database.User
-	Friend      *database.User
-	ChatId      uint
+	Messages    []*ws.Message  `json:"messages"`
+	CurrentUser *database.User `json:"current_user"`
+	Friend      *database.User `json:"friend"`
+	ChatId      uint           `json:"chat_id"`
 }
 
 func CreateChatHandle(w http.ResponseWriter, r *http.Request) error {
@@ -95,7 +95,7 @@ func CreateChatHandle(w http.ResponseWriter, r *http.Request) error {
 		ChatId:      chatId,
 	}
 
-	handles.Render(ChatResp(*chatData), w, r)
+	handles.Render(Chat(*chatData), w, r)
 
 	// tmpl, err := template.ParseFiles("api/html/chat-templ.html")
 	// if err != nil {

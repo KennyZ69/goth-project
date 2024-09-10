@@ -953,20 +953,12 @@ video {
   height: 100vh;
 }
 
-.max-h-60 {
-  max-height: 15rem;
+.max-h-\[20vh\] {
+  max-height: 20vh;
 }
 
 .max-h-\[75vh\] {
   max-height: 75vh;
-}
-
-.max-h-\[20\%\] {
-  max-height: 20%;
-}
-
-.max-h-\[20vh\] {
-  max-height: 20vh;
 }
 
 .min-h-screen {
