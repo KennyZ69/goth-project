@@ -142,7 +142,7 @@ templ Inbox(currentUser *database.User) {
 		<!-- Search bar -->
 		<div class="mb-4">
 			<input type="text" placeholder="Search..." id="friendSearch" name="friendSearch"
-				hx-params="friendSearch"
+				autocomplete="off" hx-params="friendSearch"
 				class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
 				hx-get="/api/searchFriends" hx-trigger="input changed delay:150ms"
 				hx-target="#searchResults" hx-indicator="#loader" />

@@ -132,6 +132,7 @@ func (c *Client) readPump() {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
 				log.Printf("error: %v\n", err)
 			}
+			log.Printf("there was some unexpected error: %v\n", err)
 			break
 		}
 
