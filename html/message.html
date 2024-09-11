@@ -1,6 +1,7 @@
-<div id="chat_room" hx-swap-oob="beforeend">
-	<li id="message" class="flex  my-2">
-		<h1 class="text-base font-bold mr-2 text-red-500">{{ .Username }}: </h1>
-		<p class="text-base"> {{ .Text }}</p>
+<ul id="chat_room" hx-swap-oob="beforeend">
+	<li id="message" class="flex p-3 rounded-lg shadow max-w-xs">
+		<div class="text-base font-bold mr-2 text-red-500"> {{ .Username }}: </div>
+		<div class="text-sm text-gray-800"> {{ .Text }} </div>
+		<div class="text-xs text-gray-500 mt-1"> {{ .Created_at }} </div>
 	</li>
-</div>
+</ul>

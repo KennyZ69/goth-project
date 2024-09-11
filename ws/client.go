@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"gothstarter/database"
+	"strconv"
 
 	"gothstarter/layouts/components"
 	"log"
@@ -31,7 +32,7 @@ type Chat struct {
 }
 
 type Message struct {
-	Chat_id    uint      `json:"chat_id"`
+	Chat_id    string    `json:"chat_id"`
 	Client_id  uint      `json:"client_id"`
 	Username   string    `json:"username"`
 	Text       string    `json:"text"`
@@ -144,6 +145,12 @@ func (c *Client) readPump() {
 		if err != nil {
 			log.Printf("there was error decoding message content: %v\n", err)
 		}
+		chatIdConvUint64, err := strconv.ParseUint(msg.Chat_id, 10, 64)
+		if err != nil {
+			log.Printf("error parsing the string chat id into uint: %v\n", err)
+		}
+		chat_id := uint(chatIdConvUint64)
+		log.Printf("content: %v;\n chat-id: %v;\n user_id: %v\n", msg.Text, msg.Chat_id, c.User_id)
 
 		// want to get the username to be able to display it
 		user, err := database.GetUserById(c.User_id)
@@ -151,7 +158,7 @@ func (c *Client) readPump() {
 			fmt.Printf("error getting user by id in readPump(): %v\n", err)
 		}
 
-		err = database.SaveMsgsToDb(c.User_id, msg.Chat_id, msg.Text)
+		err = database.SaveMsgsToDb(c.User_id, chat_id, msg.Text)
 		if err != nil {
 			log.Printf("error saving msg to database: %v\n", err)
 		}

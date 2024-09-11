@@ -51,7 +51,7 @@ func SearchFriends(w http.ResponseWriter, r *http.Request) error {
 	w.Header().Set("Content-Type", "text/html")
 	for _, f := range results {
 
-		if query != "" && strings.Contains(strings.ToLower(f.Friend_name), query) {
+		if strings.Trim(query, " ") != "" && strings.Contains(strings.ToLower(f.Friend_name), query) {
 			fmt.Printf("found matching friend: %v\n", f.Friend_name)
 			fmt.Fprintf(w, `
 <li class="p-2 hover:bg-blue-100 cursor-pointer" hx-get="/api/openChat?friendId=%v"

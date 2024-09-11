@@ -43,6 +43,7 @@ func CreateChatHandle(w http.ResponseWriter, r *http.Request) error {
 
 	var chatId uint
 	err = tx.QueryRow("SELECT chat_id FROM chats WHERE (user1_id=$1 AND user2_id=$2) OR (user1_id=$2 AND user2_id=$1)", currentUser.Id, friendId).Scan(&chatId)
+	fmt.Printf("chat id in the function: %v\n", chatId)
 
 	// if count < 1 {
 	if err != nil {
@@ -60,11 +61,6 @@ func CreateChatHandle(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	//TODO: Get chat messages based on the chatId
-
-	err = tx.QueryRow("SELECT chat_id FROM chats WHERE user1_id=$1 OR user2_id=$2 AND user1_id=$3 OR user2_id=$4", currentUser.Id, currentUser.Id, friendId, friendId).Scan(&chatId)
-	if err != nil {
-		return fmt.Errorf("error getting the chat id from chats: %v", err)
-	}
 
 	friend, err := database.GetUserById(uint(friendId))
 	if err != nil {
