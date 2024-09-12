@@ -32,11 +32,12 @@ type Chat struct {
 }
 
 type Message struct {
-	Chat_id    string    `json:"chat_id"`
-	Client_id  uint      `json:"client_id"`
-	Username   string    `json:"username"`
-	Text       string    `json:"text"`
-	Created_at time.Time `json:"created_at"`
+	Chat_id         string    `json:"chat_id"`
+	Client_id       uint      `json:"client_id"`
+	Username        string    `json:"username"`
+	Text            string    `json:"text"`
+	Created_at      time.Time `json:"created_at"`
+	IsCurrentSender bool      `json:"is_sender"`
 }
 
 // type WsMessage struct {
@@ -70,7 +71,7 @@ func serveSocket(w http.ResponseWriter, r *http.Request) {
 	GlobalHub.Register <- client
 
 	go client.writePump()
-	go client.readPump()
+	go client.readPump(r)
 
 }
 
@@ -113,11 +114,16 @@ func (c *Client) writePump() {
 	}
 }
 
-func (c *Client) readPump() {
+func (c *Client) readPump(r *http.Request) {
 	defer func() {
 		GlobalHub.Unregister <- c
 		c.Conn.Close()
 	}()
+
+	currentUser, err := components.GetUserByCookie(r)
+	if err != nil {
+		log.Printf("error getting the current user on readPump: %v\n", err)
+	}
 
 	c.Conn.SetReadLimit(maxMsgSize)
 	c.Conn.SetReadDeadline(time.Now().Add(pongWait))
@@ -164,11 +170,12 @@ func (c *Client) readPump() {
 		}
 		log.Printf("Broadcasting message: %v, from user: %v\n", msg.Text, user.Username)
 		GlobalHub.Broadcast <- &Message{
-			Text:       msg.Text,
-			Client_id:  c.User_id,
-			Username:   user.Username,
-			Chat_id:    msg.Chat_id,
-			Created_at: time.Now(),
+			Text:            msg.Text,
+			Client_id:       c.User_id,
+			Username:        user.Username,
+			Chat_id:         msg.Chat_id,
+			Created_at:      time.Now(),
+			IsCurrentSender: currentUser.Id == c.User_id,
 		}
 	}
 }

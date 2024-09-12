@@ -35,7 +35,7 @@ func SocketHandler(w http.ResponseWriter, r *http.Request) error {
 	GlobalHub.Register <- client
 
 	go client.writePump()
-	go client.readPump()
+	go client.readPump(r)
 
 	return nil
 }

@@ -19,11 +19,13 @@ templ Chat(data ChatData) {
 			// <ul id="chat_room" hx-swap="beforeend" hx-swap-oob="beforeend">
 				<ul id="chat_room" class="w-full h-full max-h-max max-w-full overflow-y-scroll">
 					if data.Messages == nil {
-					<div class="text-center justify-center text-2xl text-gray-500 mt-10">
+					<div class="text-center justify-center text-2xl text-gray-500 mt-10"
+						id="noMessages">
 						No messages yet. Say hello!
 					</div>
 
 					} else {
+					// if data.Messages != nil {
 
 					for _, msg := range data.Messages {
 					if data.CurrentUser.Id == msg.Client_id {
@@ -63,6 +65,9 @@ templ Chat(data ChatData) {
 	<div class="border-t border-gray-300 p-4 flex items-center">
 		// some emoji icon could be here
 		<form id="chatForm" class="w-full flex flex-grow" ws-send autocomplete="off">
+			{{ stringCurrentUserId := strconv.FormatUint(uint64(data.CurrentUser.Id), 10) }}
+			<input type="hidden" id="currentUserId" name="currentUserId" value={ stringCurrentUserId } />
+			<!-- Hidden input for user ID -->
 			<input type="hidden" id="chat_id" name="chat_id" value={ strconv.FormatUint(uint64(data.ChatId),
 				10) } />
 			<input name="text" id="chatInput" type="text" placeholder="Type a message..." rows="2"
@@ -75,43 +80,48 @@ templ Chat(data ChatData) {
 	</div>
 </div>
 <script>
-	console.log('loaded the script')
-	const currentUserId = parseInt(`{ data.CurrentUser.Id }`)
-	const chatId = document.getElementById("chat_id")
-	const ws = new WebSocket(`ws://http://127.0.0.1:7331/ws?chat_id=${chatId}`)
 
-	// When a message is received from the WebSocket server
-	ws.onmessage = function (event) {
-		const message = JSON.parse(event.data);
-		appendMessageToChat(message);
+	const currentUserId = document.getElementById('currentUserId').value; // Get current user ID
+	const chatId = document.getElementById("chat_id").value; // Get the chat ID
+	const ws = new WebSocket(`ws://127.0.0.1:7331/ws?chat_id=${chatId}`);
+
+	// WebSocket event handlers
+	ws.onopen = function () {
+		console.log("WebSocket Connection Opened");
 	};
 
-	// Function to append a message to the chat
-	function appendMessageToChat(message) {
+	ws.onerror = function (error) {
+		console.error("WebSocket Error:", error);
+	};
+
+	ws.onmessage = function (event) {
+
+		event.preventDefault();
+
+		const messageInput = document.getElementById('chatInput');
+		const messageText = messageInput.value;
+
+		messageInput.value = '';
+
 		const chatRoom = document.getElementById('chat_room');
+		const noMessagesElement = document.getElementById('noMessages');
 
-		// Create a new list item for the message
-		const messageElement = document.createElement('li');
-		messageElement.classList.add('p-3', 'mt-4', 'rounded-lg', 'shadow', 'max-w-xs');
-
-		if (message.sender_id == currentUserId {
-			messageElement.classList.add('bg-blue-100', 'text-right');
-		} else {
-			messageElement.classList.add('bg-gray-100', 'text-left');
+		// Remove the "No messages yet" message if it exists
+		if (noMessagesElement) {
+			noMessagesElement.classList.add('hidden');
 		}
 
-		messageElement.innerHTML = `
-        <div class="text-sm text-gray-800">${message.text}</div>
-        <div class="text-xs text-gray-500 mt-1">${new Date(message.created_at).toLocaleString()}</div>
-    `;
 
-		chatRoom.appendChild(messageElement);
+		const message = JSON.parse(event.data);
+		console.log("Received message:", message);
+		// appendMessageToChat(message);
+	};
 
-		// Scroll to the bottom after appending
-		chatRoom.scrollTop = chatRoom.scrollHeight;
-	}
+	ws.onclose = function () {
+		console.log("WebSocket Connection Closed");
+	};
 
-	// Handle sending the message via WebSocket
+	// Send a message through the WebSocket
 	document.getElementById('chatForm').addEventListener('submit', function (event) {
 		event.preventDefault();
 
@@ -120,17 +130,46 @@ templ Chat(data ChatData) {
 
 		if (messageText.trim() != "") {
 			const message = {
-				Chat_id: chatId,
-				Text: messageText,
-				sender_id: currentUserId
+				chat_id: chatId,
+				sender_id: currentUserId,
+				text: messageText
 			};
 
-			// Send the message via WebSocket
-			ws.send(JSON.stringify(message));
+			console.log("Sending message:", message);
+			// ws.send(JSON.stringify(message));
 
 			// Clear the input
 			messageInput.value = '';
 		}
 	});
+
+	// Function to append a message to the chat
+	function appendMessageToChat(message) {
+		const chatRoom = document.getElementById('chat_room');
+		const noMessagesElement = document.getElementById('noMessages');
+
+		// Remove the "No messages yet" message if it exists
+		if (noMessagesElement) {
+			noMessagesElement.remove();
+		}
+
+		const messageElement = document.createElement('li');
+		messageElement.classList.add('p-3', 'mt-4', 'rounded-lg', 'shadow', 'max-w-xs');
+
+		if (message.sender_id == currentUserId) {
+			messageElement.classList.add('bg-blue-100', 'text-right', 'justify-end');
+		} else {
+			messageElement.classList.add('bg-gray-100', 'text-left', 'justify-start');
+		}
+
+		messageElement.innerHTML = `
+      <div class="text-sm text-gray-800">${message.text}</div>
+      <div class="text-xs text-gray-500 mt-1">${new Date(message.created_at).toLocaleString()}</div>
+    `;
+
+		chatRoom.appendChild(messageElement);
+		chatRoom.scrollTop = chatRoom.scrollHeight;
+	};
+
 </script>
 }
