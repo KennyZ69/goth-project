@@ -17,7 +17,7 @@ templ Chat(data ChatData) {
 	<div class="p-4 space-y-4 max-h-full flex-grow" id="chatMessages">
 		<div class="flex bg-gray-100 p-4 w-full h-full max-h-full max-w-full flex-grow ">
 			// <ul id="chat_room" hx-swap="beforeend" hx-swap-oob="beforeend">
-				<ul id="chat_room" class="w-full h-full max-h-max max-w-full overflow-y-scroll">
+				<ul id="chat_room" class="w-full h-full overflow-y-scroll">
 					if data.Messages == nil {
 					<div class="text-center justify-center text-2xl text-gray-500 mt-10"
 						id="noMessages">
@@ -119,6 +119,8 @@ templ Chat(data ChatData) {
 
 	ws.onclose = function () {
 		console.log("WebSocket Connection Closed");
+		const chat_room = document.getElementById('chat_room');
+		chat_room.innerHTML = '';
 	};
 
 	// Send a message through the WebSocket

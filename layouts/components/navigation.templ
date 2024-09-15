@@ -95,7 +95,7 @@ templ Navigation(isAuthenticated bool, r *http.Request) {
 
 		<!-- Show user profile icon -->
 		<div x-data="{ dropdownOpen: false }" x-wait
-			class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end transition duration-150 ease-out">
+			class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end transition duration-150 ease-out lg:hover:text-gray-900 lg:hover:scale-110 leading-none ">
 			<!-- Profile icon and other authenticated user links -->
 			{{ hrefProfile := fmt.Sprintf("/profile/%v", user.Username) }}
 			<button @click="dropdownOpen = !dropdownOpen" class="flex items-center focus:outline-none">

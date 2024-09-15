@@ -43,7 +43,7 @@ templ Base(r *http.Request, data bool) {
 	</style>
 </head>
 
-<body class="antialiased bg-slate-500" hx-ext="reset-on-success">
+<body class="antialiased bg-slate-500 h-screen" hx-ext="reset-on-success">
 	if strings.Contains(r.URL.Path, "/inbox/"){
 	{{ user, err := components.GetUserByCookie(r) }}
 	if err != nil {
